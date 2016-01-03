@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">CornerAndroid</string>
+
+
+    <!--======================LOGIN======================-->
+    <!--<string name="corner_title">Corner</string>
+    <string name="login_btn_text">LOGIN</string>
+    <string name="login_register_btn_text">SIGNUP</string>
+    <string name="login_forget_btn_text">forget password?</string>
+    <string name="login_email_hint">example@corner.com</string>
+    <string name="login_password_hint">enter password</string>-->
+
+    <string name="corner_title">角落</string>
+    <string name="login_btn_text">登录</string>
+    <string name="login_register_btn_text">注册</string>
+    <string name="login_forget_btn_text">忘记密码?</string>
+    <string name="login_email_hint">example@corner.com</string>
+    <string name="login_password_hint">密码</string>
+
 </resources>

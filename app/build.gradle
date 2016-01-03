@@ -15,10 +15,10 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "HTTP_ADDRESS", "http://127.0.0.1:3000/app/"
+            buildConfigField "String", "HTTP_ADDRESS", '"http://127.0.0.1:3000/app/"'
         }
         release {
-            buildConfigField "String", "HTTP_ADDRESS", "http://127.0.0.1:3000/app/"
+            buildConfigField "String", "HTTP_ADDRESS", '"http://127.0.0.1:3000/app/"'
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
