@@ -9,6 +9,8 @@ import android.app.Application;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import java.util.Objects;
+
 public class CornerApplication extends Application {
 
     private static CornerApplication sSingleton;
@@ -30,5 +32,11 @@ public class CornerApplication extends Application {
 
     public RequestQueue getRequestQueue() {
         return mRequestQueue;
+    }
+
+    public void CancelRequests(){
+        if (mRequestQueue != null){
+            mRequestQueue.cancelAll(new Object());
+        }
     }
 }
