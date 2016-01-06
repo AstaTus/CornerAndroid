@@ -8,6 +8,7 @@ import android.app.Application;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.astatus.cornerandroid.http.CmdManager;
 
 import java.util.Objects;
 
@@ -15,28 +16,27 @@ public class CornerApplication extends Application {
 
     private static CornerApplication sSingleton;
 
-    private RequestQueue mRequestQueue;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        mRequestQueue = Volley.newRequestQueue(this);
-
-        sSingleton = this;
-    }
+    private CmdManager mCmdMgr;
 
     public synchronized static CornerApplication getSingleton() {
         return sSingleton;
     }
 
-    public RequestQueue getRequestQueue() {
-        return mRequestQueue;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        mCmdMgr = new CmdManager();
+        mCmdMgr.init(this);
+        sSingleton = this;
     }
 
-    public void CancelRequests(){
-        if (mRequestQueue != null){
-            mRequestQueue.cancelAll(new Object());
-        }
+    public CmdManager getCmdMgr(){
+        return mCmdMgr;
     }
+
+
+
+
+
 }

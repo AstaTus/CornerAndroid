@@ -132,7 +132,6 @@ public class NormalRequest extends Request<JSONObject> {
         //get cookie
         String cookie = "";
 
-
         if (cookie.length() > 0){
             header.put("Cookie", cookie);
         }

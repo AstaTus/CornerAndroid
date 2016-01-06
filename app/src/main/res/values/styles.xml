@@ -35,5 +35,22 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="SexButtonStyle">
+        <item name="android:background">@drawable/register_sex_btn_selector</item>
+        <item name="android:textColor">@drawable/register_sex_btn_text_selector</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!--<style name="MyCustomBetterPickersRadialTimePickerDialog">
+        <item name="bpMainColor1">@color/custom_tp_main1</item>
+        <item name="bpMainColor2">@color/custom_tp_main2</item>
+        <item name="bpAccentColor">@color/custom_tp_accent</item>
+        <item name="bpMainTextColor">@color/custom_tp_text</item>
+        <item name="bpDoneTextColor">@color/custom_tp_text</item>
+        <item name="bpLineColor">@color/custom_tp_main2</item>
+        <item name="bpDoneBackgroundColor">@drawable/tp_done_background_color</item>
+        <item name="bpSelectionAlpha">102</item>
+    </style>-->
 
 </resources>

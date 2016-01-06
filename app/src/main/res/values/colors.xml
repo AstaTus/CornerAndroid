@@ -5,6 +5,10 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="white">#fcfcfc</color>
+    <color name="black_54op">#8A000000</color>
+    <color name="black_26op">#42000000</color>
+    <color name="black">#00000000</color>
+    <color name="primaryColor">#3F51B5</color>
     <color name="inputBackground">#fcfcfc</color>
     <color name="inputBackgroundStroke">#dee1e2</color>
     <!--======================LOGIN======================-->

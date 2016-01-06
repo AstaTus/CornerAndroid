@@ -16,18 +16,28 @@ import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BaseJsonCmd {
-    private JsonObjectRequest mRequest;
+    private NormalRequest mRequest;
 
     public BaseJsonCmd(String baseUrl, String url, int methond,
                        Listener<JSONObject> response, ErrorListener error,
                        HashMap<String, String> params){
 
-        mRequest = new NormalRequest(baseUrl, url, response, error, params, true, false);
+        mRequest = new NormalRequest(baseUrl,
+                url, methond, response, error, params, true, false);
+
+    }
+
+    public BaseJsonCmd(String baseUrl, String url, int methond,
+                       Listener<JSONObject> response, ErrorListener error,
+                       HashMap<String, String> params, boolean addCookie, boolean checkCookie){
+
+        mRequest = new NormalRequest(baseUrl,
+                url, methond, response, error, params, addCookie, checkCookie);
 
     }
 
     public void excute(){
-        RequestQueue queue = CornerApplication.getSingleton().getRequestQueue();
-        queue.add(mRequest);
+        CmdManager mgr = CornerApplication.getSingleton().getCmdMgr();
+        mgr.addRequest(mRequest);
     }
 }

@@ -22,14 +22,15 @@
         android:background="@drawable/login_input_background"
         android:layout_width="match_parent"
         android:layout_marginTop="24dp">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:src="@mipmap/ic_email_black_36dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@mipmap/ic_email_black_36dp"/>
         <EditText
+            android:id="@+id/login_email_textedit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
@@ -50,6 +51,7 @@
             android:paddingRight="16dp"
             android:src="@mipmap/ic_lock_black_36dp"/>
         <EditText
+            android:id="@+id/login_password_textedit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"

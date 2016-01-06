@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.RegisterActivity"
+            android:label="@string/register_title"
             android:parentActivityName="com.astatus.cornerandroid.activity.LoginActivity" >
 
             <!-- Parent activity meta-data to support 4.0 and lower -->

@@ -16,5 +16,11 @@
     <string name="login_forget_btn_text">忘记密码?</string>
     <string name="login_email_hint">example@corner.com</string>
     <string name="login_password_hint">密码</string>
+    <string name="login_nickname_hint">昵称</string>
+    <string name="login_birth_hint">生日</string>
 
+    <string name="register_sex_gril">女</string>
+    <string name="register_sex_man">男</string>
+    <string name="register_join">加入</string>
+    <string name="register_title">注册</string>
 </resources>
