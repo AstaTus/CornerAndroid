@@ -23,7 +23,9 @@ public class CmdManager {
         mRequestQueue.add(request);
     }
     public void init(Context context){
+
         mRequestQueue = Volley.newRequestQueue(context);
+        mRequestQueue.start();
     }
 
     public void CancelRequests(){

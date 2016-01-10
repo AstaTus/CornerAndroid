@@ -23,4 +23,8 @@
     <string name="register_sex_man">男</string>
     <string name="register_join">加入</string>
     <string name="register_title">注册</string>
+
+    <string name="register_email_error">邮箱格式不正确</string>
+    <string name="register_password_error">密码由6-20位数字、字母、符号组成</string>
+    <string name="register_nickname_error">昵称格式不正确</string>
 </resources>

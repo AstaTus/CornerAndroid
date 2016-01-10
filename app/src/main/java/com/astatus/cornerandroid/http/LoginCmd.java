@@ -2,18 +2,17 @@ package com.astatus.cornerandroid.http;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-
-import org.json.JSONObject;
+import com.astatus.cornerandroid.message.LoginMsg;
 
 import java.util.HashMap;
 
 /**
  * Created by AstaTus on 2016/1/4.
  */
-public class LoginCmd extends BaseJsonCmd {
-    private static final String CMD_METHOD = "app/login";
+public class LoginCmd extends BaseJsonCmd<LoginMsg> {
+    private static final String CMD_METHOD = "login";
 
-    static public LoginCmd create(Response.Listener<JSONObject> response,
+    static public LoginCmd create(Response.Listener response,
                                   Response.ErrorListener error, String email,
                                   String password){
 
@@ -24,7 +23,7 @@ public class LoginCmd extends BaseJsonCmd {
         return new LoginCmd(response, error, params);
     }
 
-    protected LoginCmd(Response.Listener<JSONObject> response, Response.ErrorListener error, HashMap<String, String> params){
-        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, error, params);
+    protected LoginCmd(Response.Listener response, Response.ErrorListener error, HashMap<String, String> params){
+        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, LoginMsg.class, error, params);
     }
 }

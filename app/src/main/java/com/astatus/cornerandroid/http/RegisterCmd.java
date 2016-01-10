@@ -6,6 +6,8 @@ package com.astatus.cornerandroid.http;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.astatus.cornerandroid.activity.RegisterActivity;
+import com.astatus.cornerandroid.message.RegisterMsg;
 
 import org.json.JSONObject;
 
@@ -13,23 +15,27 @@ import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class RegisterCmd extends BaseJsonCmd{
+public class RegisterCmd extends BaseJsonCmd<RegisterMsg>{
 
     private static final String CMD_METHOD = "register";
 
 
-    static public RegisterCmd create(Response.Listener<JSONObject> response,
+    static public RegisterCmd create(Response.Listener response,
                                   Response.ErrorListener error, String email,
-                                  String password){
+                                  String password, String nickname, String birthday,
+                                  int sex){
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
         params.put("password", password);
+        params.put("nickname", nickname);
+        params.put("birthday", birthday);
+        params.put("sex", String.valueOf(sex));
 
         return new RegisterCmd(response, error, params);
     }
 
-    protected RegisterCmd(Response.Listener<JSONObject> response, Response.ErrorListener error, HashMap<String, String> params){
-        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, error, params);
+    protected RegisterCmd(Response.Listener response, Response.ErrorListener error, HashMap<String, String> params){
+        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, RegisterMsg.class, error, params);
     }
 }

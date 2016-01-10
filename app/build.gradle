@@ -15,10 +15,10 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "HTTP_ADDRESS", '"http://127.0.0.1:3000/app/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.5:3000/app/"'
         }
         release {
-            buildConfigField "String", "HTTP_ADDRESS", '"http://127.0.0.1:3000/app/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.5:3000/app/"'
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -34,4 +34,6 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'joda-time:joda-time:2.1'
     compile 'com.code-troopers.betterpickers:library:2.2.2'
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.google.code.gson:gson:1.7.2'
 }

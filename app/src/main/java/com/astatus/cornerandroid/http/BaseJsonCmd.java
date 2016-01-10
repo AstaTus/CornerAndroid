@@ -15,24 +15,24 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class BaseJsonCmd {
+public class BaseJsonCmd<T> {
     private NormalRequest mRequest;
 
     public BaseJsonCmd(String baseUrl, String url, int methond,
-                       Listener<JSONObject> response, ErrorListener error,
+                       Listener response, Class<T> responseClass, ErrorListener error,
                        HashMap<String, String> params){
 
         mRequest = new NormalRequest(baseUrl,
-                url, methond, response, error, params, true, false);
+                url, methond, response, responseClass, error, params, true, false);
 
     }
 
     public BaseJsonCmd(String baseUrl, String url, int methond,
-                       Listener<JSONObject> response, ErrorListener error,
+                       Listener response, Class<T> responseClass, ErrorListener error,
                        HashMap<String, String> params, boolean addCookie, boolean checkCookie){
 
         mRequest = new NormalRequest(baseUrl,
-                url, methond, response, error, params, addCookie, checkCookie);
+                url, methond, response, responseClass, error, params, addCookie, checkCookie);
 
     }
 
