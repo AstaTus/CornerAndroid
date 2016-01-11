@@ -13,11 +13,18 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.NetworkResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
-import com.android.volley.toolbox.JsonObjectRequest;
+
+import com.astatus.cornerandroid.application.CornerApplication;
+import com.astatus.cornerandroid.message.LoginMsg;
+import com.astatus.cornerandroid.message.MessagePacket;
 import com.astatus.cornerandroid.message.RegisterMsg;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonStreamParser;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
@@ -29,20 +36,22 @@ import java.util.regex.Pattern;
 /**
  * Created by AstaTus on 2016/1/4.
  */
-public class NormalRequest<T> extends Request<T> {
+public class NormalRequest<T> extends Request<MessagePacket> {
     protected static final String SET_COOKIE_KEY = "Set-Cookie";
     protected static final String COOKIE_KEY = "Cookie";
     protected static final String SESSION_COOKIE = "sessionid";
+    protected static final Gson mGson = new Gson();
 
     private Map<String, String> mParams;
     private final Class<T> mResponseClass;
     private Listener mListener;
     private String mUrl;
 
+
     private boolean mIsCheckCookie = false;
     private boolean mIsAddCookie = true;
 
-    public NormalRequest(String baseUrl, String url, int method, Listener<JSONObject> listener,
+    public NormalRequest(String baseUrl, String url, int method, Listener listener,
                          Class<T> responseClass, ErrorListener errorListener, Map<String, String> params,
                          boolean addCookie, boolean checkCookie){
 
@@ -84,8 +93,13 @@ public class NormalRequest<T> extends Request<T> {
     }
 
     @Override
-    protected void deliverResponse(T response){
-        mListener.onResponse(response);
+    protected void deliverResponse(MessagePacket response){
+        if (response.result == MessagePacket.RESULT_SUCCESS){
+            mListener.onResponse(response.msg);
+        }else{
+            CornerApplication.getSingleton().onServerErrorResponseListener(response);
+        }
+
     }
 
     @Override
@@ -104,7 +118,7 @@ public class NormalRequest<T> extends Request<T> {
     }
 
     @Override
-    protected Response<T> parseNetworkResponse(NetworkResponse response){
+    protected Response<MessagePacket> parseNetworkResponse(NetworkResponse response){
 
         if (mIsCheckCookie){
             checkSessionCookie(response.headers);
@@ -113,8 +127,16 @@ public class NormalRequest<T> extends Request<T> {
         try {
             String jsonString = new String(response.data,
                     HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-            Gson gson = new Gson();
-            return Response.success(gson.fromJson(jsonString, mResponseClass),
+
+            MessagePacket packet = new MessagePacket<T>();
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(jsonString);
+            JsonObject obj = element.getAsJsonObject();
+            packet.result = obj.get("result").getAsBoolean();
+            packet.resultCode = obj.get("resultCode").getAsInt();
+            packet.msg = mGson.fromJson(obj.get("msg"), mResponseClass);
+
+            return Response.success(packet,
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));

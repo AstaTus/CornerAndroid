@@ -144,7 +144,6 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             hideLoginProgress();
-
         }
     }
 

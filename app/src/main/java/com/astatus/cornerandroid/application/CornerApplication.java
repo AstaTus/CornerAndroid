@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.astatus.cornerandroid.http.CmdManager;
+import com.astatus.cornerandroid.message.MessagePacket;
 import com.astatus.cornerandroid.model.SharedPreferenceDef;
 
 import java.util.Objects;
@@ -48,4 +49,9 @@ public class CornerApplication extends Application {
     }
 
 
+    public void onServerErrorResponseListener(MessagePacket message){
+        if (message.resultCode == MessagePacket.RESULT_CODE_SERVER_SESSION_ERROR){
+
+        }
+    }
 }
