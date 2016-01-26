@@ -36,6 +36,6 @@ public class RegisterCmd extends BaseJsonCmd<RegisterMsg>{
     }
 
     protected RegisterCmd(Response.Listener response, Response.ErrorListener error, HashMap<String, String> params){
-        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, RegisterMsg.class, error, params);
+        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, RegisterMsg.class, error, params, false, true);
     }
 }

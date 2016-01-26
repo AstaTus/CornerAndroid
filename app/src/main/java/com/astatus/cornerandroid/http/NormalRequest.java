@@ -46,6 +46,7 @@ public class NormalRequest<T> extends Request<MessagePacket> {
     private final Class<T> mResponseClass;
     private Listener mListener;
     private String mUrl;
+    private static String mCookie;
 
 
     private boolean mIsCheckCookie = false;
@@ -149,13 +150,13 @@ public class NormalRequest<T> extends Request<MessagePacket> {
         try{
             String headerStr = headers.toString();
 
-            Pattern pattern = Pattern.compile("Set-Cookie.*?;");
+            Pattern pattern = Pattern.compile("set-cookie.*?;");
             Matcher matcher = pattern.matcher(headerStr);
             String cookie = "";
             if (matcher.find()){
                 cookie = matcher.group();
 
-                cookie = cookie.substring(11, cookie.length() - 1);
+                mCookie = cookie.substring(11, cookie.length() - 1);
 
                 //add Cookie
             }
@@ -168,8 +169,8 @@ public class NormalRequest<T> extends Request<MessagePacket> {
         //get cookie
         String cookie = "";
 
-        if (cookie.length() > 0){
-            header.put("Cookie", cookie);
+        if (mCookie.length() > 0){
+            header.put("Cookie", mCookie);
         }
     }
 }

@@ -24,6 +24,6 @@ public class LoginCmd extends BaseJsonCmd<LoginMsg> {
     }
 
     protected LoginCmd(Response.Listener response, Response.ErrorListener error, HashMap<String, String> params){
-        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, LoginMsg.class, error, params);
+        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, LoginMsg.class, error, params, false, true);
     }
 }

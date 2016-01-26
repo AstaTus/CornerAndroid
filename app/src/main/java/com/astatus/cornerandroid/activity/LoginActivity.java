@@ -16,7 +16,9 @@ import com.android.volley.VolleyError;
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.application.CornerApplication;
 import com.astatus.cornerandroid.http.LoginCmd;
+import com.astatus.cornerandroid.http.LogoutCmd;
 import com.astatus.cornerandroid.message.LoginMsg;
+import com.astatus.cornerandroid.message.LogoutMsg;
 import com.astatus.cornerandroid.model.SharedPreferenceDef;
 import com.astatus.cornerandroid.util.ToastUtil;
 import com.astatus.cornerandroid.util.VerifyUtil;
@@ -38,7 +40,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        try {
+            setContentView(R.layout.activity_login);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         initView();
         archiveLoginInfoFromSharedPreferences();
@@ -65,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
         mLoginBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
                 String email = mEmailEdit.getText().toString();
                 String password = mPasswordEdit.getText().toString();
                 if(!VerifyUtil.VerifyEmail(email)){
@@ -93,10 +99,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+                /*LogoutCmd cmd = LogoutCmd.create(
+                        new LogoutResponseListener(), new LogoutErrorListener());
+                cmd.excute();*/
             }
         });
-
-        getSupportActionBar().hide();
     }
 
 
@@ -130,6 +137,30 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordEdit.setText(mPassword);
     }
 
+    class LogoutResponseListener implements Response.Listener<LogoutMsg>{
+        @Override
+        public void onResponse(LogoutMsg msg) {
+
+            if (msg.code == 0){
+                Log.i("test", "logout ok");
+
+            }else{
+                Log.i("test", "logout failed");
+            }
+
+
+            hideLoginProgress();
+        }
+    }
+
+    class LogoutErrorListener implements Response.ErrorListener {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.i("test", "logout error");
+
+        }
+    }
+
     class LoginResponseListener implements Response.Listener<LoginMsg>{
         @Override
         public void onResponse(LoginMsg msg) {
@@ -146,8 +177,6 @@ public class LoginActivity extends AppCompatActivity {
             hideLoginProgress();
         }
     }
-
-
 
     class LoginErrorListener implements Response.ErrorListener{
         @Override

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.astatus.cornerandroid.activity.HomeActivity"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/home_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <!--可滑动的布局内容-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/home_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.astatus.cornerandroid.widget.FloatingActionMenu
+        android:id="@+id/home_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:fab_horizontalPadding="25dp"
+        app:fab_verticalPadding="80dp"
+        app:fab_labelTextStyle="@style/FABMenuLabelsStyle"
+        app:fab_backgroundDrawable="@drawable/fab_label_background">
+        <com.astatus.cornerandroid.widget.FloatingActionMenuButton
+            android:id="@+id/home_menu_photo_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/ic_photo_library_white_18dp"
+            android:tint="@color/black_54op"
+            app:pressedTranslationZ="12dp"
+            android:clickable="true"
+            app:rippleColor="@color/colorPrimary"
+            app:fabSize="mini"
+            app:fab_label="@string/home_fab_photo">
+        </com.astatus.cornerandroid.widget.FloatingActionMenuButton>
+        <com.astatus.cornerandroid.widget.FloatingActionMenuButton
+            android:id="@+id/home_menu_camara_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/ic_photo_camera_white_18dp"
+            android:tint="@color/black_54op"
+            app:pressedTranslationZ="12dp"
+            android:clickable="true"
+            app:rippleColor="@color/colorPrimary"
+            app:fabSize="mini"
+            app:fab_label="@string/home_fab_camera">
+        </com.astatus.cornerandroid.widget.FloatingActionMenuButton>
+    </com.astatus.cornerandroid.widget.FloatingActionMenu>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/home_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="bottom|end"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@android:color/white"
+        app:pressedTranslationZ="12dp"
+        android:clickable="true"
+        app:rippleColor="@color/colorPrimary" />
+</android.support.design.widget.CoordinatorLayout>
+

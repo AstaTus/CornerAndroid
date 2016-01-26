@@ -1,158 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.astatus.cornerandroid.activity.RegisterActivity"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:orientation="vertical"
+    tools:context="com.astatus.cornerandroid.activity.RegisterActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:textColor="@color/white"/>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="45dp"
-        android:background="@drawable/login_input_background"
         android:layout_width="match_parent"
-        android:layout_marginTop="24dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:src="@mipmap/ic_email_black_36dp"/>
-        <EditText
-            android:id="@+id/register_email_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:hint="@string/login_email_hint"
-            android:textColorHint="@color/black_26op"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="45dp"
-        android:background="@drawable/login_input_background"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:src="@mipmap/ic_lock_black_36dp"/>
-        <EditText
-            android:id="@+id/register_password_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:hint="@string/login_password_hint"
-            android:textColorHint="@color/black_26op"
-            android:password="true"/>
-    </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="45dp"
-        android:background="@drawable/login_input_background"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:src="@mipmap/ic_account_circle_black_36dp"/>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/register_nickname_layout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
+            android:layout_height="45dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/login_input_background"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:src="@mipmap/ic_email_black_36dp"/>
             <EditText
-                android:id="@+id/register_nickname_edittext"
+                android:id="@+id/register_email_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:hint="@string/login_nickname_hint"
+                android:hint="@string/login_email_hint"
                 android:textColorHint="@color/black_26op"/>
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="45dp"
-        android:background="@drawable/login_input_background"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp">
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/login_input_background"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:src="@mipmap/ic_lock_black_36dp"/>
+            <EditText
+                android:id="@+id/register_password_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="@string/login_password_hint"
+                android:password="true"
+                android:textColorHint="@color/black_26op"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/login_input_background"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:src="@mipmap/ic_account_circle_black_36dp"/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/register_nickname_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <EditText
+                    android:id="@+id/register_nickname_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/login_nickname_hint"
+                    android:textColorHint="@color/black_26op"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/login_input_background"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:src="@mipmap/ic_lock_black_36dp"/>
+            <TextView
+                android:id="@+id/register_birthday_textview"
+                style="?editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="@string/login_birth_hint"
+                android:textColorHint="@color/black_26op"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+
+            <RadioGroup
+                android:id="@+id/register_sex_radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/register_sex_girl_radio"
+                    style="@style/SexButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="@string/register_sex_gril" />
+                <RadioButton
+                    android:id="@+id/register_sex_boy_radio"
+                    style="@style/SexButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/register_sex_man"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/register_join_btn"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:src="@mipmap/ic_lock_black_36dp"/>
-        <TextView
-            android:id="@+id/register_birthday_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="?editTextStyle"
-            android:textColorHint="@color/black_26op"
-            android:background="@android:color/transparent"
-            android:hint="@string/login_birth_hint"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="24dp"
+            android:background="?attr/colorAccent"
+            android:elevation="2dp"
+            android:text="@string/register_join"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="45dp"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp">
-
-
-        <RadioGroup
-            android:id="@+id/register_sex_radiogroup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/register_sex_girl_radio"
-                style="@style/SexButtonStyle"
-                android:button="@null"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="@string/register_sex_gril"
-                android:gravity="center"
-                android:layout_marginRight="5dp"
-                android:checked="true" />
-            <RadioButton
-                android:id="@+id/register_sex_boy_radio"
-                style="@style/SexButtonStyle"
-                android:button="@null"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="@string/register_sex_man"
-                android:gravity="center"
-                android:layout_marginLeft="5dp"/>
-        </RadioGroup>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/register_join_btn"
-        android:background="?attr/colorAccent"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/register_join"
-        android:elevation="2dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="24dp"/>
-
 </LinearLayout>

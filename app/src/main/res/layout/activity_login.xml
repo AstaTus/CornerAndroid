@@ -15,7 +15,7 @@
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:textStyle="bold"
-        android:layout_marginTop="48dp"/>
+        android:layout_marginTop="48dp" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_height="45dp"
