@@ -21,7 +21,6 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -79,7 +78,8 @@
                 android:layout_gravity="center"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:src="@mipmap/ic_account_circle_black_36dp"/>
+                android:src="@mipmap/ic_account_circle_black_36dp"
+                android:tint="@color/gray_light"/>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/register_nickname_layout"
                 android:layout_width="match_parent"
@@ -107,7 +107,8 @@
                 android:layout_gravity="center"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:src="@mipmap/ic_lock_black_36dp"/>
+                android:src="@drawable/ic_cake_white_36dp"
+                />
             <TextView
                 android:id="@+id/register_birthday_textview"
                 style="?editTextStyle"
@@ -117,14 +118,11 @@
                 android:hint="@string/login_birth_hint"
                 android:textColorHint="@color/black_26op"/>
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal">
-
-
             <RadioGroup
                 android:id="@+id/register_sex_radiogroup"
                 android:layout_width="match_parent"

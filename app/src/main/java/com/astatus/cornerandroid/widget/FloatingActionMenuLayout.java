@@ -13,7 +13,11 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +27,15 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
+import com.astatus.cornerandroid.util.NumberUtil;
+
+import java.util.List;
 
 /**
  * Created by AstaTus on 2016/1/19.
  */
-public class FloatingActionMenu extends ViewGroup {
+@CoordinatorLayout.DefaultBehavior(FloatingActionMenuLayout.Behavior.class)
+public class FloatingActionMenuLayout extends ViewGroup {
     public static final int EXPAND_TOP_LEFT = 0;
     public static final int EXPAND_TOP_RIGHT = 1;
     public static final int EXPAND_BOTTOM_LEFT = 2;
@@ -38,8 +46,10 @@ public class FloatingActionMenu extends ViewGroup {
     private static final float EXPANDED_PLUS_ROTATION = 90f + 45f;
 
     private int mExpandLocation;
-    private int mExpandHorizontalPadding;
-    private int mExpandVerticalPadding;
+
+    private int mFabCenterX = 0;
+    private int mFabTopY = 0;
+    private int mFabBottomY = 0;
     private View mFillViewContent;
 
     private int mButtonSpacing;
@@ -50,13 +60,12 @@ public class FloatingActionMenu extends ViewGroup {
     private int mLabelsPosition;
     private int mButtonsCount;
 
-    private int mMaxButtonWidth;
-    private int mMaxButtonHeight;
+    private int mMaxButtonWidth = 0;
+    private int mMaxButtonHeight = 0;
 
     private TouchDelegateGroup mTouchDelegateGroup;
     private boolean mExpanded = false;
-//    private View mMenuButton;
-    private int mMenuButtonId;
+    private FloatingActionButton mFab;
 
     private OnFloatingActionsMenuChangeListener mListener;
     private AnimatorSet mExpandAnimation = new AnimatorSet().setDuration(ANIMATION_DURATION);
@@ -67,21 +76,34 @@ public class FloatingActionMenu extends ViewGroup {
         void onMenuCollapsed();
     }
 
-    public FloatingActionMenu(Context context) {
+    public FloatingActionMenuLayout(Context context) {
         this(context, null);
     }
 
-    public FloatingActionMenu(Context context, AttributeSet attrs) {
+    public FloatingActionMenuLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FloatingActionMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FloatingActionMenuLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
-    public void attachMenuButton(View button){
-//        mMenuButton = button;
+
+
+    public void attachMenuButton(FloatingActionButton fab){
+        mFab = fab;
+    }
+
+    public void setOriginLocation(int centerX, int topY, int bottomY){
+
+        if ((mFabCenterX != centerX) || (mFabTopY != topY) || (mFabBottomY != bottomY)){
+            mFabCenterX = centerX;
+            mFabTopY = topY;
+            mFabBottomY = bottomY;
+
+            requestLayout();
+        }
     }
 
     private void init(Context context, AttributeSet attributeSet) {
@@ -92,14 +114,12 @@ public class FloatingActionMenu extends ViewGroup {
         mTouchDelegateGroup = new TouchDelegateGroup(this);
         setTouchDelegate(mTouchDelegateGroup);
 
-        TypedArray attr = context.obtainStyledAttributes(attributeSet, R.styleable.FloatingActionMenu, 0, 0);
+        TypedArray attr = context.obtainStyledAttributes(attributeSet, R.styleable.FloatingActionMenuLayout, 0, 0);
 
-        mExpandHorizontalPadding = attr.getDimensionPixelOffset(R.styleable.FloatingActionMenu_fab_horizontalPadding, 0);
-        mExpandVerticalPadding = attr.getDimensionPixelOffset(R.styleable.FloatingActionMenu_fab_verticalPadding, 0);
-        mExpandLocation = attr.getInt(R.styleable.FloatingActionMenu_fab_expandDLocation, EXPAND_BOTTOM_RIGHT);
-        mLabelTextStyle = attr.getResourceId(R.styleable.FloatingActionMenu_fab_labelTextStyle, 0);
-        mLabelbackgroundDrawable = attr.getResourceId(R.styleable.FloatingActionMenu_fab_backgroundDrawable, 0);
-        mMenuButtonId = attr.getResourceId(R.styleable.FloatingActionMenu_fab_menuButton, 0);
+        mExpandLocation = attr.getInt(R.styleable.FloatingActionMenuLayout_fab_expandDLocation, EXPAND_BOTTOM_RIGHT);
+        mLabelTextStyle = attr.getResourceId(R.styleable.FloatingActionMenuLayout_fab_labelTextStyle, 0);
+        mLabelbackgroundDrawable = attr.getResourceId(R.styleable.FloatingActionMenuLayout_fab_backgroundDrawable, 0);
+
 
         attr.recycle();
     }
@@ -121,33 +141,6 @@ public class FloatingActionMenu extends ViewGroup {
         mListener = listener;
     }
 
-    private static class RotatingDrawable extends LayerDrawable {
-        public RotatingDrawable(Drawable drawable) {
-            super(new Drawable[] { drawable });
-        }
-
-        private float mRotation;
-
-        @SuppressWarnings("UnusedDeclaration")
-        public float getRotation() {
-            return mRotation;
-        }
-
-        @SuppressWarnings("UnusedDeclaration")
-        public void setRotation(float rotation) {
-            mRotation = rotation;
-            invalidateSelf();
-        }
-
-        @Override
-        public void draw(Canvas canvas) {
-            canvas.save();
-            canvas.rotate(mRotation, getBounds().centerX(), getBounds().centerY());
-            super.draw(canvas);
-            canvas.restore();
-        }
-    }
-
 
     public void addButton(FloatingActionMenuButton button) {
         addView(button, mButtonsCount - 1);
@@ -167,8 +160,8 @@ public class FloatingActionMenu extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
         measureChildren(widthMeasureSpec, heightMeasureSpec);
+
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -192,10 +185,6 @@ public class FloatingActionMenu extends ViewGroup {
         setMeasuredDimension(width, height);
     }
 
-    private int adjustForOvershoot(int dimension) {
-        return dimension * 12 / 10;
-    }
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
@@ -208,12 +197,12 @@ public class FloatingActionMenu extends ViewGroup {
         switch (mExpandLocation) {
             case EXPAND_BOTTOM_LEFT:
             case EXPAND_TOP_LEFT:
-                buttonsHorizontalCenter = mMaxButtonWidth / 2 + mExpandHorizontalPadding;
+                buttonsHorizontalCenter = mFabCenterX;
                 labelOffset = buttonsHorizontalCenter + mMaxButtonWidth / 2 + mLabelsMargin;
                 break;
             case EXPAND_BOTTOM_RIGHT:
             case EXPAND_TOP_RIGHT:
-                buttonsHorizontalCenter = r - l - mMaxButtonWidth / 2 - mExpandHorizontalPadding;
+                buttonsHorizontalCenter = mFabCenterX;
                 labelOffset = buttonsHorizontalCenter - mMaxButtonWidth / 2 - mLabelsMargin;
                 break;
             default:
@@ -224,11 +213,11 @@ public class FloatingActionMenu extends ViewGroup {
         switch (mExpandLocation){
             case EXPAND_BOTTOM_LEFT:
             case EXPAND_BOTTOM_RIGHT:
-                nextY = b - t - mExpandVerticalPadding;
+                nextY = mFabTopY;
                 break;
             case EXPAND_TOP_LEFT:
             case EXPAND_TOP_RIGHT:
-                nextY = mExpandVerticalPadding;
+                nextY = mFabBottomY;
         }
 
         for (int i = mButtonsCount - 1; i >= 0; i--) {
@@ -253,8 +242,18 @@ public class FloatingActionMenu extends ViewGroup {
 
             child.layout(childX, childY, childX + child.getMeasuredWidth(), childY + child.getMeasuredHeight());
 
-            float collapsedTranslation = b - t - mExpandVerticalPadding - childY;
+            float collapsedTranslation = 0f;
             float expandedTranslation = 0f;
+
+            switch (mExpandLocation){
+                case EXPAND_BOTTOM_LEFT:
+                case EXPAND_BOTTOM_RIGHT:
+                    collapsedTranslation = mFabBottomY - childY;
+                    break;
+                case EXPAND_TOP_LEFT:
+                case EXPAND_TOP_RIGHT:
+                    collapsedTranslation = mFabTopY - childY;
+            }
 
             int labelLeft = 0;
             int labelRight = 0;
@@ -412,7 +411,7 @@ public class FloatingActionMenu extends ViewGroup {
             if (Build.VERSION.SDK_INT < 23) {
                 label.setTextAppearance(getContext(), mLabelTextStyle);
             } else {
-                label.setTextAppearance(mLabelTextStyle);
+                //label.setTextAppearance(mLabelTextStyle);
             }
 
             if(mLabelbackgroundDrawable != 0){
@@ -505,6 +504,69 @@ public class FloatingActionMenu extends ViewGroup {
         }
     }
 
+    public static class Behavior extends CoordinatorLayout.Behavior<FloatingActionMenuLayout> {
+        // We only support the FAB <> Snackbar shift movement on Honeycomb and above. This is
+        // because we can use view translation properties which greatly simplifies the code.
+        private static final boolean FAB_MENU_BEHAVIOR_ENABLED = Build.VERSION.SDK_INT >= 11;
+
+
+        @Override
+        public boolean layoutDependsOn(CoordinatorLayout parent,
+                                       FloatingActionMenuLayout child, View dependency) {
+            // We're dependent on all SnackbarLayouts (if enabled)
+            boolean result = false;
+            result = FAB_MENU_BEHAVIOR_ENABLED && (dependency instanceof FloatingActionButton);
+            return result;
+        }
+
+        @Override
+        public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionMenuLayout child,
+                                              View dependency) {
+            if (dependency instanceof FloatingActionButton) {
+                updateMenuLayout(child, (FloatingActionButton)dependency);
+            }
+            return false;
+        }
+
+        private boolean updateMenuLayout(FloatingActionMenuLayout child, FloatingActionButton dependency){
+
+            Rect r = new Rect();
+            dependency.getGlobalVisibleRect(r);
+
+            child.setOriginLocation(
+                    dependency.getLeft() + (dependency.getRight() - dependency.getLeft()) / 2,
+                    dependency.getTop(), dependency.getBottom());
+            return true;
+        }
+
+        @Override
+        public boolean onLayoutChild(CoordinatorLayout parent, FloatingActionMenuLayout child, int layoutDirection) {
+
+            final List<View> dependencies = parent.getDependencies(child);
+            for (int i = 0, count = dependencies.size(); i < count; i++) {
+                final View dependency = dependencies.get(i);
+                if (dependency instanceof FloatingActionButton
+                        && updateMenuLayout(child, (FloatingActionButton) dependency)) {
+                    break;
+                }
+            }
+            return false;
+        }
+
+        /*@Override
+        public boolean onLayoutChild(CoordinatorLayout parent, FloatingActionButton child,
+                                     int layoutDirection) {
+            // First, lets make sure that the visibility of the FAB is consistent
+            final List<View> dependencies = parent.getDependencies(child);
+
+            // Now let the CoordinatorLayout lay out the FAB
+            parent.onLayoutChild(child, layoutDirection);
+            // Now offset it if needed
+
+            return true;
+        }*/
+    }
+
     public static class SavedState extends BaseSavedState {
         public boolean mExpanded;
 
@@ -535,5 +597,7 @@ public class FloatingActionMenu extends ViewGroup {
                 return new SavedState[size];
             }
         };
+
+
     }
 }

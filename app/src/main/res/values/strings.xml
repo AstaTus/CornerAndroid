@@ -28,6 +28,7 @@
     <string name="register_join">加入</string>
     <string name="register_title">注册</string>
 
+
     <string name="register_email_error">邮箱格式不正确</string>
     <string name="register_password_error">密码由6-20位数字、字母、符号组成</string>
     <string name="register_nickname_error">昵称格式不正确</string>
@@ -40,5 +41,9 @@
     <string name="home_action_setting">设置</string>
     <string name="home_fab_photo">相册</string>
     <string name="home_fab_camera">相机</string>
+
+    <!--======================PICTURE_EDIT======================-->
+    <string name="picture_edit_title">图片编辑</string>
+    <string name="picture_edit_cancel_tip">是否放弃编辑?</string>
 
 </resources>

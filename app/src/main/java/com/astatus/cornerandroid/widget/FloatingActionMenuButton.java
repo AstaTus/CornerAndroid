@@ -1,9 +1,13 @@
 package com.astatus.cornerandroid.widget;
 
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
@@ -12,6 +16,9 @@ import com.astatus.cornerandroid.R;
  * Created by AstaTus on 2016/1/19.
  */
 public class FloatingActionMenuButton extends FloatingActionButton {
+
+    /*private TextView mTextView;
+    private Button mBtn;*/
     private String mTitle;
 
     public FloatingActionMenuButton(Context context) {
@@ -30,6 +37,7 @@ public class FloatingActionMenuButton extends FloatingActionButton {
     private void init(Context context, AttributeSet attributeSet) {
         TypedArray attr = context.obtainStyledAttributes(attributeSet, R.styleable.FloatingActionMenuButton, 0, 0);
         mTitle = attr.getString(R.styleable.FloatingActionMenuButton_fab_label);
+
         attr.recycle();
     }
 

@@ -4,19 +4,20 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <application
         android:name=".application.CornerApplication"
         android:allowBackup="true"
+        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.HomeActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -24,11 +25,14 @@
             android:name=".activity.RegisterActivity"
             android:label="@string/register_title"
             android:parentActivityName=".activity.LoginActivity">
-
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.astatus.cornerandroid.activity.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".activity.PictureEditActivity"
+            android:label="@string/picture_edit_title">
         </activity>
         <!--<activity
             android:name=".activity.LoginActivity">

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="FloatingActionMenu">
+    <declare-styleable name="FloatingActionMenuLayout">
         <attr name="fab_menuButton" format="reference"/>
         <attr name="fab_labelTextStyle" format="reference"/>
         <attr name="fab_backgroundDrawable" format="reference"/>
-        <attr name="fab_horizontalPadding" format="dimension"/>
-        <attr name="fab_verticalPadding" format="dimension"/>
+        <attr name="fab_horizontalPadding" format="dimension|reference"/>
+        <attr name="fab_verticalPadding" format="dimension|reference"/>
         <attr name="fab_expandDLocation" format="enum">
             <enum name="top_left" value="0"/>
             <enum name="top_right" value="1"/>
@@ -14,6 +14,14 @@
         </attr>
     </declare-styleable>
     <declare-styleable name="FloatingActionMenuButton">
-        <attr name="fab_label" format="string"/>
+        <attr name="fab_shadowRadius" format="dimension|reference"/>
+        <attr name="fab_shadowColor" format="color|reference"/>
+        <attr name="fab_label" format="string|reference"/>
+        <attr name="fab_icon" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="RotationFloatActionButton">
+        <attr name="fab_src" format="reference"/>
+        <attr name="fab_expand_anim" format="reference"/>
+        <attr name="fab_collapsed_anim" format="reference"/>
     </declare-styleable>
 </resources>

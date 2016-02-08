@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.astatus.cornerandroid.activity.HomeActivity"
-    android:id="@+id/main_content"
+    android:id="@+id/home_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/home_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -24,16 +24,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <!--可滑动的布局内容-->
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:id="@+id/home_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 
-    <com.astatus.cornerandroid.widget.FloatingActionMenu
+    <com.astatus.cornerandroid.widget.FloatingActionMenuLayout
         android:id="@+id/home_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         app:fab_horizontalPadding="25dp"
         app:fab_verticalPadding="80dp"
         app:fab_labelTextStyle="@style/FABMenuLabelsStyle"
@@ -45,7 +44,7 @@
             app:backgroundTint="@color/white"
             android:src="@drawable/ic_photo_library_white_18dp"
             android:tint="@color/black_54op"
-            app:pressedTranslationZ="12dp"
+            app:pressedTranslationZ="0dp"
             android:clickable="true"
             app:rippleColor="@color/colorPrimary"
             app:fabSize="mini"
@@ -58,23 +57,28 @@
             app:backgroundTint="@color/white"
             android:src="@drawable/ic_photo_camera_white_18dp"
             android:tint="@color/black_54op"
-            app:pressedTranslationZ="12dp"
+            app:pressedTranslationZ="0dp"
             android:clickable="true"
             app:rippleColor="@color/colorPrimary"
             app:fabSize="mini"
             app:fab_label="@string/home_fab_camera">
         </com.astatus.cornerandroid.widget.FloatingActionMenuButton>
-    </com.astatus.cornerandroid.widget.FloatingActionMenu>
+    </com.astatus.cornerandroid.widget.FloatingActionMenuLayout>
 
+    <!--<com.astatus.cornerandroid.widget.RotationFloatActionButton
+    app:fab_src="@android:drawable/ic_input_add"-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/home_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom|end"
         android:src="@android:drawable/ic_input_add"
+        android:layout_gravity="bottom|end"
         android:tint="@android:color/white"
-        app:pressedTranslationZ="12dp"
+        app:layout_anchor="@id/home_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchorGravity="bottom|right"
+        app:elevation="8dp"
+        app:pressedTranslationZ="0dp"
         android:clickable="true"
         app:rippleColor="@color/colorPrimary" />
 </android.support.design.widget.CoordinatorLayout>

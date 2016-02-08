@@ -2,34 +2,51 @@ package com.astatus.cornerandroid.activity;
 
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 //import android.support.v7.recyclerview;
 import com.astatus.cornerandroid.R;
-import com.astatus.cornerandroid.widget.FloatingActionMenu;
+import com.astatus.cornerandroid.util.ToastUtil;
+import com.astatus.cornerandroid.widget.FloatingActionMenuLayout;
+import com.astatus.cornerandroid.widget.FloatingActionMenuButton;
+
+import java.io.File;
 
 
 /**
  * Created by AstaTus on 2016/1/14.
  */
 public class HomeActivity extends AppCompatActivity {
+
+    private static final int REQUEST_CODE_PICK_PHOTO = 1;
+    private static final int REQUEST_CODE_CAMERA = 2;
+
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView mNavigationView;
     private FloatingActionButton mFab;
     private ObjectAnimator mExpandMenuAnimator;
     private ObjectAnimator mCollapsedMenuAnimator;
-    private FloatingActionMenu mAddMenu;
+    private FloatingActionMenuLayout mAddMenu;
+    private CoordinatorLayout mRootLayout;
 //  private RecyclerView mRecyclerView;
+    private static int i = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,17 +71,25 @@ public class HomeActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(R.layout.fragment_home_actionbar);
 
-
+        mRootLayout = (CoordinatorLayout)findViewById(R.id.home_content);
         mExpandMenuAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.fab_clockwise_animator);
         mCollapsedMenuAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.fab_anticlockwise_animator);
         mFab = (FloatingActionButton)findViewById(R.id.home_fab);
         mExpandMenuAnimator.setTarget(mFab);
         mCollapsedMenuAnimator.setTarget(mFab);
+        mAddMenu = (FloatingActionMenuLayout)findViewById(R.id.home_menu);
 
         mFab.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                /*if (i == 0){
+                    i = 1;
+                    mCollapsedMenuAnimator.start();
+                }else{
+                    i = 0;
+                    mExpandMenuAnimator.start();
+                }*/
+
                 if (mAddMenu.isExpanded()) {
                     mAddMenu.collapse();
                     mCollapsedMenuAnimator.start();
@@ -75,7 +100,37 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        mAddMenu = (FloatingActionMenu)findViewById(R.id.home_menu);
+
+        FloatingActionMenuButton btn = (FloatingActionMenuButton)findViewById(R.id.home_menu_camara_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Select image"), REQUEST_CODE_PICK_PHOTO);
+            }
+        });
+
+        btn = (FloatingActionMenuButton)findViewById(R.id.home_menu_photo_btn);
+
+        btn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                File dir = new File(Environment.getExternalStorageDirectory() + "/Images");
+                if(!dir.exists()){
+                    dir.mkdirs();
+                }
+                Uri url = Uri.fromFile(
+                        new File(Environment.getExternalStorageDirectory() + "/Images/",
+                                "cameraImg" + String.valueOf(System.currentTimeMillis()) + ".jpg"));
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, url);
+                cameraIntent.putExtra("return-data", true);
+                startActivity(cameraIntent);
+            }
+        });
         /*mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.navigationView);
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -103,4 +158,21 @@ public class HomeActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == REQUEST_CODE_PICK_PHOTO) {
+            if (resultCode == Activity.RESULT_OK){
+                Uri uri = data.getData();
+                ToastUtil.showText(this, uri.toString());
+                Intent pictureIntent = new Intent(this, PictureEditActivity.class);
+                pictureIntent.putExtra("uri", uri.toString());
+                startActivity(pictureIntent);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
+    }//onActivityResult
 }
