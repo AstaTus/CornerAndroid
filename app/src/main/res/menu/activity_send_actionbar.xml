@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/picture_edit_action_next"
-        android:title="@string/picture_edit_next_step"
+    <item android:id="@+id/send_action_finish"
+        android:title="@string/send_finish"
         app:showAsAction="always"
-        android:icon="@drawable/ic_done_white_36dp"/>
+        android:icon="@drawable/ic_send_white_36dp"/>
 </menu>

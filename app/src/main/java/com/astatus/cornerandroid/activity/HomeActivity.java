@@ -170,7 +170,7 @@ public class HomeActivity extends AppCompatActivity {
                 pictureIntent.putExtra("uri", uri.toString());
                 startActivity(pictureIntent);
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
+            else if (resultCode == Activity.RESULT_CANCELED) {
 
             }
         }

@@ -8,7 +8,7 @@ import android.provider.MediaStore;
  * Created by AstaTus on 2016/2/8.
  */
 public class PathUtil {
-    private String getRealPathFromURI(Uri contentURI) {
+    /*private String getRealPathFromURI(Uri contentURI) {
         String result;
         Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
         if (cursor == null) { // Source is Dropbox or other similar local file path
@@ -20,5 +20,5 @@ public class PathUtil {
             cursor.close();
         }
         return result;
-    }
+    }*/
 }

@@ -45,5 +45,12 @@
     <!--======================PICTURE_EDIT======================-->
     <string name="picture_edit_title">图片编辑</string>
     <string name="picture_edit_cancel_tip">是否放弃编辑?</string>
+    <string name="picture_edit_next_step">下一步</string>
+
+    <!--======================SEND======================-->
+    <string name="send_title">发布</string>
+    <string name="send_text_hint">输入文字...</string>
+    <string name="send_location_hint">添加角落位置</string>
+    <string name="send_finish">发布</string>
 
 </resources>

@@ -54,8 +54,13 @@ public class ImageUtil {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
-
         is.close();
+        options.inSampleSize = calculateInSampleSize(options, type);
+        options.inJustDecodeBounds = false;
+        is = context.getContentResolver().openInputStream(uri);
+        bitmap = BitmapFactory.decodeStream(is, null, options);
+        is.close();
+
 
 
         return bitmap;
@@ -91,6 +96,8 @@ public class ImageUtil {
                 return getSystemMaxImageSampleSize(height, width);
             case SHOW_ALL_IMAGE_SIZE:
                 return getShowAllImageSampleSize(height, width);
+            case SHOW_SAMPLE_IMAGE_SIZE:
+                //return get
         }
 
         return 1;
@@ -136,6 +143,7 @@ public class ImageUtil {
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             Display display = wm.getDefaultDisplay();
 
+            sScreenSize = new Point();
             display.getSize(sScreenSize);
         }
 
