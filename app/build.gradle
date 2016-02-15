@@ -15,10 +15,10 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "HTTP_ADDRESS", '"http://172.27.23.3:3000/app/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.5:3000/app/"'
         }
         release {
-            buildConfigField "String", "HTTP_ADDRESS", '"http://172.27.23.3:3000/app/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.5:3000/app/"'
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -42,4 +42,6 @@ dependencies {
     compile 'com.code-troopers.betterpickers:library:2.2.2'//date picker
     compile 'com.google.code.gson:gson:1.7.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'org.apache.httpcomponents:httpmime:4.5.1'
+
 }
