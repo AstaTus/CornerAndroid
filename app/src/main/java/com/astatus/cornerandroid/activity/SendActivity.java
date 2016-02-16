@@ -23,6 +23,7 @@ import com.astatus.cornerandroid.message.RegisterMsg;
 import com.astatus.cornerandroid.message.SendMsg;
 import com.astatus.cornerandroid.util.ImageUtil;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -76,11 +77,17 @@ public class SendActivity extends AppCompatActivity {
             case R.id.send_action_finish:
 
                 try {
-                    InputStream image = getContentResolver().openInputStream(mUri);
+                    File image = new File(mUri.getPath());
                     SendCmd cmd = SendCmd.create(new SendResponseListener(),
                             new SendErrorListener(), image,
                             mEditText.getText().toString(),
                             mLocationView.getText().toString());
+
+                    /*InputStream image = getContentResolver().openInputStream(mUri);
+                    SendCmd cmd = SendCmd.create(new SendResponseListener(),
+                            new SendErrorListener(), image,
+                            mEditText.getText().toString(),
+                            mLocationView.getText().toString());*/
                     cmd.excute();
 
                 } catch (FileNotFoundException e) {

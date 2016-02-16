@@ -16,23 +16,23 @@ import java.util.HashMap;
  * Created by AstaTus on 2016/2/13.
  */
 public class BaseMultipartCmd<T> {
-    private MultipartRequest mRequest;
+    private NewMultipartRequest mRequest;
 
 
     public BaseMultipartCmd(String baseUrl, String url,
                        Response.Listener response, Class<T> responseClass,
-                            MultipartParam param,
+                            NewMultipartParam param,
                             Response.ErrorListener error){
 
-        mRequest = new MultipartRequest(baseUrl,
+        mRequest = new NewMultipartRequest(baseUrl,
                 url, Request.Method.POST, response, responseClass, error, param, true, false);
     }
 
     public BaseMultipartCmd(String baseUrl, String url, int methond,
                        Response.Listener response, Class<T> responseClass, Response.ErrorListener error,
-                       MultipartParam param, boolean addCookie, boolean checkCookie){
+                       NewMultipartParam param, boolean addCookie, boolean checkCookie){
 
-        mRequest = new MultipartRequest(baseUrl,
+        mRequest = new NewMultipartRequest(baseUrl,
                 url, methond, response, responseClass,
                 error, param, addCookie, checkCookie);
 
