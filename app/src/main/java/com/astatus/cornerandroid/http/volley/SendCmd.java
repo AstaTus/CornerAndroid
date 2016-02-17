@@ -1,6 +1,4 @@
-package com.astatus.cornerandroid.http;
-
-import android.graphics.Bitmap;
+package com.astatus.cornerandroid.http.volley;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -8,7 +6,6 @@ import com.astatus.cornerandroid.message.SendMsg;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 
 /**

@@ -1,19 +1,14 @@
-package com.astatus.cornerandroid.http;
+package com.astatus.cornerandroid.http.volley;
 
 /**
  * Created by AstaTus on 2016/1/1.
  */
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.astatus.cornerandroid.application.CornerApplication;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class BaseJsonCmd<T> {
     private NormalRequest mRequest;

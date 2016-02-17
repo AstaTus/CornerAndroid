@@ -1,16 +1,8 @@
-package com.astatus.cornerandroid.http;
-
-import android.graphics.Bitmap;
+package com.astatus.cornerandroid.http.volley;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.astatus.cornerandroid.application.CornerApplication;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * Created by AstaTus on 2016/2/13.

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,17 +14,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.application.CornerApplication;
-import com.astatus.cornerandroid.http.LoginCmd;
-import com.astatus.cornerandroid.http.LogoutCmd;
+import com.astatus.cornerandroid.http.volley.LoginCmd;
 import com.astatus.cornerandroid.message.LoginMsg;
 import com.astatus.cornerandroid.message.LogoutMsg;
 import com.astatus.cornerandroid.model.SharedPreferenceDef;
 import com.astatus.cornerandroid.util.ToastUtil;
 import com.astatus.cornerandroid.util.VerifyUtil;
-
-import org.json.JSONObject;
-
-import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 

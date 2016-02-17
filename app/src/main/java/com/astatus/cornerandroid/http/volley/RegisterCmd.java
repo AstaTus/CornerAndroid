@@ -2,17 +2,13 @@
  * Created by AstaTus on 2016/1/1.
  */
 
-package com.astatus.cornerandroid.http;
+package com.astatus.cornerandroid.http.volley;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.astatus.cornerandroid.activity.RegisterActivity;
 import com.astatus.cornerandroid.message.RegisterMsg;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 public class RegisterCmd extends BaseJsonCmd<RegisterMsg>{

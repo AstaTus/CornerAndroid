@@ -17,17 +17,13 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.astatus.cornerandroid.R;
-import com.astatus.cornerandroid.http.CmdManager;
-import com.astatus.cornerandroid.http.SendCmd;
-import com.astatus.cornerandroid.message.RegisterMsg;
+import com.astatus.cornerandroid.http.volley.SendCmd;
 import com.astatus.cornerandroid.message.SendMsg;
 import com.astatus.cornerandroid.util.ImageUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class SendActivity extends AppCompatActivity {
     private ImageView mImageView;

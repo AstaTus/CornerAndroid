@@ -1,4 +1,4 @@
-package com.astatus.cornerandroid.http;
+package com.astatus.cornerandroid.http.volley;
 
 import com.astatus.cornerandroid.BuildConfig;
 

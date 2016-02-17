@@ -15,32 +15,16 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.56.1:3000/app/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/app/"'
         }
         release {
-            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.56.1:3000/app/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/app/"'
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    // Something wrong with the http* libs
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/dependencies.txt'
-        exclude 'META-INF/LGPL2.1'
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
@@ -59,6 +43,17 @@ dependencies {
     compile 'com.code-troopers.betterpickers:library:2.2.2'//date picker
     compile 'com.google.code.gson:gson:1.7.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'org.apache.httpcomponents:httpmime:4.5.1'
-    compile 'org.apache.httpcomponents:httpcore:4.4.3'
+    /*compile ('org.apache.httpcomponents:httpmime:4.5.1'){
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    compile ('org.apache.httpcomponents:httpcore:4.4.3'){
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }*/
+
+    compile('org.apache.httpcomponents:httpmime:4.5.1') {
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+
+    compile 'com.squareup.okhttp3:okhttp:3.1.2'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.1.2'
 }

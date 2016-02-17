@@ -1,16 +1,11 @@
-package com.astatus.cornerandroid.http;
+package com.astatus.cornerandroid.http.volley;
 
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.entity.ContentType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,7 +15,7 @@ import java.io.IOException;
  */
 public class NewMultipartRequest<T> extends BaseRequest<T> {
 
-    private HttpEntity mEntity;
+    private MultipartEntity mEntity;
 
     public NewMultipartRequest(String baseUrl, String url, int method, Response.Listener listener, Class<T> responseClass, Response.ErrorListener errorListener, boolean addCookie, boolean checkCookie) {
         super(baseUrl, url, method, listener, responseClass, errorListener, addCookie, checkCookie);

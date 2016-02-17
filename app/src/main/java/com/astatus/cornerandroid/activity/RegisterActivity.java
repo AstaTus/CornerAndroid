@@ -17,15 +17,13 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.astatus.cornerandroid.R;
-import com.astatus.cornerandroid.http.RegisterCmd;
+import com.astatus.cornerandroid.http.volley.RegisterCmd;
 import com.astatus.cornerandroid.message.RegisterMsg;
 import com.astatus.cornerandroid.util.ToastUtil;
 import com.astatus.cornerandroid.util.VerifyUtil;
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
-import com.google.gson.Gson;
 
 import org.joda.time.DateTime;
-import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity
         implements CalendarDatePickerDialogFragment.OnDateSetListener{

@@ -1,4 +1,4 @@
-package com.astatus.cornerandroid.http;
+package com.astatus.cornerandroid.http.volley;
 
 import android.content.Context;
 
@@ -8,6 +8,12 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+
+import okhttp3.JavaNetCookieJar;
+import okhttp3.OkHttpClient;
+import okhttp3.CookieJar;
 /**
  * Created by AstaTus on 2016/1/1.
  */

@@ -9,17 +9,13 @@ import android.content.SharedPreferences;
  * Created by AstaTus on 2016/1/1.
  */
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.astatus.cornerandroid.http.CmdManager;
+import com.astatus.cornerandroid.http.okhttp.CmdManager;
 import com.astatus.cornerandroid.message.MessagePacket;
 import com.astatus.cornerandroid.model.SharedPreferenceDef;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-
-import java.util.Objects;
 
 public class CornerApplication extends Application {
 
@@ -42,7 +38,7 @@ public class CornerApplication extends Application {
     public CmdManager getCmdMgr(){
         if (mCmdMgr == null){
             mCmdMgr = new CmdManager();
-            mCmdMgr.init(this);
+            mCmdMgr.init();
         }
 
         return mCmdMgr;
