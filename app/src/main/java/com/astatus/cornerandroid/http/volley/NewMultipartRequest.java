@@ -35,18 +35,19 @@ public class NewMultipartRequest<T> extends BaseRequest<T> {
 
     @Override
     public String getBodyContentType() {
-        return mEntity.getContentType().toString();
+        return "";
+        /*return mEntity.getContentType().toString();*/
     }
 
     @Override
     public byte[] getBody() throws AuthFailureError {
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try {
+        /*try {
             mEntity.writeTo(bos);
         } catch (IOException e) {
             Log.e("error", "getBody: ");
-        }
+        }*/
         return bos.toByteArray();
     }
 }

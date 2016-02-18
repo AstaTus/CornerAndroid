@@ -1,5 +1,8 @@
 package com.astatus.cornerandroid.http.okhttp;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.astatus.cornerandroid.message.MessagePacket;
 import com.google.gson.Gson;
@@ -19,24 +22,31 @@ import okhttp3.Response;
 public class CommonCallback<T> implements Callback {
     private CmdListener mListener;
     private final Class<T> mResponseClass;
+    private static Handler mHandler = new Handler(Looper.getMainLooper());
     protected static final Gson mGson = new Gson();
 
     public CommonCallback(CmdListener listener, Class<T> responseClass){
 
+        mListener = listener;
         mResponseClass = responseClass;
     }
     @Override
     public void onFailure(Call call, IOException e) {
 
-        mListener.onFailed();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mListener.onFailed(); // must be inside run()
+            }
+        });
     }
 
     @Override
     public void onResponse(Call call, Response response) throws IOException {
 
-        String jsonString = response.body().toString();
+        String jsonString = response.body().string();
 
-        MessagePacket packet = new MessagePacket<T>();
+        final MessagePacket packet = new MessagePacket<T>();
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(jsonString);
         JsonObject obj = element.getAsJsonObject();
@@ -44,6 +54,13 @@ public class CommonCallback<T> implements Callback {
         packet.resultCode = obj.get("resultCode").getAsInt();
         packet.msg = mGson.fromJson(obj.get("msg"), mResponseClass);
 
-        mListener.onSuccess(packet);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mListener.onSuccess(packet); // must be inside run()
+            }
+        });
+
+
     }
 }

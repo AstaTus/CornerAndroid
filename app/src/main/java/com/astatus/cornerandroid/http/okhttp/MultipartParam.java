@@ -22,8 +22,11 @@ public class MultipartParam {
     }
 
     public void addFilePart(String fileName, File file){
-        mBuilder.addFormDataPart("image", fileName,
-                RequestBody.create(MEDIA_TYPE, file));
+        if(file.exists()){
+            mBuilder.addFormDataPart("image", fileName,
+                    RequestBody.create(MEDIA_TYPE, file));
+        }
+
     }
 
     public void addParamPart(String key, String value){

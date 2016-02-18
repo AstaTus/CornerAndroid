@@ -31,7 +31,7 @@ public class BaseMultipartCmd<T> {
     }
 
     public void excute(){
-        CmdManager mgr = CornerApplication.getSingleton().getCmdMgr();
-        mgr.addRequest(mRequest);
+        /*CmdManager mgr = CornerApplication.getSingleton().getCmdMgr();
+        mgr.addRequest(mRequest);*/
     }
 }

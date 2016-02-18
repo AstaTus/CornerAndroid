@@ -20,7 +20,7 @@ public class NewMultipartParam {
         mEntity = new MultipartEntity();
     }
 
-    public void addFilePart(String key, File file) {
+    /*public void addFilePart(String key, File file) {
         FileBody fileBody = new FileBody(file);
         mEntity.addPart(key, fileBody);
 
@@ -29,7 +29,7 @@ public class NewMultipartParam {
     public void addTextPart(String key, String text) throws UnsupportedEncodingException {
         StringBody stringBody = new StringBody(text, Charset.forName("UTF-8"));
         mEntity.addPart(key, stringBody);
-    }
+    }*/
 
     public MultipartEntity getBody(){
         return mEntity;

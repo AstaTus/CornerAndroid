@@ -23,9 +23,15 @@ public class BaseCmd<T> {
         mListener = listener;
     }
 
-    public void excute() throws IOException {
+    public void excute()  {
         com.astatus.cornerandroid.http.okhttp.CmdManager mgr = CornerApplication.getSingleton().getCmdMgr();
-        mCall = mgr.addRequest(mRequest, new CommonCallback<T>(mListener, mResponseClass));
+
+        try {
+            mCall = mgr.addRequest(mRequest, new CommonCallback<T>(mListener, mResponseClass));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public void cancel() {

@@ -21,9 +21,9 @@ public class SendCmd extends BaseMultipartCmd<SendMsg> {
                                  String location) throws IOException {
 
         NewMultipartParam param = new NewMultipartParam();
-        param.addFilePart("image", image);
+        /*param.addFilePart("image", image);
         param.addTextPart("text", text);
-        param.addTextPart("location", location);
+        param.addTextPart("location", location);*/
 
         return new SendCmd(response, error, param);
     }

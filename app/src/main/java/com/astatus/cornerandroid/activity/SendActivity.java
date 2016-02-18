@@ -2,7 +2,9 @@ package com.astatus.cornerandroid.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Path;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +19,17 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.astatus.cornerandroid.R;
-import com.astatus.cornerandroid.http.volley.SendCmd;
+import com.astatus.cornerandroid.http.okhttp.CmdListener;
+import com.astatus.cornerandroid.http.okhttp.SendCmd;
+import com.astatus.cornerandroid.message.MessagePacket;
 import com.astatus.cornerandroid.message.SendMsg;
 import com.astatus.cornerandroid.util.ImageUtil;
+import com.astatus.cornerandroid.util.PathUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
 
 public class SendActivity extends AppCompatActivity {
     private ImageView mImageView;
@@ -73,10 +79,10 @@ public class SendActivity extends AppCompatActivity {
             case R.id.send_action_finish:
 
                 try {
-                    File image = new File(mUri.getPath());
-                    SendCmd cmd = SendCmd.create(new SendResponseListener(),
-                            new SendErrorListener(), image,
-                            mEditText.getText().toString(),
+
+                    File image = new File(PathUtil.ConvertUriToPath(mUri, MediaStore.Images.Media.DATA));
+                    SendCmd cmd = SendCmd.create(new SendCmdListener(),
+                            image, mEditText.getText().toString(),
                             mLocationView.getText().toString());
 
                     /*InputStream image = getContentResolver().openInputStream(mUri);
@@ -99,6 +105,23 @@ public class SendActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class SendCmdListener implements CmdListener{
+
+        @Override
+        public void onSuccess(MessagePacket result) {
+            if (result.resultCode == 0){
+                Log.i("test", "send ok");
+            }else{
+                Log.i("test", "send failed");
+            }
+        }
+
+        @Override
+        public void onFailed() {
+
+        }
     }
 
     class SendResponseListener implements Response.Listener<SendMsg>{

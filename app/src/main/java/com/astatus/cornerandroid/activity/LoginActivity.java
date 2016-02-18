@@ -14,12 +14,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.application.CornerApplication;
+import com.astatus.cornerandroid.http.okhttp.CmdListener;
 import com.astatus.cornerandroid.http.volley.LoginCmd;
 import com.astatus.cornerandroid.message.LoginMsg;
 import com.astatus.cornerandroid.message.LogoutMsg;
+import com.astatus.cornerandroid.message.MessagePacket;
 import com.astatus.cornerandroid.model.SharedPreferenceDef;
 import com.astatus.cornerandroid.util.ToastUtil;
 import com.astatus.cornerandroid.util.VerifyUtil;
+
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -101,9 +105,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void login(String email, String password){
-        LoginCmd cmd = LoginCmd.create(
+    private void login(String email, String password) {
+
+
+        /*LoginCmd cmd = LoginCmd.create(
                 new LoginResponseListener(), new LoginErrorListener(), email, password);
+        cmd.excute();
+        showLoginProgress();*/
+
+        com.astatus.cornerandroid.http.okhttp.LoginCmd cmd =
+                com.astatus.cornerandroid.http.okhttp.LoginCmd.create(new LoginCmdListener(), email, password);
         cmd.excute();
         showLoginProgress();
     }
@@ -131,29 +142,31 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordEdit.setText(mPassword);
     }
 
-    class LogoutResponseListener implements Response.Listener<LogoutMsg>{
+    class LoginCmdListener implements CmdListener{
+
         @Override
-        public void onResponse(LogoutMsg msg) {
+        public void onSuccess(MessagePacket msg) {
 
-            if (msg.code == 0){
-                Log.i("test", "logout ok");
+            if (msg.result){
 
-            }else{
-                Log.i("test", "logout failed");
+                if (msg.resultCode == 0){
+                    Log.i("test", "login ok");
+                    saveLoginInfoIntoSharedPreferences();
+                }else{
+                    Log.i("test", "login failed");
+                }
             }
 
+            hideLoginProgress();
+        }
+
+        @Override
+        public void onFailed() {
 
             hideLoginProgress();
         }
     }
 
-    class LogoutErrorListener implements Response.ErrorListener {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.i("test", "logout error");
-
-        }
-    }
 
     class LoginResponseListener implements Response.Listener<LoginMsg>{
         @Override
