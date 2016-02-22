@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         initView();
         archiveLoginInfoFromSharedPreferences();
         tryAutoLogin();
@@ -140,6 +139,9 @@ public class LoginActivity extends AppCompatActivity {
 
         mEmailEdit.setText(mEmail);
         mPasswordEdit.setText(mPassword);
+
+        mEmailEdit.setText("chenjunqi5@126.com");
+        mPasswordEdit.setText("123456");
     }
 
     class LoginCmdListener implements CmdListener{
@@ -152,6 +154,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (msg.resultCode == 0){
                     Log.i("test", "login ok");
                     saveLoginInfoIntoSharedPreferences();
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
                 }else{
                     Log.i("test", "login failed");
                 }
@@ -168,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    class LoginResponseListener implements Response.Listener<LoginMsg>{
+    /*class LoginResponseListener implements Response.Listener<LoginMsg>{
         @Override
         public void onResponse(LoginMsg msg) {
             if (msg.result){
@@ -191,5 +195,5 @@ public class LoginActivity extends AppCompatActivity {
 
             hideLoginProgress();
         }
-    }
+    }*/
 }

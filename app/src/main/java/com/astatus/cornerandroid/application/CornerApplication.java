@@ -38,7 +38,7 @@ public class CornerApplication extends Application {
     public CmdManager getCmdMgr(){
         if (mCmdMgr == null){
             mCmdMgr = new CmdManager();
-            mCmdMgr.init();
+            mCmdMgr.init(this);
         }
 
         return mCmdMgr;

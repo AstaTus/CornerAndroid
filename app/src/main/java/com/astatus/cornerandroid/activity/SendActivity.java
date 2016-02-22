@@ -112,6 +112,7 @@ public class SendActivity extends AppCompatActivity {
         @Override
         public void onSuccess(MessagePacket result) {
             if (result.resultCode == 0){
+                //发送成功
                 Log.i("test", "send ok");
             }else{
                 Log.i("test", "send failed");
