@@ -42,6 +42,8 @@
     <string name="home_fab_photo">相册</string>
     <string name="home_fab_camera">相机</string>
 
+    <string name="home_send_success_tip">发布成功</string>
+
     <!--======================PICTURE_EDIT======================-->
     <string name="picture_edit_title">图片编辑</string>
     <string name="picture_edit_cancel_tip">是否放弃编辑?</string>

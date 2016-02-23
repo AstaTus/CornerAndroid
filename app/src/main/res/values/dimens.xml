@@ -19,4 +19,7 @@
     <dimen name="publish_activity_edit_height">220dp</dimen>
     <dimen name="publish_activity_edit_text_size">16sp</dimen>
 
+
+    <!--======================PERSONAL_ACTIVITY======================-->
+    <dimen name="personal_app_bar_height">180dp</dimen>
 </resources>

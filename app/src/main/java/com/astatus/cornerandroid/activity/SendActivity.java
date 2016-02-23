@@ -85,7 +85,7 @@ public class SendActivity extends AppCompatActivity {
                             image, mEditText.getText().toString(),
                             mLocationView.getText().toString());
 
-                    /*InputStream image = getContentResolver().openInputStream(mUri);
+                    /*InputStre                                                                                                                                                                                                                    am image = getContentResolver().openInputStream(mUri);
                     SendCmd cmd = SendCmd.create(new SendResponseListener(),
                             new SendErrorListener(), image,
                             mEditText.getText().toString(),
@@ -112,7 +112,11 @@ public class SendActivity extends AppCompatActivity {
         @Override
         public void onSuccess(MessagePacket result) {
             if (result.resultCode == 0){
-                //发送成功
+
+                Intent homeIntent = new Intent(SendActivity.this, HomeActivity.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                homeIntent.putExtra(ActivityDef.IINTENT_PARAM1, ActivityDef.IP_SEND_SUCCESS);
+                startActivity(homeIntent);
                 Log.i("test", "send ok");
             }else{
                 Log.i("test", "send failed");
