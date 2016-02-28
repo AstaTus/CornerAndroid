@@ -55,4 +55,10 @@
     <string name="send_location_hint">添加角落位置</string>
     <string name="send_finish">发布</string>
 
+    <!--======================PERSONAL======================-->
+    <string name="personal_title">个人主页</string>
+    <string name="personal_attention">关注</string>
+    <string name="personal_fan">粉丝</string>
+    <string name="personal_want_corner">想去</string>
+    <string name="personal_been_corner">去过</string>
 </resources>

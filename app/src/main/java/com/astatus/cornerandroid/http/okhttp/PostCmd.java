@@ -22,7 +22,7 @@ public class PostCmd<T> extends BaseCmd<T> {
     public PostCmd(String baseUrl, String url, CmdListener listener,
                    Class<T> responseClass, HashMap<String, String> params){
 
-        super(baseUrl, url, listener, responseClass);
+        super(listener, responseClass);
 
         FormBody.Builder builder = new FormBody.Builder();
         if (null != params) {

@@ -16,7 +16,7 @@ public class BaseCmd<T> {
     private CmdListener mListener;
     private final Class<T> mResponseClass;
 
-    public BaseCmd(String baseUrl, String url, CmdListener listener,
+    public BaseCmd(CmdListener listener,
                    Class<T> responseClass) {
 
         mResponseClass = responseClass;

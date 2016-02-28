@@ -26,6 +26,7 @@ import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.util.ToastUtil;
 import com.astatus.cornerandroid.widget.FloatingActionMenuLayout;
 import com.astatus.cornerandroid.widget.FloatingActionMenuButton;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
 
@@ -46,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     private ObjectAnimator mCollapsedMenuAnimator;
     private FloatingActionMenuLayout mAddMenu;
     private CoordinatorLayout mRootLayout;
+    private RoundedImageView mHeadImageView;
 //  private RecyclerView mRecyclerView;
     private static int i = 0;
     @Override
@@ -141,6 +143,15 @@ public class HomeActivity extends AppCompatActivity {
                 R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();*/
+
+        mHeadImageView = (RoundedImageView)findViewById(R.id.home_head_image);
+        mHeadImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent personalIntent = new Intent(HomeActivity.this, PersonalActivity.class);
+                startActivity(personalIntent);
+            }
+        });
     }
 
     @Override

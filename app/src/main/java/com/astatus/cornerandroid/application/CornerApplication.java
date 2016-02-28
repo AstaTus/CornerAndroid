@@ -12,10 +12,6 @@ import android.content.SharedPreferences;
 import com.astatus.cornerandroid.http.okhttp.CmdManager;
 import com.astatus.cornerandroid.message.MessagePacket;
 import com.astatus.cornerandroid.model.SharedPreferenceDef;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 public class CornerApplication extends Application {
 
@@ -23,7 +19,6 @@ public class CornerApplication extends Application {
 
     private CmdManager mCmdMgr = null;
     private SharedPreferences mSharedPreferences = null;
-    private ImageLoader mImageLoader = null;
 
     public synchronized static CornerApplication getSingleton() {
         return sSingleton;
@@ -53,12 +48,12 @@ public class CornerApplication extends Application {
         return mSharedPreferences;
     }
 
-    public ImageLoader getImageLoader(){
+    /*public ImageLoader getImageLoader(){
         if (mImageLoader == null){
             initImageLoader(this);
         }
         return mImageLoader;
-    }
+    }*/
 
 
     public void onServerErrorResponseListener(MessagePacket message){
@@ -67,7 +62,7 @@ public class CornerApplication extends Application {
         }
     }
 
-    private void initImageLoader(Context context) {
+    /*private void initImageLoader(Context context) {
         // This configuration tuning is custom. You can tune every option, you may tune some of them,
         // or you can create default configuration by
         //  ImageLoaderConfiguration.createDefault(this);
@@ -83,5 +78,5 @@ public class CornerApplication extends Application {
         // Initialize ImageLoader with configuration.
         mImageLoader = ImageLoader.getInstance();
         mImageLoader.init(config.build());
-    }
+    }*/
 }

@@ -20,7 +20,7 @@ public class MultipartCmd<T> extends BaseCmd<T>{
 
     public MultipartCmd(String baseUrl, String url, CmdListener listener,
                         Class<T> responseClass, MultipartParam param){
-        super(baseUrl, url, listener, responseClass);
+        super(listener, responseClass);
 
         RequestBody body = param.getBody();
         mRequest = new Request.Builder()

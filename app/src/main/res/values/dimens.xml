@@ -21,5 +21,5 @@
 
 
     <!--======================PERSONAL_ACTIVITY======================-->
-    <dimen name="personal_app_bar_height">180dp</dimen>
+    <dimen name="personal_app_bar_height">280dp</dimen>
 </resources>

@@ -1,8 +1,6 @@
 package com.astatus.cornerandroid.http.okhttp;
 
-import com.android.volley.Response;
-import com.astatus.cornerandroid.http.okhttp.MultipartParam;
-import com.astatus.cornerandroid.message.SendMsg;
+import com.astatus.cornerandroid.message.PublishMsg;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,10 +8,10 @@ import java.io.IOException;
 /**
  * Created by AstaTus on 2016/2/17.
  */
-public class SendCmd extends MultipartCmd<SendMsg>{
-    private static final String CMD_METHOD = "send";
+public class PublishCmd extends MultipartCmd<PublishMsg>{
+    private static final String CMD_METHOD = "app/publish";
 
-    static public SendCmd create(CmdListener listener,
+    static public PublishCmd create(CmdListener listener,
                                  File image,
                                  String text,
                                  String location) throws IOException {
@@ -23,10 +21,10 @@ public class SendCmd extends MultipartCmd<SendMsg>{
         param.addParamPart("text", text);
         param.addParamPart("location", location);
 
-        return new SendCmd(listener, param);
+        return new PublishCmd(listener, param);
     }
 
-    public SendCmd(CmdListener listener, MultipartParam param) {
-        super(HttpDef.SERVER_URL, CMD_METHOD, listener, SendMsg.class, param);
+    public PublishCmd(CmdListener listener, MultipartParam param) {
+        super(HttpDef.SERVER_HOST_URL, CMD_METHOD, listener, PublishMsg.class, param);
     }
 }

@@ -57,7 +57,7 @@ public class CommonCallback<T> implements Callback {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mListener.onSuccess(packet); // must be inside run()
+                mListener.onSuccess(packet.msg); // must be inside run()
             }
         });
 

@@ -2,7 +2,6 @@ package com.astatus.cornerandroid.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Path;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
@@ -20,18 +19,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.http.okhttp.CmdListener;
-import com.astatus.cornerandroid.http.okhttp.SendCmd;
-import com.astatus.cornerandroid.message.MessagePacket;
-import com.astatus.cornerandroid.message.SendMsg;
+import com.astatus.cornerandroid.http.okhttp.PublishCmd;
+import com.astatus.cornerandroid.message.PublishMsg;
 import com.astatus.cornerandroid.util.ImageUtil;
 import com.astatus.cornerandroid.util.PathUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 
-public class SendActivity extends AppCompatActivity {
+public class PublishActivity extends AppCompatActivity {
     private ImageView mImageView;
     private TextView mLocationView;
     private EditText mEditText;
@@ -63,7 +60,7 @@ public class SendActivity extends AppCompatActivity {
             Bitmap image = ImageUtil.decodeBitmapFromFile(mUri, ImageUtil.SHOW_ALL_IMAGE_SIZE);
             mImageView.setImageBitmap(image);
         }catch(Exception e){
-            e.printStackTrace();
+             e.printStackTrace();
         }
     }
 
@@ -81,12 +78,12 @@ public class SendActivity extends AppCompatActivity {
                 try {
 
                     File image = new File(PathUtil.ConvertUriToPath(mUri, MediaStore.Images.Media.DATA));
-                    SendCmd cmd = SendCmd.create(new SendCmdListener(),
+                    PublishCmd cmd = PublishCmd.create(new PublishCmdListener(),
                             image, mEditText.getText().toString(),
                             mLocationView.getText().toString());
 
                     /*InputStre                                                                                                                                                                                                                    am image = getContentResolver().openInputStream(mUri);
-                    SendCmd cmd = SendCmd.create(new SendResponseListener(),
+                    PublishCmd cmd = PublishCmd.create(new SendResponseListener(),
                             new SendErrorListener(), image,
                             mEditText.getText().toString(),
                             mLocationView.getText().toString());*/
@@ -107,13 +104,13 @@ public class SendActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class SendCmdListener implements CmdListener{
+    class PublishCmdListener implements CmdListener<PublishMsg>{
 
         @Override
-        public void onSuccess(MessagePacket result) {
-            if (result.resultCode == 0){
+        public void onSuccess(PublishMsg result) {
+            if (result.result){
 
-                Intent homeIntent = new Intent(SendActivity.this, HomeActivity.class);
+                Intent homeIntent = new Intent(PublishActivity.this, HomeActivity.class);
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 homeIntent.putExtra(ActivityDef.IINTENT_PARAM1, ActivityDef.IP_SEND_SUCCESS);
                 startActivity(homeIntent);
@@ -129,9 +126,9 @@ public class SendActivity extends AppCompatActivity {
         }
     }
 
-    class SendResponseListener implements Response.Listener<SendMsg>{
+    class SendResponseListener implements Response.Listener<PublishMsg>{
         @Override
-        public void onResponse(SendMsg msg) {
+        public void onResponse(PublishMsg msg) {
 
             if (msg.code == 0){
                 Log.i("test", "send ok");

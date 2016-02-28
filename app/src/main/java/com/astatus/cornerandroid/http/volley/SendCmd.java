@@ -2,7 +2,7 @@ package com.astatus.cornerandroid.http.volley;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.astatus.cornerandroid.message.SendMsg;
+import com.astatus.cornerandroid.message.PublishMsg;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by AstaTus on 2016/2/13.
  */
-public class SendCmd extends BaseMultipartCmd<SendMsg> {
+public class SendCmd extends BaseMultipartCmd<PublishMsg> {
     private static final String CMD_METHOD = "send";
 
     static public SendCmd create(Response.Listener response,
@@ -29,6 +29,6 @@ public class SendCmd extends BaseMultipartCmd<SendMsg> {
     }
 
     protected SendCmd(Response.Listener response, Response.ErrorListener error, NewMultipartParam param){
-        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, SendMsg.class, error, param, false, true);
+        super(HttpDef.SERVER_URL, CMD_METHOD, Request.Method.POST, response, PublishMsg.class, error, param, false, true);
     }
 }

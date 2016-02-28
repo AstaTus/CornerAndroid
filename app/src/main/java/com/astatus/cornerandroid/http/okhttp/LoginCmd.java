@@ -1,7 +1,6 @@
 package com.astatus.cornerandroid.http.okhttp;
 
 import com.astatus.cornerandroid.message.LoginMsg;
-import com.astatus.cornerandroid.message.MessagePacket;
 
 import java.util.HashMap;
 
@@ -10,7 +9,7 @@ import java.util.HashMap;
  */
 public class LoginCmd extends PostCmd<LoginMsg> {
 
-    private static final String CMD_METHOD = "login";
+    private static final String CMD_METHOD = "app/login";
 
     static public LoginCmd create(CmdListener listener, String email, String password){
 
@@ -24,6 +23,6 @@ public class LoginCmd extends PostCmd<LoginMsg> {
     public LoginCmd(CmdListener listener,
                     HashMap<String, String> params) {
 
-        super(HttpDef.SERVER_URL, CMD_METHOD, listener, LoginMsg.class, params);
+        super(HttpDef.SERVER_HOST_URL, CMD_METHOD, listener, LoginMsg.class, params);
     }
 }

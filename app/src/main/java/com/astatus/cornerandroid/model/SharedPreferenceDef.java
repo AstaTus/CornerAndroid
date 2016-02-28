@@ -8,6 +8,4 @@ public class SharedPreferenceDef {
     public static final String SHARED_USER_PASSWORD = "SHARED_USER_PASSWORD";
 
     public static final String PREFERENCE_NAME = "ASTATUS_CORNER_PS";
-
-
 }

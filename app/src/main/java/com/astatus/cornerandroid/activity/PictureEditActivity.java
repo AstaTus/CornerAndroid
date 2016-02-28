@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +16,6 @@ import android.widget.ImageView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.util.ImageUtil;
-import com.astatus.cornerandroid.util.ToastUtil;
 
 /**
  * Created by AstaTus on 2016/2/4.
@@ -108,7 +105,7 @@ public class PictureEditActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.picture_edit_action_next:
                 try {
-                    Intent publishIntent = new Intent(this, SendActivity.class);
+                    Intent publishIntent = new Intent(this, PublishActivity.class);
                     publishIntent.putExtra("uri", mUriStr.toString());
                     startActivity(publishIntent);
                 }catch (Exception e){

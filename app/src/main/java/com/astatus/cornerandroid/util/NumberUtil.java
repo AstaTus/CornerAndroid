@@ -12,4 +12,13 @@ public class NumberUtil {
 
         return false;
     }
+
+
+    public static String GetSimplifyString(int value){
+        if (value >= 1000){
+            return String.valueOf(value / 1000) + "k";
+        }else{
+            return String.valueOf(value);
+        }
+    }
 }

@@ -18,8 +18,8 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PersonalActivity"
-            android:label="@string/picture_edit_title" >
+        <activity android:name=".activity.LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +40,7 @@
             android:name=".activity.PictureEditActivity"
             android:label="@string/picture_edit_title" />
         <activity
-            android:name=".activity.SendActivity"
+            android:name=".activity.PublishActivity"
             android:label="@string/send_title" />
         <!--
         <activity
@@ -57,7 +57,7 @@
             android:label="@string/home_title"
             android:theme="@style/AppTheme"></activity>
         -->
-        <!--<activity android:name=".activity.PersonalActivity"></activity>-->
+        <activity android:name=".activity.PersonalActivity"></activity>
     </application>
 
 </manifest>

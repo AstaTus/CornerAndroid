@@ -144,14 +144,14 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordEdit.setText("123456");
     }
 
-    class LoginCmdListener implements CmdListener{
+    class LoginCmdListener implements CmdListener<LoginMsg>{
 
         @Override
-        public void onSuccess(MessagePacket msg) {
+        public void onSuccess(LoginMsg msg) {
 
             if (msg.result){
 
-                if (msg.resultCode == 0){
+                if (msg.code == 0){
                     Log.i("test", "login ok");
                     saveLoginInfoIntoSharedPreferences();
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
