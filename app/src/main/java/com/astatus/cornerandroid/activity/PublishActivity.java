@@ -15,8 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.http.okhttp.CmdListener;
 import com.astatus.cornerandroid.http.okhttp.PublishCmd;
@@ -108,7 +106,7 @@ public class PublishActivity extends AppCompatActivity {
 
         @Override
         public void onSuccess(PublishMsg result) {
-            if (result.result){
+            if (result.mResult){
 
                 Intent homeIntent = new Intent(PublishActivity.this, HomeActivity.class);
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -123,25 +121,6 @@ public class PublishActivity extends AppCompatActivity {
         @Override
         public void onFailed() {
 
-        }
-    }
-
-    class SendResponseListener implements Response.Listener<PublishMsg>{
-        @Override
-        public void onResponse(PublishMsg msg) {
-
-            if (msg.code == 0){
-                Log.i("test", "send ok");
-            }else{
-                Log.i("test", "send failed");
-            }
-        }
-    }
-
-    class SendErrorListener implements Response.ErrorListener{
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.i("test", "send error");
         }
     }
 }

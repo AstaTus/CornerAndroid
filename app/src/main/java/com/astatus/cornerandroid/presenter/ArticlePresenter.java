@@ -52,7 +52,7 @@ public class ArticlePresenter {
 
             mModel.addArticles(result.articleList, ArticleModel.ADD_ARTICLE_LOCATION_FRONT);
 
-            mArticleView.showNextPage();
+            mArticleView.showNewerPage();
         }
 
         @Override
@@ -66,6 +66,8 @@ public class ArticlePresenter {
 
         @Override
         public void onSuccess(ArticleMsg result) {
+
+            mModel.addArticles(result.articleList, ArticleModel.ADD_ARTICLE_LOCATION_BACK);
 
             mArticleView.showNextPage();
         }

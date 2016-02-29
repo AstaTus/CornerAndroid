@@ -137,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity
         @Override
         public void onResponse(RegisterMsg msg) {
 
-            if (msg.code == 0){
+            if (msg.mResult){
                 Log.i("test", "register ok");
             }else{
                 Log.i("test", "register failed");

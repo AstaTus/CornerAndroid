@@ -2,6 +2,7 @@ package com.astatus.cornerandroid.http.okhttp;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.astatus.cornerandroid.message.MessagePacket;
@@ -52,14 +53,19 @@ public class CommonCallback<T> implements Callback {
         JsonObject obj = element.getAsJsonObject();
         packet.result = obj.get("result").getAsBoolean();
         packet.resultCode = obj.get("resultCode").getAsInt();
-        packet.msg = mGson.fromJson(obj.get("msg"), mResponseClass);
+        if (packet.result){
+            packet.msg = mGson.fromJson(obj.get("msg"), mResponseClass);
 
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mListener.onSuccess(packet.msg); // must be inside run()
-            }
-        });
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mListener.onSuccess(packet.msg); // must be inside run()
+                }
+            });
+        }else{
+            Log.i("test", "server error code:" + packet.resultCode);
+        }
+
 
 
     }
