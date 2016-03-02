@@ -1,5 +1,7 @@
 package com.astatus.cornerandroid.message;
 
+import com.astatus.cornerandroid.entity.CommentEntity;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,10 +18,10 @@ public class ArticleMsg {
     public ArrayList<Date> mTimes;
     public ArrayList<String> mImageUrls;
     public ArrayList<String> mFeelTexts;
-    public ArrayList<Integer> mUpCount;
-    public ArrayList<Integer> mReadCount;
-    public ArrayList<ArrayList<String>> mComments;
-    public ArrayList<BigInteger> mLocationGuid;
-    public ArrayList<String> mLocationName;
+    public ArrayList<Integer> mUpCounts;
+    public ArrayList<Integer> mReadCounts;
+    public ArrayList<CommentMsg> mComments;
+    public ArrayList<BigInteger> mLocationGuids;
+    public ArrayList<String> mLocationNames;
     public ArrayList<Boolean> mIsUps;
 }

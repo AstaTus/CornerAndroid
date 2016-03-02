@@ -12,8 +12,8 @@ import com.astatus.cornerandroid.view.ICommentView;
 public class CommentActivity extends AppCompatActivity implements ICommentView {
 
     private CommentPresenter mPresenter;
-    private RecyclerView mRecycleView;
-    private
+    private RecyclerView mRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +24,7 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
 
     private void init(){
 
-        mRecycleView = (RecyclerView)findViewById(R.id.comment_recyclerView);
+        mRecyclerView = (RecyclerView)findViewById(R.id.comment_recyclerView);
         CommentRecyclerAdapter adapter = new CommentRecyclerAdapter(this);
         mRecyclerView.setAdapter(adapter);
         mPresenter = new CommentPresenter(this, adapter);

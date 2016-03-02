@@ -49,7 +49,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
                     .transform(transformation)
                     .into(holder.mHeadImage);
 
-            holder.mArtistName.setText(entity.mName);
+            holder.mArtistName.setText(entity.mUserName);
             holder.mTime.setText(entity.mTime.toString());
 
             Picasso.with(mContext)

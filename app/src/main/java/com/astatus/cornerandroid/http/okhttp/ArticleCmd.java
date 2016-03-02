@@ -2,6 +2,7 @@ package com.astatus.cornerandroid.http.okhttp;
 
 import com.astatus.cornerandroid.message.ArticleMsg;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import okhttp3.HttpUrl;
@@ -20,11 +21,12 @@ public class ArticleCmd extends GetCmd<ArticleMsg>{
 
 
     //上拉 获取所有的项,如果超过时间间隔-时间间隔服务器定,则本地数据要清空,
-    static public ArticleCmd create(CmdListener listener, int type, int direction, Date time){
+    static public ArticleCmd create(CmdListener listener, BigInteger articleGuid, int type, int direction, Date time){
 
         try {
             HttpUrl url = HttpUrl.parse(HttpDef.SERVER_HOST_URL + CMD_METHOD)
                     .newBuilder()
+                    .addQueryParameter("articleGuid", articleGuid.toString())
                     .addQueryParameter("type", String.valueOf(type))
                     .addQueryParameter("direction", String.valueOf(direction))
                     .addQueryParameter("time", time == null ? "" : time.toString())

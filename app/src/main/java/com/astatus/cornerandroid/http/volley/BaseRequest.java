@@ -79,7 +79,7 @@ public class BaseRequest<T> extends Request<MessagePacket> {
         if (response.result == MessagePacket.RESULT_SUCCESS){
             mListener.onResponse(response.msg);
         }else{
-            CornerApplication.getSingleton().onServerErrorResponseListener(response);
+            //CornerApplication.getSingleton().onServerErrorResponseListener(response);
         }
 
     }

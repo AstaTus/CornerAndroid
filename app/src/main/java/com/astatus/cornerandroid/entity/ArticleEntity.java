@@ -1,6 +1,7 @@
 package com.astatus.cornerandroid.entity;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -8,14 +9,14 @@ import java.util.Date;
  */
 public class ArticleEntity {
     public BigInteger mGuid;
-    public String mName;
+    public String mUserName;
     public String mHeadUrl;
     public Date mTime;
     public String mImageUrl;
     public String mFeelText;
     public int mUpCount;
     public int mReadCount;
-    public String[] mComments;
+    public ArrayList<CommentEntity> mComments;
     public BigInteger mLocationGuid;
     public String mLocationName;
     public boolean mIsUp;

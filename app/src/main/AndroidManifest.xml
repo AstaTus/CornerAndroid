@@ -56,7 +56,11 @@
             android:label="@string/home_title"
             android:theme="@style/AppTheme"></activity>
         -->
-        <activity android:name=".activity.PersonalActivity" />
+        <activity android:name=".activity.PersonalActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.astatus.cornerandroid.activity.HomeActivity" />
+        </activity>
         <activity android:name=".activity.CommentActivity"></activity>
     </application>
 

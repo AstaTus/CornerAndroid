@@ -19,7 +19,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
     private List<CommentEntity> mData;
     private Context mContext;
 
-    CommentRecyclerAdapter(Context context){
+    public CommentRecyclerAdapter(Context context){
         mContext = context;
     }
     @Override

@@ -53,16 +53,6 @@ public class ArticleModel {
         }
     }
 
-    //article inc order
-    public void addArticles(List<ArticleEntity> articles, int location) {
-
-        if (location == ADD_ARTICLE_LOCATION_FRONT){
-            mArticles.addAll(0, articles);
-        }else{
-            mArticles.addAll(articles);
-        }
-    }
-
     public List<ArticleEntity> getArticleList(){
         return mArticles;
     }
