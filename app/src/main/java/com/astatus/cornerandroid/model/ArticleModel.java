@@ -2,7 +2,6 @@ package com.astatus.cornerandroid.model;
 
 import com.astatus.cornerandroid.entity.ArticleEntity;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +43,14 @@ public class ArticleModel {
         }
 
         return null;
+    }
+
+    public void addArticle(ArticleEntity entity, int location){
+        if (location == ADD_ARTICLE_LOCATION_FRONT){
+            mArticles.add(0, entity);
+        }else{
+            mArticles.add(entity);
+        }
     }
 
     //article inc order

@@ -1,4 +1,4 @@
-package com.astatus.cornerandroid.cornerandroid.entity;
+package com.astatus.cornerandroid.entity;
 
 import java.util.Date;
 

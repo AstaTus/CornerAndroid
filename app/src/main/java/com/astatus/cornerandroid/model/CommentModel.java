@@ -1,6 +1,5 @@
-package com.astatus.cornerandroid.cornerandroid.model;
+package com.astatus.cornerandroid.model;
 
-import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.entity.CommentEntity;
 
 import java.util.List;

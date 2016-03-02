@@ -1,17 +1,13 @@
-package com.astatus.cornerandroid.cornerandroid.adapder;
+package com.astatus.cornerandroid.adapder;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.entity.CommentEntity;
 import com.makeramen.roundedimageview.RoundedImageView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -32,7 +28,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
     }
 
     @Override
-    public void onBindViewHolder(CommentViewHolder holder, int position) {
+    public void onBindViewHolder(CommentRecyclerAdapter.CommentViewHolder holder, int position) {
 
     }
 

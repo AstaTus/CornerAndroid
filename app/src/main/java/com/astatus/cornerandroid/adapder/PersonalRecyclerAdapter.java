@@ -79,7 +79,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
         return mData.size();
     }
 
-    public void RestData(List<ArticleEntity> data){
+    public void restData(List<ArticleEntity> data){
         mData = data;
         notifyDataSetChanged();
     }

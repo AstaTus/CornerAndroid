@@ -1,14 +1,12 @@
 package com.astatus.cornerandroid.presenter;
 
 import com.astatus.cornerandroid.adapder.PersonalRecyclerAdapter;
+import com.astatus.cornerandroid.entity.CommentEntity;
 import com.astatus.cornerandroid.http.okhttp.ArticleCmd;
 import com.astatus.cornerandroid.http.okhttp.CmdListener;
 import com.astatus.cornerandroid.message.ArticleMsg;
-import com.astatus.cornerandroid.message.MessagePacket;
 import com.astatus.cornerandroid.model.ArticleModel;
 import com.astatus.cornerandroid.view.IArticleView;
-
-import java.util.Date;
 
 /**
  * Created by AstaTus on 2016/2/28.
@@ -24,7 +22,7 @@ public class ArticlePresenter {
         mArticleView = view;
         mAdpater = adpater;
 
-        mAdpater.RestData(mModel.getArticleList());
+        mAdpater.restData(mModel.getArticleList());
     }
 
     public void loadNextPage(){
@@ -46,11 +44,18 @@ public class ArticlePresenter {
         @Override
         public void onSuccess(ArticleMsg result) {
 
-            if (result.isTimeOut){
+            if (result.mIsTimeOut){
                 mModel.resetData();
             }
 
-            mModel.addArticles(result.articleList, ArticleModel.ADD_ARTICLE_LOCATION_FRONT);
+            for (int i =0; i < result.mGuids.size(); ++i){
+
+                CommentEntity entity = new CommentEntity();
+
+                mModel.addArticles();
+            }
+
+            //mModel.addArticles(result.articleList, ArticleModel.ADD_ARTICLE_LOCATION_FRONT);
 
             mArticleView.showNewerPage();
         }

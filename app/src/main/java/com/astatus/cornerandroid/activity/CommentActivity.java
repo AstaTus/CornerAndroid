@@ -1,7 +1,7 @@
-package com.astatus.cornerandroid.cornerandroid.activity;
+package com.astatus.cornerandroid.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.astatus.cornerandroid.R;
