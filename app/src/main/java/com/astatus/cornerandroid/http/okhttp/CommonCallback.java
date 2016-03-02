@@ -7,6 +7,7 @@ import android.util.Log;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.astatus.cornerandroid.message.MessagePacket;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -24,7 +25,9 @@ public class CommonCallback<T> implements Callback {
     private CmdListener mListener;
     private final Class<T> mResponseClass;
     private static Handler mHandler = new Handler(Looper.getMainLooper());
-    protected static final Gson mGson = new Gson();
+    protected static final Gson mGson = new GsonBuilder()
+                                            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                                            .create();
 
     public CommonCallback(CmdListener listener, Class<T> responseClass){
 
@@ -54,7 +57,17 @@ public class CommonCallback<T> implements Callback {
         packet.result = obj.get("result").getAsBoolean();
         packet.resultCode = obj.get("resultCode").getAsInt();
         if (packet.result){
-            packet.msg = mGson.fromJson(obj.get("msg"), mResponseClass);
+
+            long startTime = System.currentTimeMillis();   //获取开始时间
+            try{
+                packet.msg = mGson.fromJson(obj.get("msg"), mResponseClass);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            long endTime = System.currentTimeMillis(); //获取结束时间
+            Log.i("Time ", (endTime - startTime) + "ms");
+
 
             mHandler.post(new Runnable() {
                 @Override
