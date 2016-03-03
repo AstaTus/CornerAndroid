@@ -11,7 +11,7 @@ public class CommentMsg {
     public BigInteger mArticleGuid;
     public ArrayList<BigInteger> mGuids;
     public ArrayList<BigInteger> mReplyGuids;
-    public ArrayList<BigInteger> mReplyNames;
+    public ArrayList<String> mReplyNames;
     public ArrayList<String> mHeadUrls;
 
     public ArrayList<BigInteger> mTargetGuids;

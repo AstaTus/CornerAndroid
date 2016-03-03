@@ -2,9 +2,11 @@ package com.astatus.cornerandroid.presenter;
 
 import com.astatus.cornerandroid.adapder.PersonalRecyclerAdapter;
 import com.astatus.cornerandroid.entity.ArticleEntity;
+import com.astatus.cornerandroid.entity.CommentEntity;
 import com.astatus.cornerandroid.http.okhttp.ArticleCmd;
 import com.astatus.cornerandroid.http.okhttp.CmdListener;
 import com.astatus.cornerandroid.message.ArticleMsg;
+import com.astatus.cornerandroid.message.CommentMsg;
 import com.astatus.cornerandroid.model.ArticleModel;
 import com.astatus.cornerandroid.view.IArticleView;
 
@@ -105,6 +107,25 @@ public class ArticlePresenter {
         entity.mUserName = result.mUserNames.get(index);
         entity.mReadCount = result.mReadCounts.get(index);
         entity.mUpCount = result.mReadCounts.get(index);
+
+        CommentMsg msg = result.mComments.get(index);
+        for (int i = 0; i < msg.mGuids.size(); ++i){
+
+            if (msg != null && msg.mGuids != null
+                    && msg.mGuids.get(i).compareTo(BigInteger.valueOf(0)) != 0){
+                CommentEntity comment = new CommentEntity();
+                comment.mGuid = msg.mGuids.get(i);
+                comment.mReplyGuid = msg.mReplyGuids.get(i);
+                comment.mReplyHeadUrl = msg.mHeadUrls.get(i);
+                comment.mTargetName = msg.mTargetNames.get(i);
+                comment.mReplyName = msg.mReplyNames.get(i);
+                comment.mTime = msg.mTimes.get(i);
+                comment.mFeelText = msg.mTexts.get(i);
+
+                entity.mComments.add(comment);
+            }
+        }
+
         return entity;
     }
 }

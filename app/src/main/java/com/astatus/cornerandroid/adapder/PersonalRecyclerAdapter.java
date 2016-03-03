@@ -44,7 +44,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
                     .build();
 
             Picasso.with(mContext)
-                    .load(entity.mHeadUrl)
+                    .load(entity.mReplyHeadUrl)
                     .fit()
                     .transform(transformation)
                     .into(holder.mHeadImage);
