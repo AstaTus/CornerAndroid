@@ -1,16 +1,22 @@
 package com.astatus.cornerandroid.adapder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.entity.ArticleEntity;
+import com.astatus.cornerandroid.util.NumberUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
@@ -36,7 +42,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
         ArticleEntity entity = mData.get(position);
         if (entity != null){
             //头像
-            /*Transformation transformation = new RoundedTransformationBuilder()
+            Transformation transformation = new RoundedTransformationBuilder()
                     .borderColor(Color.BLACK)
                     .borderWidthDp(3)
                     .cornerRadiusDp(30)
@@ -44,7 +50,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
                     .build();
 
             Picasso.with(mContext)
-                    .load(entity.mReplyHeadUrl)
+                    .load(entity.mHeadUrl)
                     .fit()
                     .transform(transformation)
                     .into(holder.mHeadImage);
@@ -70,7 +76,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
             }
 
             holder.mUpCount.setText(NumberUtil.GetSimplifyString(entity.mUpCount));
-            holder.mReadCount.setText(NumberUtil.GetSimplifyString(entity.mReadCount));*/
+            holder.mReadCount.setText(NumberUtil.GetSimplifyString(entity.mReadCount));
         }
     }
 
@@ -107,7 +113,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
         public PersonalViewHolder(View v) {
             super(v);
 
-            /*mHeadImage = (RoundedImageView)v.findViewById(R.id.image_card_head_image);
+            mHeadImage = (RoundedImageView)v.findViewById(R.id.image_card_head_image);
             mArtistName = (TextView)v.findViewById(R.id.image_card_artist);
             mTime = (TextView)v.findViewById(R.id.image_card_time);
             mPostImage = (ImageView)v.findViewById(R.id.image_card_image);
@@ -122,15 +128,13 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
             mUpCount = (TextView)v.findViewById(R.id.image_card_up_text);
             mReadCount = (TextView)v.findViewById(R.id.image_card_head_image);
 
-            Button btn = (Button) v.findViewById(R.id.image_card_up_btn);
+            ImageView btn = (ImageView) v.findViewById(R.id.image_card_up_btn);
             btn.setOnClickListener(sUpBtnListener);
-            btn = (Button) v.findViewById(R.id.image_card_comment_btn);
+            btn = (ImageView) v.findViewById(R.id.image_card_comment_btn);
             btn.setOnClickListener(sCommentBtnListener);
 
-            btn = (Button) v.findViewById(R.id.image_card_more_btn);
-            btn.setOnClickListener(sMoreBtnListener);*/
-
-
+            btn = (ImageView) v.findViewById(R.id.image_card_more_btn);
+            btn.setOnClickListener(sMoreBtnListener);
         }
 
 

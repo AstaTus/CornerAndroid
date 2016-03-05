@@ -21,15 +21,15 @@ public class ArticleCmd extends GetCmd<ArticleMsg>{
 
 
     //上拉 获取所有的项,如果超过时间间隔-时间间隔服务器定,则本地数据要清空,
-    static public ArticleCmd create(CmdListener listener, BigInteger articleGuid, int type, int direction, Date time){
+    static public ArticleCmd create(CmdListener listener, BigInteger articleUserGuid, BigInteger articleGuid, int type, int direction){
 
         try {
             HttpUrl url = HttpUrl.parse(HttpDef.SERVER_HOST_URL + CMD_METHOD)
                     .newBuilder()
+                    .addQueryParameter("articleUserGuid", articleUserGuid.toString())
                     .addQueryParameter("articleGuid", articleGuid.toString())
                     .addQueryParameter("type", String.valueOf(type))
                     .addQueryParameter("direction", String.valueOf(direction))
-                    .addQueryParameter("time", time == null ? "" : time.toString())
                     .build();
 
             return new ArticleCmd(url, listener);

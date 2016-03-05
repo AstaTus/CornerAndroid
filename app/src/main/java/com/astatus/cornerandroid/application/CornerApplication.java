@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
  * Created by AstaTus on 2016/1/1.
  */
 
+import com.astatus.cornerandroid.cache.UserCache;
 import com.astatus.cornerandroid.http.okhttp.CmdManager;
 import com.astatus.cornerandroid.message.MessagePacket;
 import com.astatus.cornerandroid.model.SharedPreferenceDef;
@@ -20,6 +21,7 @@ public class CornerApplication extends Application {
     private CmdManager mCmdMgr = null;
     private SharedPreferences mSharedPreferences = null;
 
+    private UserCache mUserCache;
 
     public synchronized static CornerApplication getSingleton() {
         return sSingleton;
@@ -38,6 +40,15 @@ public class CornerApplication extends Application {
         }
 
         return mCmdMgr;
+    }
+
+    public UserCache getUserCache(){
+        if (mUserCache == null){
+            mUserCache = new UserCache();
+
+        }
+
+        return mUserCache;
     }
 
 

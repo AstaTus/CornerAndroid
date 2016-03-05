@@ -1,6 +1,8 @@
 package com.astatus.cornerandroid.presenter;
 
 import com.astatus.cornerandroid.adapder.PersonalRecyclerAdapter;
+import com.astatus.cornerandroid.application.CornerApplication;
+import com.astatus.cornerandroid.cache.UserCache;
 import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.entity.CommentEntity;
 import com.astatus.cornerandroid.http.okhttp.ArticleCmd;
@@ -31,18 +33,25 @@ public class ArticlePresenter {
 
     public void loadNextPage(){
 
+        UserCache user = CornerApplication.getSingleton().getUserCache();
         ArticleCmd cmd = ArticleCmd.create(
-                new LoadNextPageArticleCmdListener(),
-                BigInteger.valueOf(0), ArticleCmd.REQUEST_TYPE_PERSONAL,
-                ArticleCmd.REQUEST_DIRECTION_DOWN, mModel.getLastDate());
+                new LoadNextPageArticleCmdListener()
+                ,user.getMainUserGuid()
+                , mModel.getLastGuid()
+                , ArticleCmd.REQUEST_TYPE_PERSONAL,
+                ArticleCmd.REQUEST_DIRECTION_DOWN);
         cmd.excute();
     }
 
     public void loadNewerPage(){
+
+        UserCache user = CornerApplication.getSingleton().getUserCache();
         ArticleCmd cmd = ArticleCmd.create(
-                new LoadNewerPageArticleCmdListener(),
-                BigInteger.valueOf(0), ArticleCmd.REQUEST_TYPE_PERSONAL,
-                ArticleCmd.REQUEST_DIRECTION_DOWN, mModel.getFrontDate());
+                new LoadNewerPageArticleCmdListener()
+                ,user.getMainUserGuid()
+                ,mModel.getFrontGuid(),
+                ArticleCmd.REQUEST_TYPE_PERSONAL,
+                ArticleCmd.REQUEST_DIRECTION_DOWN);
         cmd.excute();
     }
 
@@ -105,8 +114,8 @@ public class ArticlePresenter {
         entity.mLocationGuid = result.mLocationGuids.get(index);
         entity.mLocationName = result.mLocationNames.get(index);
         entity.mUserName = result.mUserNames.get(index);
-        entity.mReadCount = result.mReadCounts.get(index);
-        entity.mUpCount = result.mReadCounts.get(index);
+        entity.mReadCount = result.mReadCounts.get(index).intValue();
+        entity.mUpCount = result.mReadCounts.get(index).intValue();
 
         CommentMsg msg = result.mComments.get(index);
         for (int i = 0; i < msg.mGuids.size(); ++i){

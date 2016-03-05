@@ -2,6 +2,7 @@ package com.astatus.cornerandroid.model;
 
 import com.astatus.cornerandroid.entity.ArticleEntity;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,25 +25,25 @@ public class ArticleModel {
         mArticles.clear();
     }
 
-    public Date getFrontDate(){
+    public BigInteger getFrontGuid(){
 
         if (mArticles.size() > 0){
             ArticleEntity entity = mArticles.get(0);
 
-            return entity.mTime;
+            return entity.mGuid;
         }
 
-        return null;
+        return BigInteger.valueOf(0);
     }
 
-    public Date getLastDate(){
+    public BigInteger getLastGuid(){
         if (mArticles.size() > 0){
             ArticleEntity entity = mArticles.get(mArticles.size() - 1);
 
-            return entity.mTime;
+            return entity.mGuid;
         }
 
-        return null;
+        return BigInteger.valueOf(0);
     }
 
     public void addArticle(ArticleEntity entity, int location){
