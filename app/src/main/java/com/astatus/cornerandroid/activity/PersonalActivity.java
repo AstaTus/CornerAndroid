@@ -130,15 +130,16 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     @Override
     public void showNextPage() {
 
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showNewerPage() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showLoadFailedToast() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 }

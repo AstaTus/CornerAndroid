@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,42 +40,49 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
     public void onBindViewHolder(PersonalRecyclerAdapter.PersonalViewHolder holder, int position) {
         ArticleEntity entity = mData.get(position);
         if (entity != null){
-            //头像
-            Transformation transformation = new RoundedTransformationBuilder()
-                    .borderColor(Color.BLACK)
-                    .borderWidthDp(3)
-                    .cornerRadiusDp(30)
-                    .oval(false)
-                    .build();
+            try{
+                //头像
+                Transformation transformation = new RoundedTransformationBuilder()
+                        .borderColor(Color.BLACK)
+                        .borderWidthDp(3)
+                        .cornerRadiusDp(30)
+                        .oval(false)
+                        .build();
 
-            Picasso.with(mContext)
-                    .load(entity.mHeadUrl)
-                    .fit()
-                    .transform(transformation)
-                    .into(holder.mHeadImage);
+                if (entity.mHeadUrl.length() == 0){
+                    holder.mHeadImage.setBackgroundResource(R.drawable.ic_account_circle_black_48dp);
+                }else{
+                    Picasso.with(mContext)
+                            .load(entity.mHeadUrl)
+                            .fit()
+                            .transform(transformation)
+                            .into(holder.mHeadImage);
+                }
 
-            holder.mArtistName.setText(entity.mUserName);
-            holder.mTime.setText(entity.mTime.toString());
 
-            Picasso.with(mContext)
-                    .load(entity.mImageUrl)
-                    .fit()
-                    .transform(transformation)
-                    .into(holder.mPostImage);
+                holder.mArtistName.setText(entity.mUserName);
+                holder.mTime.setText(entity.mTime.toString());
 
-            holder.mFeelText.setText(entity.mFeelText);
-            holder.mLocationName.setText(entity.mLocationName);
-            holder.mLocationDistance.setText("3km");
+                Picasso.with(mContext)
+                        .load(entity.mImageUrl)
+                        .into(holder.mArticleImage);
 
-            if (entity.mIsUp){
-                holder.mUpView.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
+                holder.mFeelText.setText(entity.mFeelText);
+                holder.mLocationName.setText(entity.mLocationName);
+                holder.mLocationDistance.setText("3km");
 
-            }else{
-                holder.mUpView.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
+                if (entity.mIsUp){
+                    holder.mUpView.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
+
+                }else{
+                    holder.mUpView.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
+                }
+
+                holder.mUpCount.setText(NumberUtil.GetSimplifyString(entity.mUpCount));
+                holder.mReadCount.setText(NumberUtil.GetSimplifyString(entity.mReadCount));
+            }catch (Exception e){
+                e.printStackTrace();
             }
-
-            holder.mUpCount.setText(NumberUtil.GetSimplifyString(entity.mUpCount));
-            holder.mReadCount.setText(NumberUtil.GetSimplifyString(entity.mReadCount));
         }
     }
 
@@ -96,7 +102,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
         protected RoundedImageView mHeadImage;
         protected TextView mArtistName;
         protected TextView mTime;
-        protected ImageView mPostImage;
+        protected ImageView mArticleImage;
         protected TextView mAttentionCount;
         protected TextView mFanCount;
         protected TextView mFeelText;
@@ -116,17 +122,14 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
             mHeadImage = (RoundedImageView)v.findViewById(R.id.image_card_head_image);
             mArtistName = (TextView)v.findViewById(R.id.image_card_artist);
             mTime = (TextView)v.findViewById(R.id.image_card_time);
-            mPostImage = (ImageView)v.findViewById(R.id.image_card_image);
-
-            mAttentionCount = (TextView)v.findViewById(R.id.image_card_head_image);
-            mFanCount = (TextView)v.findViewById(R.id.image_card_head_image);
+            mArticleImage = (ImageView)v.findViewById(R.id.image_card_image);
 
             mFeelText = (TextView)v.findViewById(R.id.image_card_text);
             mLocationName = (TextView)v.findViewById(R.id.image_card_corner_name);
             mLocationDistance = (TextView)v.findViewById(R.id.image_card_corner_distance);
             mUpView = (ImageView)v.findViewById(R.id.image_card_up_btn);
             mUpCount = (TextView)v.findViewById(R.id.image_card_up_text);
-            mReadCount = (TextView)v.findViewById(R.id.image_card_head_image);
+            mReadCount = (TextView)v.findViewById(R.id.image_card_read_text);
 
             ImageView btn = (ImageView) v.findViewById(R.id.image_card_up_btn);
             btn.setOnClickListener(sUpBtnListener);

@@ -33,10 +33,9 @@ public class ArticlePresenter {
 
     public void loadNextPage(){
 
-        UserCache user = CornerApplication.getSingleton().getUserCache();
         ArticleCmd cmd = ArticleCmd.create(
                 new LoadNextPageArticleCmdListener()
-                ,user.getMainUserGuid()
+                , BigInteger.valueOf(0)
                 , mModel.getLastGuid()
                 , ArticleCmd.REQUEST_TYPE_PERSONAL,
                 ArticleCmd.REQUEST_DIRECTION_DOWN);
@@ -48,7 +47,7 @@ public class ArticlePresenter {
         UserCache user = CornerApplication.getSingleton().getUserCache();
         ArticleCmd cmd = ArticleCmd.create(
                 new LoadNewerPageArticleCmdListener()
-                ,user.getMainUserGuid()
+                ,BigInteger.valueOf(0)
                 ,mModel.getFrontGuid(),
                 ArticleCmd.REQUEST_TYPE_PERSONAL,
                 ArticleCmd.REQUEST_DIRECTION_DOWN);

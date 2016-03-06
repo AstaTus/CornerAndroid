@@ -58,7 +58,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<CommentRecycler
             /*mHeadImage = (RoundedImageView)v.findViewById(R.id.image_card_head_image);
             mArtistName = (TextView)v.findViewById(R.id.image_card_artist);
             mTime = (TextView)v.findViewById(R.id.image_card_time);
-            mPostImage = (ImageView)v.findViewById(R.id.image_card_image);
+            mArticleImage = (ImageView)v.findViewById(R.id.image_card_image);
 
             mAttentionCount = (TextView)v.findViewById(R.id.image_card_head_image);
             mFanCount = (TextView)v.findViewById(R.id.image_card_head_image);
