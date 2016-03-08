@@ -11,17 +11,20 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.adapder.PersonalRecyclerAdapter;
 import com.astatus.cornerandroid.presenter.ArticlePresenter;
 import com.astatus.cornerandroid.view.IArticleView;
+import com.astatus.cornerandroid.widget.LoadMoreRecyclerView;
+import com.astatus.cornerandroid.widget.ProlateSwipeRefreshLayout;
 
 public class PersonalActivity extends AppCompatActivity implements IArticleView {
 
-    private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private LoadMoreRecyclerView mRecyclerView;
+    private ProlateSwipeRefreshLayout mSwipeRefreshLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private AppBarLayout mAppbarLayout;
     private TextView mTitleTextView;
@@ -36,8 +39,13 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
         setContentView(R.layout.activity_personal);
         init();
 
+        /*mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+        mSwipeRefreshLayout.setRefreshing(true);
 
-        mArticlePresenter.loadNextPage();
+        mArticlePresenter.loadNewPage();*/
+        mSwipeRefreshLayout.autoRefresh();
     }
 
     private void init(){
@@ -104,15 +112,20 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.personal_swiperefresh);
+
+
+
+        mSwipeRefreshLayout = (ProlateSwipeRefreshLayout)findViewById(R.id.personal_swiperefresh);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 //Your refresh code here
 
-                mArticlePresenter.loadNewerPage();
+                mArticlePresenter.loadNewPage();
             }
         });
+
+
 
         /*List<ArticleEntity> entities = new ArrayList<ArticleEntity>();
         entities.add(new ArticleEntity());

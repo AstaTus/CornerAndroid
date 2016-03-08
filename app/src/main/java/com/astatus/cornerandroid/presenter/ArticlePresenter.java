@@ -42,7 +42,7 @@ public class ArticlePresenter {
         cmd.excute();
     }
 
-    public void loadNewerPage(){
+    public void loadNewPage(){
 
         UserCache user = CornerApplication.getSingleton().getUserCache();
         ArticleCmd cmd = ArticleCmd.create(
@@ -108,7 +108,7 @@ public class ArticlePresenter {
         entity.mTime = result.mTimes.get(index);
         entity.mFeelText = result.mFeelTexts.get(index);
         entity.mHeadUrl = result.mHeadUrls.get(index);
-        entity.mImageUrl = result.mImageUrls.get(index);
+        entity.mImagePath = result.mImagePaths.get(index);
         entity.mIsUp = result.mIsUps.get(index);
         entity.mLocationGuid = result.mLocationGuids.get(index);
         entity.mLocationName = result.mLocationNames.get(index);

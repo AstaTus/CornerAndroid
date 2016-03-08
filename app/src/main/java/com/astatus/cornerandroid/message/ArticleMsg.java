@@ -16,7 +16,7 @@ public class ArticleMsg {
     public ArrayList<String> mUserNames;
     public ArrayList<String> mHeadUrls;
     public ArrayList<Date> mTimes;
-    public ArrayList<String> mImageUrls;
+    public ArrayList<String> mImagePaths;
     public ArrayList<String> mFeelTexts;
     public ArrayList<Integer> mUpCounts;
     public ArrayList<Integer> mReadCounts;

@@ -12,7 +12,7 @@ public class ArticleEntity {
     public String mUserName;
     public String mHeadUrl;
     public Date mTime;
-    public String mImageUrl;
+    public String mImagePath;
     public String mFeelText;
     public int mUpCount;
     public int mReadCount;

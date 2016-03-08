@@ -6,4 +6,6 @@ package com.astatus.cornerandroid.message;
 public class PublishMsg {
     public boolean mResult;
     public int mCode;
+
+    public static final int CODE_IMAGE_IS_MORE_THAN_5MB = 1;
 }

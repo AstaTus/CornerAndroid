@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.entity.ArticleEntity;
+import com.astatus.cornerandroid.util.HttpUtil;
 import com.astatus.cornerandroid.util.NumberUtil;
+import com.astatus.cornerandroid.viewholder.SwipeRefreshFootViewHolder;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
@@ -22,22 +24,25 @@ import java.util.List;
 /**
  * Created by AstaTus on 2016/2/23.
  */
-public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecyclerAdapter.PersonalViewHolder> {
+public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
 
     private List<ArticleEntity> mData;
     private Context mContext;
+
     public PersonalRecyclerAdapter(Context context){
+        super(false, true);
         mContext = context;
+        setFootViewHolder(R.layout.widget_recyleview_foot);
     }
 
     @Override
-    public PersonalRecyclerAdapter.PersonalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_image_card, parent, false);
-        return new PersonalRecyclerAdapter.PersonalViewHolder(v);
+    public int getDataItemCount() {
+        return mData.size();
     }
 
     @Override
-    public void onBindViewHolder(PersonalRecyclerAdapter.PersonalViewHolder holder, int position) {
+    public void onBindDataViewHolder(RecyclerView.ViewHolder holder, int position) {
+        PersonalViewHolder pvHolder = (PersonalViewHolder)holder;
         ArticleEntity entity = mData.get(position);
         if (entity != null){
             try{
@@ -50,36 +55,36 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
                         .build();
 
                 if (entity.mHeadUrl.length() == 0){
-                    holder.mHeadImage.setBackgroundResource(R.drawable.ic_account_circle_black_48dp);
+                    pvHolder.mHeadImage.setBackgroundResource(R.drawable.ic_account_circle_black_48dp);
                 }else{
                     Picasso.with(mContext)
                             .load(entity.mHeadUrl)
                             .fit()
                             .transform(transformation)
-                            .into(holder.mHeadImage);
+                            .into(pvHolder.mHeadImage);
                 }
 
 
-                holder.mArtistName.setText(entity.mUserName);
-                holder.mTime.setText(entity.mTime.toString());
+                pvHolder.mArtistName.setText(entity.mUserName);
+                pvHolder.mTime.setText(entity.mTime.toString());
 
                 Picasso.with(mContext)
-                        .load(entity.mImageUrl)
-                        .into(holder.mArticleImage);
+                        .load(HttpUtil.getImageUrl(entity.mImagePath, HttpUtil.IMAGE_TYPE_PREVIEW))
+                        .into(pvHolder.mArticleImage);
 
-                holder.mFeelText.setText(entity.mFeelText);
-                holder.mLocationName.setText(entity.mLocationName);
-                holder.mLocationDistance.setText("3km");
+                pvHolder.mFeelText.setText(entity.mFeelText);
+                pvHolder.mLocationName.setText(entity.mLocationName);
+                pvHolder.mLocationDistance.setText("3km");
 
                 if (entity.mIsUp){
-                    holder.mUpView.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
+                    pvHolder.mUpView.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
 
                 }else{
-                    holder.mUpView.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
+                    pvHolder.mUpView.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
                 }
 
-                holder.mUpCount.setText(NumberUtil.GetSimplifyString(entity.mUpCount));
-                holder.mReadCount.setText(NumberUtil.GetSimplifyString(entity.mReadCount));
+                pvHolder.mUpCount.setText(NumberUtil.GetSimplifyString(entity.mUpCount));
+                pvHolder.mReadCount.setText(NumberUtil.GetSimplifyString(entity.mReadCount));
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -87,9 +92,12 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
     }
 
     @Override
-    public int getItemCount() {
-        return mData.size();
+    public RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_image_card, parent, false);
+        return new PersonalRecyclerAdapter.PersonalViewHolder(v);
     }
+
+
 
     public void restData(List<ArticleEntity> data){
         mData = data;
@@ -103,8 +111,6 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<PersonalRecycl
         protected TextView mArtistName;
         protected TextView mTime;
         protected ImageView mArticleImage;
-        protected TextView mAttentionCount;
-        protected TextView mFanCount;
         protected TextView mFeelText;
         protected TextView mLocationName;
         protected TextView mLocationDistance;
