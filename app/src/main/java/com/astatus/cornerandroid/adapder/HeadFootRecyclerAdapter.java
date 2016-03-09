@@ -94,11 +94,11 @@ public abstract class HeadFootRecyclerAdapter extends RecyclerView.Adapter<Recyc
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_HEAD){
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_image_card, parent, false);
-            return new PersonalRecyclerAdapter.PersonalViewHolder(v);
+            View v = LayoutInflater.from(parent.getContext()).inflate(mHeadRes, parent, false);
+            return new HeadViewHolder(v);
         }else if (viewType == TYPE_FOOT){
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_recyleview_foot, parent, false);
-            return new SwipeRefreshFootViewHolder(v);
+            View v = LayoutInflater.from(parent.getContext()).inflate(mFootRes, parent, false);
+            return new FootViewHolder(v);
         }else{
             return onCreateDataViewHolder(parent, viewType);
         }
@@ -106,9 +106,8 @@ public abstract class HeadFootRecyclerAdapter extends RecyclerView.Adapter<Recyc
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        if (!(holder instanceof FootViewHolder)
-                || !(holder instanceof HeadViewHolder)){
+        int type = getItemViewType(position);
+        if ((type != TYPE_HEAD) && (type != TYPE_FOOT)){
             onBindDataViewHolder(holder, position);
         }
     }
@@ -129,7 +128,7 @@ public abstract class HeadFootRecyclerAdapter extends RecyclerView.Adapter<Recyc
 
         if (position == 0 && isHeadViewShow())
             return TYPE_HEAD;
-        else if (position == getItemCount())
+        else if ((position + 1 == getItemCount()) && isFootViewShow())
             return TYPE_FOOT;
         // 最后一个item设置为footerView
         else

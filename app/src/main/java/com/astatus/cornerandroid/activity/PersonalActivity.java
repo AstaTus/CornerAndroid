@@ -91,7 +91,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
             }
         });
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.personal_recyclerView);
+        mRecyclerView = (LoadMoreRecyclerView)findViewById(R.id.personal_recyclerView);
         PersonalRecyclerAdapter adapter = new PersonalRecyclerAdapter(this);
         mRecyclerView.setAdapter(adapter);
         /*mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
@@ -111,9 +111,12 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
-
-
-
+        mRecyclerView.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mArticlePresenter.loadNextPage();
+            }
+        });
 
         mSwipeRefreshLayout = (ProlateSwipeRefreshLayout)findViewById(R.id.personal_swiperefresh);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -143,12 +146,13 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     @Override
     public void showNextPage() {
 
-        mSwipeRefreshLayout.setRefreshing(false);
+        mRecyclerView.setLoadMore(false);
     }
 
     @Override
     public void showNewerPage() {
         mSwipeRefreshLayout.setRefreshing(false);
+
     }
 
     @Override

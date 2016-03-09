@@ -23,14 +23,11 @@ public class LoadMoreRecyclerView extends RecyclerView {
 
     public LoadMoreRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public LoadMoreRecyclerView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
         init();
     }
 
-    public void SetOnLoadMoreListener(OnLoadMoreListener listener){
+
+    public void setOnLoadMoreListener(OnLoadMoreListener listener){
         mOnLoadMoreListener = listener;
     }
 
@@ -83,14 +80,7 @@ public class LoadMoreRecyclerView extends RecyclerView {
     }
 
 
-    private void setLoadMore(boolean isLoadMore){
-        if (isLoadMore){
-            HeadFootRecyclerAdapter adapter = (HeadFootRecyclerAdapter)getAdapter();
-            adapter.showFootView();
-        }else{
-            HeadFootRecyclerAdapter adapter = (HeadFootRecyclerAdapter)getAdapter();
-            adapter.hideFootView();
-        }
+    public void setLoadMore(boolean isLoadMore){
         mIsLoadMore = isLoadMore;
     }
 

@@ -58,20 +58,25 @@ public class ArticlePresenter {
         @Override
         public void onSuccess(ArticleMsg result) {
 
-            if (result.mIsTimeOut){
-                mModel.resetData();
+            try {
+                if (result.mIsTimeOut){
+                    mModel.resetData();
+                }
+
+                ArticleEntity entity;
+                for (int i = result.mGuids.size() - 1; i >= 0; --i){
+
+                    entity = builderArticleEntity(result, i);
+                    mModel.addArticle(entity, ArticleModel.ADD_ARTICLE_LOCATION_FRONT);
+                }
+
+                mAdpater.restData(mModel.getArticleList());
+                mAdpater.showFootView();
+                mArticleView.showNewerPage();
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
-            ArticleEntity entity;
-            for (int i = result.mGuids.size() - 1; i >= 0; --i){
-
-                entity = builderArticleEntity(result, i);
-                mModel.addArticle(entity, ArticleModel.ADD_ARTICLE_LOCATION_FRONT);
-            }
-
-            mAdpater.restData(mModel.getArticleList());
-
-            mArticleView.showNewerPage();
         }
 
         @Override
