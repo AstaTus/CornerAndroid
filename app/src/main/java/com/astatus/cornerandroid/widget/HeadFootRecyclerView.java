@@ -12,16 +12,16 @@ import com.astatus.cornerandroid.adapder.HeadFootRecyclerAdapter;
 /**
  * Created by AstaTus on 2016/3/8.
  */
-public class LoadMoreRecyclerView extends RecyclerView {
+public class HeadFootRecyclerView extends RecyclerView {
 
     private OnLoadMoreListener mOnLoadMoreListener;
     private boolean mIsLoadMore;
 
-    public LoadMoreRecyclerView(Context context) {
+    public HeadFootRecyclerView(Context context) {
         super(context);
     }
 
-    public LoadMoreRecyclerView(Context context, AttributeSet attrs) {
+    public HeadFootRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }

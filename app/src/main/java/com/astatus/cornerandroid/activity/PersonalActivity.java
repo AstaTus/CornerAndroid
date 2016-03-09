@@ -9,21 +9,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.adapder.PersonalRecyclerAdapter;
 import com.astatus.cornerandroid.presenter.ArticlePresenter;
 import com.astatus.cornerandroid.view.IArticleView;
-import com.astatus.cornerandroid.widget.LoadMoreRecyclerView;
+import com.astatus.cornerandroid.widget.HeadFootRecyclerView;
 import com.astatus.cornerandroid.widget.ProlateSwipeRefreshLayout;
 
 public class PersonalActivity extends AppCompatActivity implements IArticleView {
 
-    private LoadMoreRecyclerView mRecyclerView;
+    private HeadFootRecyclerView mRecyclerView;
     private ProlateSwipeRefreshLayout mSwipeRefreshLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private AppBarLayout mAppbarLayout;
@@ -91,7 +89,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
             }
         });
 
-        mRecyclerView = (LoadMoreRecyclerView)findViewById(R.id.personal_recyclerView);
+        mRecyclerView = (HeadFootRecyclerView)findViewById(R.id.personal_recyclerView);
         PersonalRecyclerAdapter adapter = new PersonalRecyclerAdapter(this);
         mRecyclerView.setAdapter(adapter);
         /*mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
@@ -111,7 +109,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
-        mRecyclerView.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+        mRecyclerView.setOnLoadMoreListener(new HeadFootRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 mArticlePresenter.loadNextPage();

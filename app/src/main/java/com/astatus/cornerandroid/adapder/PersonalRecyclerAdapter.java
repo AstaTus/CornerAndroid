@@ -13,7 +13,7 @@ import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.util.HttpUtil;
 import com.astatus.cornerandroid.util.NumberUtil;
-import com.astatus.cornerandroid.viewholder.SwipeRefreshFootViewHolder;
+import com.astatus.cornerandroid.widget.HeadFootAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
@@ -32,7 +32,17 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
     public PersonalRecyclerAdapter(Context context){
         super(false, true);
         mContext = context;
-        setFootViewHolder(R.layout.widget_recyleview_foot);
+        setFootAdapter(new LoadMoreAdapter());
+    }
+
+    public void setHaveMore(boolean more){
+
+        LoadMoreAdapter adapter = (LoadMoreAdapter)getFootAdapter();
+
+        if (more !=  adapter.getHaveMore()){
+            adapter.setHaveMore(more);
+            notifyItemChanged(getItemCount() - 1);
+        }
     }
 
     @Override
@@ -166,6 +176,45 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
             public void onClick(View v) {
 
             }
+        }
+    }
+
+    public static class LoadMoreAdapter extends HeadFootAdapter{
+
+        private boolean mHaveMore = true;
+        public LoadMoreAdapter() {
+            super(R.layout.widget_recyleview_foot);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if(mHaveMore){
+
+            }else{
+
+            }
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(mResId, parent, false);
+            return new FootViewHolder(v);
+        }
+
+        public void setHaveMore(boolean more){
+
+            mHaveMore = more;
+        }
+
+        public boolean getHaveMore(){
+            return mHaveMore;
+        }
+    }
+
+    public static class FootViewHolder extends RecyclerView.ViewHolder {
+
+        public FootViewHolder(View itemView) {
+            super(itemView);
         }
     }
 }

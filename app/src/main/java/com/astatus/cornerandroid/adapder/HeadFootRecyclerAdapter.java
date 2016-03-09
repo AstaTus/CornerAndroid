@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.viewholder.SwipeRefreshFootViewHolder;
+import com.astatus.cornerandroid.widget.HeadFootAdapter;
 
 /**
  * Created by AstaTus on 2016/3/8.
@@ -23,8 +24,9 @@ public abstract class HeadFootRecyclerAdapter extends RecyclerView.Adapter<Recyc
     private boolean mIsFootEnable = false;
     private boolean mIsHeadEnable = false;
 
-    private int mFootRes;
-    private int mHeadRes;
+
+    private HeadFootAdapter mHeadAdapter = null;
+    private HeadFootAdapter mFootAdapter = null;
 
     public HeadFootRecyclerAdapter(boolean headEnable, boolean footEnalbe){
 
@@ -72,19 +74,27 @@ public abstract class HeadFootRecyclerAdapter extends RecyclerView.Adapter<Recyc
         }
     }
 
-    public void setFootViewHolder(@LayoutRes int resource){
-        mFootRes = resource;
+    public void setFootAdapter(HeadFootAdapter foot){
+        mFootAdapter = foot;
         if (mIsFootVisible == true){
             notifyItemChanged(getItemCount() - 1);
         }
     }
 
-    public void setHeadViewHolder(@LayoutRes int resource){
-
-        mHeadRes = resource;
+    public void setHeadAdapter(HeadFootAdapter head){
+        mHeadAdapter = head;
         if (mIsHeadVisible == true){
             notifyItemChanged(0);
         }
+    }
+
+
+    protected HeadFootAdapter getHeadAdapter(){
+        return mHeadAdapter;
+    }
+
+    protected HeadFootAdapter getFootAdapter(){
+        return mFootAdapter;
     }
 
     public int getRealPosition(int dataPos){
@@ -94,11 +104,9 @@ public abstract class HeadFootRecyclerAdapter extends RecyclerView.Adapter<Recyc
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_HEAD){
-            View v = LayoutInflater.from(parent.getContext()).inflate(mHeadRes, parent, false);
-            return new HeadViewHolder(v);
+            return mHeadAdapter.onCreateDataViewHolder(parent, viewType);
         }else if (viewType == TYPE_FOOT){
-            View v = LayoutInflater.from(parent.getContext()).inflate(mFootRes, parent, false);
-            return new FootViewHolder(v);
+            return mFootAdapter.onCreateDataViewHolder(parent, viewType);
         }else{
             return onCreateDataViewHolder(parent, viewType);
         }
@@ -107,7 +115,11 @@ public abstract class HeadFootRecyclerAdapter extends RecyclerView.Adapter<Recyc
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
-        if ((type != TYPE_HEAD) && (type != TYPE_FOOT)){
+        if (type == TYPE_HEAD){
+            mHeadAdapter.onBindViewHolder(holder, position);
+        }else if(type == TYPE_FOOT){
+            mFootAdapter.onBindViewHolder(holder, position);
+        }else{
             onBindDataViewHolder(holder, position);
         }
     }
@@ -133,19 +145,6 @@ public abstract class HeadFootRecyclerAdapter extends RecyclerView.Adapter<Recyc
         // 最后一个item设置为footerView
         else
             return TYPE_ITEM;
-    }
-
-    public static class FootViewHolder extends RecyclerView.ViewHolder {
-
-        public FootViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
-    public static class HeadViewHolder extends RecyclerView.ViewHolder {
-
-        public HeadViewHolder(View itemView) {
-            super(itemView);
-        }
     }
 
     public abstract int getDataItemCount();
