@@ -61,4 +61,8 @@
     <string name="personal_fan">粉丝</string>
     <string name="personal_want_corner">想去</string>
     <string name="personal_been_corner">去过</string>
+
+    <!--======================COMMENT======================-->
+    <string name="commnet_title">评论</string>
+    <string name="commnet_send">发送</string>
 </resources>

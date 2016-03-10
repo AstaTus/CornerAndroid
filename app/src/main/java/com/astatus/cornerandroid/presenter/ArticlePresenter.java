@@ -46,7 +46,7 @@ public class ArticlePresenter {
 
         UserCache user = CornerApplication.getSingleton().getUserCache();
         ArticleCmd cmd = ArticleCmd.create(
-                new LoadNewerPageArticleCmdListener()
+                new LoadNewPageArticleCmdListener()
                 ,BigInteger.valueOf(0)
                 ,mModel.getFrontGuid(),
                 ArticleCmd.REQUEST_TYPE_PERSONAL,
@@ -54,7 +54,7 @@ public class ArticlePresenter {
         cmd.excute();
     }
 
-    class LoadNewerPageArticleCmdListener implements CmdListener<ArticleMsg> {
+    class LoadNewPageArticleCmdListener implements CmdListener<ArticleMsg> {
         @Override
         public void onSuccess(ArticleMsg result) {
 
@@ -70,9 +70,10 @@ public class ArticlePresenter {
                     mModel.addArticle(entity, ArticleModel.ADD_ARTICLE_LOCATION_FRONT);
                 }
 
+
                 mAdpater.restData(mModel.getArticleList());
                 mAdpater.showFootView();
-                mArticleView.showNewerPage();
+                mArticleView.showNewPage();
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -95,6 +96,13 @@ public class ArticlePresenter {
             for (int i = 0; i < result.mGuids.size(); ++i){
                 entity = builderArticleEntity(result, i);
                 mModel.addArticle(entity, ArticleModel.ADD_ARTICLE_LOCATION_BACK);
+            }
+
+            if (result.mGuids.size() < ArticleCmd.REQUEST_ARTICLE_MAX_COUNT){
+                mAdpater.setHaveMore(false);
+                mArticleView.setNoMoreArticle();
+            }else{
+                mAdpater.setHaveMore(true);
             }
 
             mAdpater.restData(mModel.getArticleList());

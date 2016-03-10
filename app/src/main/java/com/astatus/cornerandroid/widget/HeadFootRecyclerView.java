@@ -16,6 +16,7 @@ public class HeadFootRecyclerView extends RecyclerView {
 
     private OnLoadMoreListener mOnLoadMoreListener;
     private boolean mIsLoadMore;
+    private boolean mIsLoadMoreEnable;
 
     public HeadFootRecyclerView(Context context) {
         super(context);
@@ -24,6 +25,10 @@ public class HeadFootRecyclerView extends RecyclerView {
     public HeadFootRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
+    }
+
+    public void setLoadMoreEnable(boolean enable){
+        mIsLoadMoreEnable = enable;
     }
 
 
@@ -40,20 +45,25 @@ public class HeadFootRecyclerView extends RecyclerView {
             public void onScrollStateChanged(RecyclerView recyclerView,
                                              int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (mOnLoadMoreListener != null) {
+
+                if (mIsLoadMoreEnable && mOnLoadMoreListener != null){
                     if (newState == RecyclerView.SCROLL_STATE_IDLE
                             && mLastItemPos + 1 == getAdapter().getItemCount()) {
                         setLoadMore(true);
                         mOnLoadMoreListener.onLoadMore();
                     }
+
                 }
+
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutMgr = (LinearLayoutManager) (getLayoutManager());
-                mLastItemPos = layoutMgr.findLastVisibleItemPosition();
+                if (mIsLoadMoreEnable && mOnLoadMoreListener != null){
+                    LinearLayoutManager layoutMgr = (LinearLayoutManager) (getLayoutManager());
+                    mLastItemPos = layoutMgr.findLastVisibleItemPosition();
+                }
             }
         });
 

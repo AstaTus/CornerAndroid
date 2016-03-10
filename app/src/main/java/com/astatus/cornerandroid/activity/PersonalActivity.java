@@ -109,6 +109,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
+        mRecyclerView.setLoadMoreEnable(true);
         mRecyclerView.setOnLoadMoreListener(new HeadFootRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -148,9 +149,14 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     }
 
     @Override
-    public void showNewerPage() {
+    public void showNewPage() {
         mSwipeRefreshLayout.setRefreshing(false);
 
+    }
+
+    @Override
+    public void setNoMoreArticle(){
+        mRecyclerView.setLoadMoreEnable(false);
     }
 
     @Override

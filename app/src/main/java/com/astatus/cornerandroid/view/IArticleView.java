@@ -11,7 +11,9 @@ public interface IArticleView {
 
     void showNextPage();
 
-    void showNewerPage();
+    void showNewPage();
 
     void showLoadFailedToast();
+
+    void setNoMoreArticle();
 }

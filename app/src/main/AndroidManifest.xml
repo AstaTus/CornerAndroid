@@ -61,7 +61,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.astatus.cornerandroid.activity.HomeActivity" />
         </activity>
-        <activity android:name=".activity.CommentActivity"></activity>
+        <activity android:name=".activity.CommentActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>

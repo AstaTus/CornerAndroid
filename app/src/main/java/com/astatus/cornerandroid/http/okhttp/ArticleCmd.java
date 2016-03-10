@@ -12,6 +12,8 @@ import okhttp3.HttpUrl;
  */
 public class ArticleCmd extends GetCmd<ArticleMsg>{
 
+    public static final int REQUEST_ARTICLE_MAX_COUNT = 3;
+
     public static final int REQUEST_TYPE_PERSONAL = 1;
     public static final int REQUEST_DIRECTION_UP = 1;
     public static final int REQUEST_DIRECTION_DOWN = 2;
