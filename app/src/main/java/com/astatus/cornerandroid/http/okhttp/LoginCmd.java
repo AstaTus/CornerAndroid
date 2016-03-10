@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class LoginCmd extends PostCmd<LoginMsg> {
 
-    private static final String CMD_METHOD = "app/login";
+    private static final String CMD_METHOD = "app/Login";
 
     static public LoginCmd create(CmdListener listener, String email, String password){
 

@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by AstaTus on 2016/3/2.
  */
-public class CommentMsg {
+public class CommentObtainMsg {
     public BigInteger mArticleGuid;
     public ArrayList<BigInteger> mGuids;
     public ArrayList<BigInteger> mReplyGuids;

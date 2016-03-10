@@ -8,7 +8,7 @@ import com.astatus.cornerandroid.entity.CommentEntity;
 import com.astatus.cornerandroid.http.okhttp.ArticleCmd;
 import com.astatus.cornerandroid.http.okhttp.CmdListener;
 import com.astatus.cornerandroid.message.ArticleMsg;
-import com.astatus.cornerandroid.message.CommentMsg;
+import com.astatus.cornerandroid.message.CommentObtainMsg;
 import com.astatus.cornerandroid.model.ArticleModel;
 import com.astatus.cornerandroid.view.IArticleView;
 
@@ -52,6 +52,11 @@ public class ArticlePresenter {
                 ArticleCmd.REQUEST_TYPE_PERSONAL,
                 ArticleCmd.REQUEST_DIRECTION_DOWN);
         cmd.excute();
+    }
+
+
+    public void changeUpState(){
+
     }
 
     class LoadNewPageArticleCmdListener implements CmdListener<ArticleMsg> {
@@ -129,7 +134,7 @@ public class ArticlePresenter {
         entity.mReadCount = result.mReadCounts.get(index).intValue();
         entity.mUpCount = result.mReadCounts.get(index).intValue();
 
-        CommentMsg msg = result.mComments.get(index);
+        CommentObtainMsg msg = result.mComments.get(index);
         for (int i = 0; i < msg.mGuids.size(); ++i){
 
             if (msg != null && msg.mGuids != null

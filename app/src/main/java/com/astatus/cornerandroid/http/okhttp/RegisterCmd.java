@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class RegisterCmd extends PostCmd<RegisterMsg>{
 
-    private static final String CMD_METHOD = "app/register";
+    private static final String CMD_METHOD = "app/Register";
 
     static public RegisterCmd create(CmdListener listener,
                                     String email, String password,

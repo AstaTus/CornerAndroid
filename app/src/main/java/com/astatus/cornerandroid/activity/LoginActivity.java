@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
     private void login(String email, String password) {
 
 
-        /*LoginCmd cmd = LoginCmd.create(
+        /*CommentAddCmd cmd = CommentAddCmd.create(
                 new LoginResponseListener(), new LoginErrorListener(), email, password);
         cmd.excute();
         showLoginProgress();*/

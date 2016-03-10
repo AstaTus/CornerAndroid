@@ -1,6 +1,7 @@
 package com.astatus.cornerandroid.adapder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
+import com.astatus.cornerandroid.activity.CommentActivity;
+import com.astatus.cornerandroid.activity.PersonalActivity;
 import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.util.HttpUtil;
 import com.astatus.cornerandroid.util.NumberUtil;
@@ -161,6 +164,8 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
             @Override
             public void onClick(View v) {
 
+                Intent commentIntent = new Intent(v.getContext(), CommentActivity.class);
+                v.getContext().startActivity(commentIntent);
             }
         }
 

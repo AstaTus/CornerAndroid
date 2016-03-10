@@ -19,7 +19,7 @@ public class ArticleCmd extends GetCmd<ArticleMsg>{
     public static final int REQUEST_DIRECTION_DOWN = 2;
 
 
-    private static final String CMD_METHOD = "app/article";
+    private static final String CMD_METHOD = "app/Article";
 
 
     //上拉 获取所有的项,如果超过时间间隔-时间间隔服务器定,则本地数据要清空,

@@ -9,7 +9,7 @@ import java.io.IOException;
  * Created by AstaTus on 2016/2/17.
  */
 public class PublishCmd extends MultipartCmd<PublishMsg>{
-    private static final String CMD_METHOD = "app/publish";
+    private static final String CMD_METHOD = "app/Publish";
 
     static public PublishCmd create(CmdListener listener,
                                  File image,
