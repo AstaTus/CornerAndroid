@@ -1,6 +1,6 @@
 package com.astatus.cornerandroid.http.okhttp;
 
-import com.astatus.cornerandroid.message.CommentDeleteMsg;
+import com.astatus.cornerandroid.message.CommentRemoveMsg;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -8,20 +8,20 @@ import java.util.HashMap;
 /**
  * Created by AstaTus on 2016/3/10.
  */
-public class CommentDeleteCmd extends PostCmd<CommentDeleteMsg> {
+public class CommentRemoveCmd extends PostCmd<CommentRemoveMsg> {
 
     private static final String CMD_METHOD = "app/Comment/Delete";
-    static public CommentDeleteCmd create(CmdListener listener,
+    static public CommentRemoveCmd create(CmdListener listener,
                                        BigInteger commentGuid){
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("commentGuid", commentGuid.toString());
 
-        return new CommentDeleteCmd(listener, params);
+        return new CommentRemoveCmd(listener, params);
     }
 
-    public CommentDeleteCmd(CmdListener listener, HashMap<String, String> params) {
+    public CommentRemoveCmd(CmdListener listener, HashMap<String, String> params) {
 
-        super(HttpDef.SERVER_HOST_URL, CMD_METHOD, listener, CommentDeleteMsg.class, params);
+        super(HttpDef.SERVER_HOST_URL, CMD_METHOD, listener, CommentRemoveMsg.class, params);
     }
 }

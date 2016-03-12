@@ -4,7 +4,6 @@ import com.astatus.cornerandroid.entity.ArticleEntity;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +43,23 @@ public class ArticleModel {
         }
 
         return BigInteger.valueOf(0);
+    }
+
+    public int changeUpState(BigInteger articleGuid, boolean isUp){
+
+        ArticleEntity entity;
+        for (int i = 0; i < mArticles.size(); ++i){
+            entity = mArticles.get(i);
+            if (entity.mGuid.compareTo(articleGuid) == 0){
+                entity.mIsUp = isUp;
+                entity.mNeedUpdateUp = true;
+
+                return i;
+
+            }
+        }
+
+        return -1;
     }
 
     public void addArticle(ArticleEntity entity, int location){

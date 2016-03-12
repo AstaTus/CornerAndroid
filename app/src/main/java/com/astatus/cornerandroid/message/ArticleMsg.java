@@ -18,7 +18,7 @@ public class ArticleMsg {
     public ArrayList<String> mFeelTexts;
     public ArrayList<Integer> mUpCounts;
     public ArrayList<Integer> mReadCounts;
-    public ArrayList<CommentObtainMsg> mComments;
+    public ArrayList<ArrayList<CommentBlock>> mComments;
     public ArrayList<BigInteger> mLocationGuids;
     public ArrayList<String> mLocationNames;
     public ArrayList<Boolean> mIsUps;

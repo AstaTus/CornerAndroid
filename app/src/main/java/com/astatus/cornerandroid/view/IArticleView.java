@@ -13,7 +13,16 @@ public interface IArticleView {
 
     void showNewPage();
 
-    void showLoadFailedToast();
+    void loadNewPageFailed();
 
-    void setNoMoreArticle();
+    void loadNextPageFailed();
+
+    void updateAllArticles();
+
+    void bindArticleListData(List<ArticleEntity> list);
+
+    void changeRecyclerViewFootStyle(boolean loadMoreStyle);
+
+    void notifyUpState(int index);
+
 }

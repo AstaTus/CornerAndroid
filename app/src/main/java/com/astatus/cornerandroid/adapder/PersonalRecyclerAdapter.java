@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.activity.CommentActivity;
-import com.astatus.cornerandroid.activity.PersonalActivity;
 import com.astatus.cornerandroid.entity.ArticleEntity;
+import com.astatus.cornerandroid.presenter.ArticlePresenter;
 import com.astatus.cornerandroid.util.HttpUtil;
 import com.astatus.cornerandroid.util.NumberUtil;
 import com.astatus.cornerandroid.widget.HeadFootAdapter;
@@ -22,6 +22,7 @@ import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -31,19 +32,26 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
 
     private List<ArticleEntity> mData;
     private Context mContext;
+    private ArticlePresenter mPresenter;
 
-    public PersonalRecyclerAdapter(Context context){
+    private CommentBtnClickListener mCommentBtnListener = new CommentBtnClickListener();
+    private MoreBtnClickListener mMoreBtnListener = new MoreBtnClickListener();
+    private UpBtnClickListener mUpBtnListener = new UpBtnClickListener();
+
+
+    public PersonalRecyclerAdapter(Context context, ArticlePresenter presenter){
         super(false, true);
         mContext = context;
+        mPresenter = presenter;
         setFootAdapter(new LoadMoreAdapter());
     }
 
     public void setHaveMore(boolean more){
 
-        LoadMoreAdapter adapter = (LoadMoreAdapter)getFootAdapter();
+        LoadMoreAdapter foot = (LoadMoreAdapter)getFootAdapter();
 
-        if (more !=  adapter.getHaveMore()){
-            adapter.setHaveMore(more);
+        if (more !=  foot.getHaveMore()){
+            foot.setHaveMore(more);
             notifyItemChanged(getItemCount() - 1);
         }
     }
@@ -58,7 +66,9 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
         PersonalViewHolder pvHolder = (PersonalViewHolder)holder;
         ArticleEntity entity = mData.get(position);
         if (entity != null){
+            //根据entity  item中的控件可做到局部更新
             try{
+
                 //头像
                 Transformation transformation = new RoundedTransformationBuilder()
                         .borderColor(Color.BLACK)
@@ -90,14 +100,17 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
                 pvHolder.mLocationDistance.setText("3km");
 
                 if (entity.mIsUp){
-                    pvHolder.mUpView.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
+                    pvHolder.mUpView.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
 
                 }else{
-                    pvHolder.mUpView.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
+                    pvHolder.mUpView.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
                 }
+                pvHolder.mUpView.setTag(entity.mGuid);
 
                 pvHolder.mUpCount.setText(NumberUtil.GetSimplifyString(entity.mUpCount));
                 pvHolder.mReadCount.setText(NumberUtil.GetSimplifyString(entity.mReadCount));
+
+
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -117,8 +130,35 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
         notifyDataSetChanged();
     }
 
+    class CommentBtnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
 
-    public static class PersonalViewHolder extends RecyclerView.ViewHolder {
+            Intent commentIntent = new Intent(v.getContext(), CommentActivity.class);
+            v.getContext().startActivity(commentIntent);
+        }
+    }
+
+    class MoreBtnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+    class UpBtnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            BigInteger articlGuid = (BigInteger)v.getTag();
+            if (articlGuid != null){
+                mPresenter.changeUpState(articlGuid);
+            }
+
+        }
+    }
+
+
+    public class PersonalViewHolder extends RecyclerView.ViewHolder {
 
         protected RoundedImageView mHeadImage;
         protected TextView mArtistName;
@@ -131,9 +171,6 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
         protected TextView mUpCount;
         protected TextView mReadCount;
 
-        private static CommentBtnClickListener sCommentBtnListener = new CommentBtnClickListener();
-        private static MoreBtnClickListener sMoreBtnListener = new MoreBtnClickListener();
-        private static UpBtnClickListener sUpBtnListener = new UpBtnClickListener();
 
         public PersonalViewHolder(View v) {
             super(v);
@@ -151,37 +188,16 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
             mReadCount = (TextView)v.findViewById(R.id.image_card_read_text);
 
             ImageView btn = (ImageView) v.findViewById(R.id.image_card_up_btn);
-            btn.setOnClickListener(sUpBtnListener);
+            btn.setOnClickListener(mUpBtnListener);
             btn = (ImageView) v.findViewById(R.id.image_card_comment_btn);
-            btn.setOnClickListener(sCommentBtnListener);
+            btn.setOnClickListener(mCommentBtnListener);
 
             btn = (ImageView) v.findViewById(R.id.image_card_more_btn);
-            btn.setOnClickListener(sMoreBtnListener);
+            btn.setOnClickListener(mMoreBtnListener);
         }
 
 
-        static class CommentBtnClickListener implements View.OnClickListener{
-            @Override
-            public void onClick(View v) {
 
-                Intent commentIntent = new Intent(v.getContext(), CommentActivity.class);
-                v.getContext().startActivity(commentIntent);
-            }
-        }
-
-        static class MoreBtnClickListener implements View.OnClickListener{
-            @Override
-            public void onClick(View v) {
-
-            }
-        }
-
-        static class UpBtnClickListener implements View.OnClickListener{
-            @Override
-            public void onClick(View v) {
-
-            }
-        }
     }
 
     public static class LoadMoreAdapter extends HeadFootAdapter{

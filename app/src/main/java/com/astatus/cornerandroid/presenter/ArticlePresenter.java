@@ -1,18 +1,20 @@
 package com.astatus.cornerandroid.presenter;
 
-import com.astatus.cornerandroid.adapder.PersonalRecyclerAdapter;
 import com.astatus.cornerandroid.application.CornerApplication;
 import com.astatus.cornerandroid.cache.UserCache;
 import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.entity.CommentEntity;
 import com.astatus.cornerandroid.http.okhttp.ArticleCmd;
 import com.astatus.cornerandroid.http.okhttp.CmdListener;
+import com.astatus.cornerandroid.http.okhttp.UpChangeStateCmd;
 import com.astatus.cornerandroid.message.ArticleMsg;
-import com.astatus.cornerandroid.message.CommentObtainMsg;
+import com.astatus.cornerandroid.message.CommentBlock;
+import com.astatus.cornerandroid.message.UpChangeStateMsg;
 import com.astatus.cornerandroid.model.ArticleModel;
 import com.astatus.cornerandroid.view.IArticleView;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 /**
  * Created by AstaTus on 2016/2/28.
@@ -21,14 +23,14 @@ public class ArticlePresenter {
 
     private ArticleModel mModel;
     private IArticleView mArticleView;
-    private PersonalRecyclerAdapter mAdpater;
 
-    public ArticlePresenter(IArticleView view, PersonalRecyclerAdapter adpater){
+    public ArticlePresenter(IArticleView view){
         mModel = new ArticleModel();
         mArticleView = view;
-        mAdpater = adpater;
+    }
 
-        mAdpater.restData(mModel.getArticleList());
+    public void bindArticleListData(){
+        mArticleView.bindArticleListData(mModel.getArticleList());
     }
 
     public void loadNextPage(){
@@ -55,8 +57,27 @@ public class ArticlePresenter {
     }
 
 
-    public void changeUpState(){
+    public void changeUpState(BigInteger articleGuid){
 
+        UpChangeStateCmd cmd = UpChangeStateCmd.create(
+                new UpChangeStateCmdListener(),
+                articleGuid);
+        cmd.excute();
+    }
+
+    class UpChangeStateCmdListener implements CmdListener<UpChangeStateMsg>{
+
+        @Override
+        public void onSuccess(UpChangeStateMsg result) {
+
+            int index = mModel.changeUpState(result.mArticleGuid, result.mIsUp);
+            mArticleView.notifyUpState(index);
+        }
+
+        @Override
+        public void onFailed() {
+
+        }
     }
 
     class LoadNewPageArticleCmdListener implements CmdListener<ArticleMsg> {
@@ -76,8 +97,6 @@ public class ArticlePresenter {
                 }
 
 
-                mAdpater.restData(mModel.getArticleList());
-                mAdpater.showFootView();
                 mArticleView.showNewPage();
             }catch (Exception e){
                 e.printStackTrace();
@@ -87,7 +106,7 @@ public class ArticlePresenter {
 
         @Override
         public void onFailed() {
-            mArticleView.showLoadFailedToast();
+            mArticleView.loadNextPageFailed();
         }
     }
 
@@ -104,19 +123,18 @@ public class ArticlePresenter {
             }
 
             if (result.mGuids.size() < ArticleCmd.REQUEST_ARTICLE_MAX_COUNT){
-                mAdpater.setHaveMore(false);
-                mArticleView.setNoMoreArticle();
+
+                mArticleView.changeRecyclerViewFootStyle(false);
             }else{
-                mAdpater.setHaveMore(true);
+                mArticleView.changeRecyclerViewFootStyle(true);
             }
 
-            mAdpater.restData(mModel.getArticleList());
             mArticleView.showNextPage();
         }
 
         @Override
         public void onFailed() {
-            mArticleView.showLoadFailedToast();
+            mArticleView.loadNextPageFailed();
         }
     }
 
@@ -134,19 +152,19 @@ public class ArticlePresenter {
         entity.mReadCount = result.mReadCounts.get(index).intValue();
         entity.mUpCount = result.mReadCounts.get(index).intValue();
 
-        CommentObtainMsg msg = result.mComments.get(index);
-        for (int i = 0; i < msg.mGuids.size(); ++i){
+        ArrayList<CommentBlock> blocks = result.mComments.get(index);
+        for (int i = 0; i < blocks.size(); ++i){
+            CommentBlock block = blocks.get(i);
 
-            if (msg != null && msg.mGuids != null
-                    && msg.mGuids.get(i).compareTo(BigInteger.valueOf(0)) != 0){
+            if (block.mGuid.compareTo(BigInteger.valueOf(0)) != 0){
                 CommentEntity comment = new CommentEntity();
-                comment.mGuid = msg.mGuids.get(i);
-                comment.mReplyGuid = msg.mReplyGuids.get(i);
-                comment.mReplyHeadUrl = msg.mHeadUrls.get(i);
-                comment.mTargetName = msg.mTargetNames.get(i);
-                comment.mReplyName = msg.mReplyNames.get(i);
-                comment.mTime = msg.mTimes.get(i);
-                comment.mFeelText = msg.mTexts.get(i);
+                comment.mGuid = block.mGuid;
+                comment.mReplyGuid = block.mReplyGuid;
+                comment.mReplyHeadUrl = block.mHeadUrl;
+                comment.mTargetName = block.mTargetName;
+                comment.mReplyName = block.mReplyName;
+                comment.mTime = block.mTime;
+                comment.mFeelText = block.mText;
 
                 entity.mComments.add(comment);
             }

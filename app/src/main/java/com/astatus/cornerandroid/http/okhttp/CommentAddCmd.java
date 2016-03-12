@@ -1,6 +1,6 @@
 package com.astatus.cornerandroid.http.okhttp;
 
-import com.astatus.cornerandroid.message.CommentObtainMsg;
+import com.astatus.cornerandroid.message.CommentAddMsg;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * Created by AstaTus on 2016/3/10.
  */
-public class CommentAddCmd extends PostCmd<CommentObtainMsg> {
+public class CommentAddCmd extends PostCmd<CommentAddMsg> {
 
     private static final String CMD_METHOD = "app/Comment/Add";
     static public CommentAddCmd create(CmdListener listener,
@@ -26,6 +26,6 @@ public class CommentAddCmd extends PostCmd<CommentObtainMsg> {
 
     public CommentAddCmd(CmdListener listener, HashMap<String, String> params) {
 
-        super(HttpDef.SERVER_HOST_URL, CMD_METHOD, listener, CommentObtainMsg.class, params);
+        super(HttpDef.SERVER_HOST_URL, CMD_METHOD, listener, CommentAddMsg.class, params);
     }
 }

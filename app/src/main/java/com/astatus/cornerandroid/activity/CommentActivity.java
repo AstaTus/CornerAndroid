@@ -45,4 +45,39 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
 
         mPresenter = new CommentPresenter(this, adapter);
     }
+
+    @Override
+    public void showNextPage() {
+
+    }
+
+    @Override
+    public void showNewPage() {
+
+    }
+
+    @Override
+    public void loadNewPageFailed() {
+
+    }
+
+    @Override
+    public void loadNextPageFailed() {
+
+    }
+
+    @Override
+    public void notifyCommentAdd() {
+
+    }
+
+    @Override
+    public void notifyCommentRemove(int index) {
+
+    }
+
+    @Override
+    public void changeRecyclerViewFootStyle(int style) {
+
+    }
 }

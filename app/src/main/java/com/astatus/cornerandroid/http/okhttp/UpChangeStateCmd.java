@@ -8,20 +8,20 @@ import java.util.HashMap;
 /**
  * Created by AstaTus on 2016/3/10.
  */
-public class ChangeUpStateCmd extends PostCmd<UpChangeStateMsg> {
+public class UpChangeStateCmd extends PostCmd<UpChangeStateMsg> {
 
-    private static final String CMD_METHOD = "app/ChangeUpState";
+    private static final String CMD_METHOD = "app/Up/ChangeState";
 
-    static public ChangeUpStateCmd create(CmdListener listener, BigInteger articleGuid){
+    static public UpChangeStateCmd create(CmdListener listener, BigInteger articleGuid){
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("articleGuid", articleGuid.toString());
 
-        return new ChangeUpStateCmd(listener, params);
+        return new UpChangeStateCmd(listener, params);
     }
 
-    public ChangeUpStateCmd(CmdListener listener,
-                    HashMap<String, String> params) {
+    public UpChangeStateCmd(CmdListener listener,
+                            HashMap<String, String> params) {
 
         super(HttpDef.SERVER_HOST_URL, CMD_METHOD, listener, UpChangeStateMsg.class, params);
     }

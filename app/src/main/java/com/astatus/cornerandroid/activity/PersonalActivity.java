@@ -14,10 +14,13 @@ import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.adapder.PersonalRecyclerAdapter;
+import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.presenter.ArticlePresenter;
 import com.astatus.cornerandroid.view.IArticleView;
 import com.astatus.cornerandroid.widget.HeadFootRecyclerView;
 import com.astatus.cornerandroid.widget.ProlateSwipeRefreshLayout;
+
+import java.util.List;
 
 public class PersonalActivity extends AppCompatActivity implements IArticleView {
 
@@ -27,6 +30,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     private AppBarLayout mAppbarLayout;
     private TextView mTitleTextView;
     private ActionBar mActionBar;
+    private PersonalRecyclerAdapter mAdpater;
 
     private ArticlePresenter mArticlePresenter;
 
@@ -47,6 +51,8 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     }
 
     private void init(){
+        mArticlePresenter = new ArticlePresenter(this);
+
         final Toolbar toolbar = (Toolbar) findViewById(R.id.personal_toolbar);
         setSupportActionBar(toolbar);
         mActionBar = getSupportActionBar();
@@ -69,14 +75,6 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
                 //updateSwipeRefreshEnable(verticalOffset);
             }
 
-            /*private void updateSwipeRefreshEnable(int verticalOffset){
-                if (mSwipeRefreshLayout.isEnabled()){
-                    if (mIsRecyclerViewTouchDown && verticalOffset != 0){
-                        mSwipeRefreshLayout.setEnabled(false);
-                    }
-                }
-            }*/
-
             private void titleAlphaChange(int verticalOffset) {
                 float collapsingToolbarLayoutMiniHeight = ViewCompat.
                         getMinimumHeight(mCollapsingToolbarLayout);
@@ -90,8 +88,8 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
         });
 
         mRecyclerView = (HeadFootRecyclerView)findViewById(R.id.personal_recyclerView);
-        PersonalRecyclerAdapter adapter = new PersonalRecyclerAdapter(this);
-        mRecyclerView.setAdapter(adapter);
+        mAdpater = new PersonalRecyclerAdapter(this, mArticlePresenter);
+        mRecyclerView.setAdapter(mAdpater);
         /*mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -127,40 +125,49 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
             }
         });
 
-
-
-        /*List<ArticleEntity> entities = new ArrayList<ArticleEntity>();
-        entities.add(new ArticleEntity());
-        entities.add(new ArticleEntity());
-        entities.add(new ArticleEntity());
-        entities.add(new ArticleEntity());
-
-        mAdapter = new PersonalRecyclerAdapter(entities, this);
-
-        mRecyclerView.setAdapter(mAdapter);*/
-
-        mArticlePresenter = new ArticlePresenter(this, adapter);
+        mArticlePresenter.bindArticleListData();
     }
 
     @Override
     public void showNextPage() {
-
-        mRecyclerView.setLoadMore(false);
+        mAdpater.notifyDataSetChanged();
     }
 
     @Override
     public void showNewPage() {
+        mAdpater.showFootView();
+        mAdpater.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);
 
     }
 
     @Override
-    public void setNoMoreArticle(){
-        mRecyclerView.setLoadMoreEnable(false);
+    public void updateAllArticles() {
+        mAdpater.notifyDataSetChanged();
     }
 
     @Override
-    public void showLoadFailedToast() {
+    public void bindArticleListData(List<ArticleEntity> list) {
+        mAdpater.restData(list);
+    }
+
+    @Override
+    public void changeRecyclerViewFootStyle(boolean isLoadMoreStyle) {
+        mRecyclerView.setLoadMoreEnable(isLoadMoreStyle);
+    }
+
+    @Override
+    public void notifyUpState(int index) {
+        mAdpater.notifyItemChanged(index);
+    }
+
+    @Override
+    public void loadNextPageFailed() {
+
+    }
+
+    @Override
+    public void loadNewPageFailed() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 }

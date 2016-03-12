@@ -13,6 +13,8 @@ public class CommentObtainCmd extends GetCmd<CommentObtainMsg> {
 
     private static final String CMD_METHOD = "app/Comment/Obtain";
 
+    public static final int REQUEST_COMMENT_MAX_COUNT = 3;
+
     public static final int REQUEST_DIRECTION_UP = 1;
     public static final int REQUEST_DIRECTION_DOWN = 2;
 

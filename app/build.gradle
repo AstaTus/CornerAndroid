@@ -15,14 +15,14 @@ android {
     buildTypes {
 
         debug {
-            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.3:3000/"'
-            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
+            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
             //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.0.107:3000/"'
             buildConfigField "String", "IMAGE_ADDRESS", '"http://corner-image-bucket.img-cn-shanghai.aliyuncs.com/"'
         }
         release {
-            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.3:3000/"'
-            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
+            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
             //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.0.107:3000/"'
             buildConfigField "String", "IMAGE_ADDRESS", '"http://corner-image-bucket.img-cn-shanghai.aliyuncs.com/"'
 

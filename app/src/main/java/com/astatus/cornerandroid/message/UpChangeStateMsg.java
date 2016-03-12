@@ -7,8 +7,8 @@ import java.math.BigInteger;
  */
 public class UpChangeStateMsg {
     public BigInteger mArticleGuid;
-    public int mIsUp;
+    public boolean mIsUp;
 
-    public static final int CODE_UP_STATE = 1;
-    public static final int CODE_UNUP_STATE = 2;
+    public static final boolean CODE_UP_STATE = true;
+    public static final boolean CODE_UNUP_STATE = false;
 }

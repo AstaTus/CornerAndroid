@@ -21,5 +21,6 @@ public class ArticleEntity {
     public String mLocationName;
     public boolean mIsUp;
 
-    public int mSegment;
+    //用于Up的更新
+    public boolean mNeedUpdateUp = false;
 }
