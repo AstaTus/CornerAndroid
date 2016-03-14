@@ -70,6 +70,15 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <!--  这个是加入的代码 -->
+    <style name="commentBottomMenuAnimStyle">
+        <item name="android:windowEnterAnimation">@animator/bottom_menu_show_animator</item>
+        <!-- 指定显示的动画xml -->
+
+        <item name="android:windowExitAnimation">@animator/bottom_menu_hide_animator</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
     <!--<style name="MyCustomBetterPickersRadialTimePickerDialog">
         <item name="bpMainColor1">@color/custom_tp_main1</item>
         <item name="bpMainColor2">@color/custom_tp_main2</item>

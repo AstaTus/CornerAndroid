@@ -1,6 +1,7 @@
 package com.astatus.cornerandroid.adapder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
-import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.entity.CommentEntity;
 import com.astatus.cornerandroid.widget.HeadFootAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
@@ -23,11 +26,21 @@ public class CommentRecyclerAdapter extends HeadFootRecyclerAdapter {
 
     private List<CommentEntity> mData;
     private Context mContext;
+    private CommentItemClickListener mCommentItemClickListener;
+
+    public interface CommentItemClickListener {
+        public void onItemClick(View view,int postion);
+    }
 
     public CommentRecyclerAdapter(Context context){
         super(false, true);
-        setFootAdapter(new LoadMoreAdapter(R.layout.widget_recyleview_foot));
         mContext = context;
+        setFootAdapter(new LoadMoreAdapter(R.layout.widget_recyleview_foot));
+
+    }
+
+    public void setCommentItenClickListener(CommentItemClickListener listener){
+        mCommentItemClickListener = listener;
     }
 
 
@@ -42,7 +55,40 @@ public class CommentRecyclerAdapter extends HeadFootRecyclerAdapter {
         CommentEntity entity = mData.get(position);
         if (entity != null){
 
+            cvHolder.mRoot.setTag(entity);
 
+            Transformation transformation = new RoundedTransformationBuilder()
+                    .borderColor(Color.BLACK)
+                    .borderWidthDp(3)
+                    .cornerRadiusDp(30)
+                    .oval(false)
+                    .build();
+
+            if (entity.mReplyHeadUrl != null && entity.mReplyHeadUrl.length() == 0){
+                Picasso.with(mContext)
+                        .load(entity.mReplyHeadUrl)
+                        .fit()
+                        .transform(transformation)
+                        .into(cvHolder.mHeadImage);
+            }else{
+                cvHolder.mHeadImage.setBackgroundResource(R.drawable.ic_account_circle_black_48dp);
+            }
+
+            cvHolder.mReplyNameText.setText(entity.mReplyName);
+
+            if (entity.mTargetName == null || entity.mTargetName.length() == 0){
+                cvHolder.mTargetNameText.setVisibility(View.GONE);
+                cvHolder.mReplyText.setVisibility(View.GONE);
+            }else{
+                cvHolder.mTargetNameText.setVisibility(View.VISIBLE);
+                cvHolder.mReplyText.setVisibility(View.VISIBLE);
+
+                cvHolder.mTargetNameText.setText(entity.mTargetName);
+            }
+
+            cvHolder.mDateText.setText(entity.mTime.toString());
+
+            cvHolder.mCommentText.setText(entity.mFeelText);
         }
     }
 
@@ -60,38 +106,27 @@ public class CommentRecyclerAdapter extends HeadFootRecyclerAdapter {
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
 
+        protected View mRoot;
         protected RoundedImageView mHeadImage;
-        protected TextView mNameText;
-        protected TextView mReplyText;
         protected TextView mReplyNameText;
+        protected TextView mTargetNameText;
+        protected TextView mReplyText;
+
         protected TextView mDateText;
         protected TextView mCommentText;
 
         public CommentViewHolder(View v) {
             super(v);
 
-            /*mHeadImage = (RoundedImageView)v.findViewById(R.id.image_card_head_image);
-            mArtistName = (TextView)v.findViewById(R.id.image_card_artist);
-            mTime = (TextView)v.findViewById(R.id.image_card_time);
-            mArticleImage = (ImageView)v.findViewById(R.id.image_card_image);
+            mRoot = v.findViewById(R.id.comment_item_root);
+            mHeadImage = (RoundedImageView)v.findViewById(R.id.comment_item_head_image);
+            mReplyNameText = (TextView)v.findViewById(R.id.comment_item_reply_name_text);
+            mTargetNameText = (TextView)v.findViewById(R.id.comment_item_target_name_text);
+            mReplyText = (TextView)v.findViewById(R.id.comment_item_reply_text);
 
-            mAttentionCount = (TextView)v.findViewById(R.id.image_card_head_image);
-            mFanCount = (TextView)v.findViewById(R.id.image_card_head_image);
+            mDateText = (TextView)v.findViewById(R.id.comment_item_date_text);
+            mCommentText = (TextView)v.findViewById(R.id.comment_item_comment_text);
 
-            mFeelText = (TextView)v.findViewById(R.id.image_card_text);
-            mLocationName = (TextView)v.findViewById(R.id.image_card_corner_name);
-            mLocationDistance = (TextView)v.findViewById(R.id.image_card_corner_distance);
-            mUpView = (ImageView)v.findViewById(R.id.image_card_up_btn);
-            mUpCount = (TextView)v.findViewById(R.id.image_card_up_text);
-            mReadCount = (TextView)v.findViewById(R.id.image_card_head_image);
-
-            Button btn = (Button) v.findViewById(R.id.image_card_up_btn);
-            btn.setOnClickListener(sUpBtnListener);
-            btn = (Button) v.findViewById(R.id.image_card_comment_btn);
-            btn.setOnClickListener(sCommentBtnListener);
-
-            btn = (Button) v.findViewById(R.id.image_card_more_btn);
-            btn.setOnClickListener(sMoreBtnListener);*/
         }
     }
 

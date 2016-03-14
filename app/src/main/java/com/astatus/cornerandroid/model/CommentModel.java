@@ -17,27 +17,43 @@ public class CommentModel {
 
     private List<CommentEntity> mComments;
 
-    private BigInteger mArticleGuid = BigInteger.valueOf(0);;
+
 
     public CommentModel(){
         mComments = new ArrayList<CommentEntity>();
     }
 
-    public List<CommentEntity> getArticleList(){
+    public List<CommentEntity> getCommentList(){
         return mComments;
     }
 
-    public void setArticleGuid(BigInteger articleGuid){
-        mArticleGuid = articleGuid;
+    public CommentEntity getComment(BigInteger guid){
+        CommentEntity ce;
+        for(int i = 0; i < mComments.size(); ++i){
+            ce = mComments.get(i);
+            if (ce.mGuid.compareTo(guid) == 0){
+                return ce;
+            }
+        }
+
+        return null;
     }
 
-    public BigInteger getArticleGuid(){
-
-        return mArticleGuid;
+    public int addComment(CommentEntity entity, int position){
+        mComments.add(entity);
+        return mComments.size() - 1;
     }
 
-    public void addComment(CommentEntity entity, int position){
+    public int removeComment(BigInteger guid){
+        for (int i = 0; i < mComments.size(); ++i){
+            CommentEntity entity = mComments.get(i);
+            if (entity.mGuid.compareTo(guid) == 0){
+                mComments.remove(i);
+                return i;
+            }
+        }
 
+        return -1;
     }
 
     public BigInteger getFrontGuid(){

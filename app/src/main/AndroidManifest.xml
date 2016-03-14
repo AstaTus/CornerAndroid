@@ -62,7 +62,9 @@
                 android:value="com.astatus.cornerandroid.activity.HomeActivity" />
         </activity>
         <activity android:name=".activity.CommentActivity"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
     </application>
 
 </manifest>

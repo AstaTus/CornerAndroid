@@ -3,6 +3,7 @@ package com.astatus.cornerandroid.adapder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,7 +107,8 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
                     pvHolder.mUpView.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
                 }
                 pvHolder.mUpView.setTag(entity.mGuid);
-
+                pvHolder.mCommentView.setTag(entity.mGuid);
+                pvHolder.mMoreView.setTag(entity.mGuid);
                 pvHolder.mUpCount.setText(NumberUtil.GetSimplifyString(entity.mUpCount));
                 pvHolder.mReadCount.setText(NumberUtil.GetSimplifyString(entity.mReadCount));
 
@@ -134,7 +136,9 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
         @Override
         public void onClick(View v) {
 
+            BigInteger guid = (BigInteger)v.getTag();
             Intent commentIntent = new Intent(v.getContext(), CommentActivity.class);
+            commentIntent.putExtra("ARTICLE_GUID", guid.toString());
             v.getContext().startActivity(commentIntent);
         }
     }
@@ -168,6 +172,8 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
         protected TextView mLocationName;
         protected TextView mLocationDistance;
         protected ImageView mUpView;
+        protected ImageView mCommentView;
+        protected ImageView mMoreView;
         protected TextView mUpCount;
         protected TextView mReadCount;
 
@@ -183,17 +189,18 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
             mFeelText = (TextView)v.findViewById(R.id.image_card_text);
             mLocationName = (TextView)v.findViewById(R.id.image_card_corner_name);
             mLocationDistance = (TextView)v.findViewById(R.id.image_card_corner_distance);
-            mUpView = (ImageView)v.findViewById(R.id.image_card_up_btn);
+
             mUpCount = (TextView)v.findViewById(R.id.image_card_up_text);
             mReadCount = (TextView)v.findViewById(R.id.image_card_read_text);
 
-            ImageView btn = (ImageView) v.findViewById(R.id.image_card_up_btn);
-            btn.setOnClickListener(mUpBtnListener);
-            btn = (ImageView) v.findViewById(R.id.image_card_comment_btn);
-            btn.setOnClickListener(mCommentBtnListener);
+            mUpView = (ImageView) v.findViewById(R.id.image_card_up_btn);
+            mUpView.setOnClickListener(mUpBtnListener);
 
-            btn = (ImageView) v.findViewById(R.id.image_card_more_btn);
-            btn.setOnClickListener(mMoreBtnListener);
+            mCommentView = (ImageView) v.findViewById(R.id.image_card_comment_btn);
+            mCommentView.setOnClickListener(mCommentBtnListener);
+
+            mMoreView = (ImageView) v.findViewById(R.id.image_card_more_btn);
+            mMoreView.setOnClickListener(mMoreBtnListener);
         }
 
 

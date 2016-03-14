@@ -2,7 +2,6 @@ package com.astatus.cornerandroid.presenter;
 
 import com.astatus.cornerandroid.adapder.CommentRecyclerAdapter;
 import com.astatus.cornerandroid.entity.CommentEntity;
-import com.astatus.cornerandroid.http.okhttp.ArticleCmd;
 import com.astatus.cornerandroid.http.okhttp.CmdListener;
 import com.astatus.cornerandroid.http.okhttp.CommentAddCmd;
 import com.astatus.cornerandroid.http.okhttp.CommentObtainCmd;
@@ -11,9 +10,10 @@ import com.astatus.cornerandroid.message.CommentAddMsg;
 import com.astatus.cornerandroid.message.CommentBlock;
 import com.astatus.cornerandroid.message.CommentObtainMsg;
 import com.astatus.cornerandroid.message.CommentRemoveMsg;
-import com.astatus.cornerandroid.model.ArticleModel;
 import com.astatus.cornerandroid.model.CommentModel;
 import com.astatus.cornerandroid.view.ICommentView;
+
+import org.w3c.dom.Comment;
 
 import java.math.BigInteger;
 
@@ -24,14 +24,25 @@ public class CommentPresenter {
 
     private CommentModel mModel;
     private ICommentView mCommentView;
-    private CommentRecyclerAdapter mAdpater;
 
-    public CommentPresenter(ICommentView view, CommentRecyclerAdapter adpater) {
+    private BigInteger mArticleGuid = BigInteger.valueOf(0);
+
+    public void setArticleGuid(BigInteger articleGuid){
+        mArticleGuid = articleGuid;
+    }
+
+    public BigInteger getArticleGuid(){
+
+        return mArticleGuid;
+    }
+
+    public CommentPresenter(ICommentView view) {
         mModel = new CommentModel();
         mCommentView = view;
-        mAdpater = adpater;
+    }
 
-        mAdpater.resetData(mModel.getArticleList());
+    public void bindArticleListData(){
+        mCommentView.bindArticleListData(mModel.getCommentList());
     }
 
 
@@ -39,7 +50,7 @@ public class CommentPresenter {
 
         CommentObtainCmd cmd = CommentObtainCmd.create(
                 new LoadNewPageCommentCmdListener(),
-                mModel.getArticleGuid(),
+                mArticleGuid,
                 mModel.getFrontGuid(),
                 CommentObtainCmd.REQUEST_DIRECTION_UP);
         cmd.excute();
@@ -48,17 +59,18 @@ public class CommentPresenter {
     public void loadNextPage() {
         CommentObtainCmd cmd = CommentObtainCmd.create(
                 new LoadNextPageCommentCmdListener(),
-                mModel.getArticleGuid(),
+                mArticleGuid,
                 mModel.getLastGuid(),
                 CommentObtainCmd.REQUEST_DIRECTION_DOWN);
         cmd.excute();
-
     }
 
     public void sendComment(BigInteger targetGuid, String comment) {
+
+        CommentAddCmdListener listener = new CommentAddCmdListener();
         CommentAddCmd cmd = CommentAddCmd.create(
-                new CommentAddCmdListener(),
-                mModel.getArticleGuid(),
+                listener,
+                mArticleGuid,
                 targetGuid,
                 comment);
         cmd.excute();
@@ -81,7 +93,6 @@ public class CommentPresenter {
         comment.mReplyName = block.mReplyName;
         comment.mTargetName = block.mTargetName;
         comment.mTime = block.mTime;
-
 
         return comment;
     }
@@ -109,7 +120,6 @@ public class CommentPresenter {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
 
         @Override
@@ -155,6 +165,19 @@ public class CommentPresenter {
         @Override
         public void onSuccess(CommentAddMsg result) {
 
+            CommentEntity entity = new CommentEntity();
+            CommentBlock block = result.mBlock;
+
+            entity.mGuid = block.mGuid;
+            entity.mTime = block.mTime;
+            entity.mTargetName = block.mTargetName;
+            entity.mReplyGuid = block.mReplyGuid;
+            entity.mReplyHeadUrl = block.mHeadUrl;
+            entity.mReplyName = block.mReplyName;
+            entity.mFeelText = block.mText;
+
+            int pos = mModel.addComment(entity, CommentModel.ADD_COMMENT_LOCATION_BACK);
+            mCommentView.notifyCommentAdd(pos);
         }
 
         @Override
@@ -168,6 +191,10 @@ public class CommentPresenter {
         @Override
         public void onSuccess(CommentRemoveMsg result) {
 
+            if (result.mResult){
+                int index = mModel.removeComment(result.mGuid);
+                mCommentView.notifyCommentRemove(index);
+            }
         }
 
         @Override
