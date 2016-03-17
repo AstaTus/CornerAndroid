@@ -33,6 +33,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     private PersonalRecyclerAdapter mAdpater;
 
     private ArticlePresenter mArticlePresenter;
+    private boolean mIsFirstLoad = true;
 
     //private boolean mIsRecyclerViewTouchDown = false;
     @Override
@@ -47,6 +48,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
         mSwipeRefreshLayout.setRefreshing(true);
 
         mArticlePresenter.loadNewPage();*/
+        mIsFirstLoad = true;
         mSwipeRefreshLayout.autoRefresh();
     }
 
@@ -121,7 +123,12 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
             public void onRefresh() {
                 //Your refresh code here
 
-                mArticlePresenter.loadNewPage();
+                if (mIsFirstLoad){
+                    mArticlePresenter.loadNextPage();
+                }else{
+                    mArticlePresenter.loadNewPage();
+                }
+
             }
         });
 
@@ -130,6 +137,10 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
 
     @Override
     public void showNextPage() {
+        if (mIsFirstLoad){
+            mIsFirstLoad = false;
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
         mAdpater.notifyDataSetChanged();
     }
 
@@ -164,6 +175,10 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     @Override
     public void loadNextPageFailed() {
 
+        if (mIsFirstLoad){
+            mIsFirstLoad = false;
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

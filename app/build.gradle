@@ -4,6 +4,18 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    //配置签名文件
+    signingConfigs {
+        //调试用的KeyStore
+        debug {
+            keyAlias 'CornerAndroidKey'
+            keyPassword '1qaz2wsx!23456'
+            //配置你的keystroe路径
+            storeFile file('../keystore/debug.kjs')
+            storePassword '1qaz2wsx!23456'
+        }
+    }
+
     defaultConfig {
         applicationId "com.astatus.cornerandroid"
         minSdkVersion 17
@@ -15,14 +27,14 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
-            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
+            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
             //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.0.107:3000/"'
             buildConfigField "String", "IMAGE_ADDRESS", '"http://corner-image-bucket.img-cn-shanghai.aliyuncs.com/"'
         }
         release {
-            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
-            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
+            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
             //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.0.107:3000/"'
             buildConfigField "String", "IMAGE_ADDRESS", '"http://corner-image-bucket.img-cn-shanghai.aliyuncs.com/"'
 
@@ -38,7 +50,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
@@ -46,15 +57,17 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'joda-time:joda-time:2.1'
-    compile 'com.code-troopers.betterpickers:library:2.2.2'//date picker
+    compile 'com.code-troopers.betterpickers:library:2.2.2'
+    //date picker
     compile 'com.google.code.gson:gson:1.7.2'
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    
     compile('org.apache.httpcomponents:httpmime:4.5.1') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
-
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.1.2'
+    compile files('libs/AMap_Search_V3.2.1_20160308.jar')
+    compile files('libs/AMap_Location_V2.4.0_20160308.jar')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

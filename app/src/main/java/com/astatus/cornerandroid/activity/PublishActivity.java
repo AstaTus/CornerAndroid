@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,10 +26,12 @@ import com.astatus.cornerandroid.util.PathUtil;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigInteger;
 
 public class PublishActivity extends AppCompatActivity {
     private ImageView mImageView;
     private TextView mLocationView;
+    private BigInteger mLocationGuid;
     private EditText mEditText;
 
     private Uri mUri;
@@ -36,7 +39,7 @@ public class PublishActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send);
+        setContentView(R.layout.activity_publish);
         initView();
     }
 
@@ -48,9 +51,17 @@ public class PublishActivity extends AppCompatActivity {
         // Enable the Up button
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        mImageView = (ImageView)findViewById(R.id.send_imageview);
-        mLocationView = (TextView)findViewById(R.id.send_location_text);
-        mEditText = (EditText)findViewById(R.id.send_edit_text);
+        mImageView = (ImageView)findViewById(R.id.publish_imageview);
+        mLocationView = (TextView)findViewById(R.id.publish_location_text);
+        mEditText = (EditText)findViewById(R.id.publish_edit_text);
+        View locationRoot = findViewById(R.id.publish_location_root);
+        locationRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PublishActivity.this, LocationActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
         try {
             Intent intent = getIntent();
             String uriStr = intent.getStringExtra("uri");
@@ -100,6 +111,19 @@ public class PublishActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult( int requestCode, int resultCode, Intent data )
+    {
+        switch ( resultCode ) {
+            case RESULT_OK :
+                mLocationView.setText(data.getExtras().getString("name"));
+                mLocationGuid = BigInteger.valueOf(Long.valueOf(data.getExtras().getString("guid"))) ;
+                break;
+            default :
+                break;
+        }
     }
 
     class PublishCmdListener implements CmdListener<PublishMsg>{

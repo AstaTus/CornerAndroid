@@ -22,6 +22,9 @@ import java.math.BigInteger;
  */
 public class CommentPresenter {
 
+    public static final int COMMENT_LIST_STATE_IS_LOADING = 0;
+    public static final int COMMENT_LIST_STATE_NO_MORE = 0;
+
     private CommentModel mModel;
     private ICommentView mCommentView;
 
@@ -109,7 +112,6 @@ public class CommentPresenter {
                 CommentBlock block;
                 CommentEntity entity;
                 for (int i = result.mCommentBlocks.size() - 1; i >= 0; --i) {
-
                     block = result.mCommentBlocks.get(i);
                     entity = builderCommentEntity(block);
                     mModel.addComment(entity, CommentModel.ADD_COMMENT_LOCATION_FRONT);
@@ -124,7 +126,7 @@ public class CommentPresenter {
 
         @Override
         public void onFailed() {
-            mCommentView.loadNextPageFailed();
+            mCommentView.loadNewPageFailed();
         }
     }
 
@@ -136,7 +138,7 @@ public class CommentPresenter {
 
             CommentBlock block;
             CommentEntity entity;
-            for (int i = result.mCommentBlocks.size() - 1; i >= 0; --i) {
+            for (int i = 0; i < result.mCommentBlocks.size(); ++i) {
 
                 block = result.mCommentBlocks.get(i);
                 entity = builderCommentEntity(block);
@@ -145,9 +147,9 @@ public class CommentPresenter {
 
             if (result.mCommentBlocks.size() < CommentObtainCmd.REQUEST_COMMENT_MAX_COUNT) {
 
-                mCommentView.changeRecyclerViewFootStyle(0);
+                mCommentView.changeRecyclerViewFootStyle(false);
             } else {
-                mCommentView.changeRecyclerViewFootStyle(0);
+                mCommentView.changeRecyclerViewFootStyle(true);
             }
 
             mCommentView.showNextPage();

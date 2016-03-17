@@ -35,9 +35,11 @@ public class CommentRecyclerAdapter extends HeadFootRecyclerAdapter {
     public CommentRecyclerAdapter(Context context){
         super(false, true);
         mContext = context;
-        setFootAdapter(new LoadMoreAdapter(R.layout.widget_recyleview_foot));
+        setFootAdapter(new LoadMoreAdapter(R.layout.widget_recylerview_loading_foot));
 
     }
+
+
 
     public void setCommentItenClickListener(CommentItemClickListener listener){
         mCommentItemClickListener = listener;

@@ -18,9 +18,13 @@ public interface ICommentView {
 
     void notifyCommentAdd(int pos);
 
+    void commentAddFailed();
+
     void notifyCommentRemove(int index);
 
-    void changeRecyclerViewFootStyle(int style);
+    void commentRemoveFailed();
+
+    void changeRecyclerViewFootStyle(boolean isLoadMoreStyle);
 
 
     void bindArticleListData(List<CommentEntity> list);

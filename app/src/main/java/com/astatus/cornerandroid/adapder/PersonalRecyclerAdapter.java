@@ -3,7 +3,6 @@ package com.astatus.cornerandroid.adapder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -211,7 +210,7 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
 
         private boolean mHaveMore = true;
         public LoadMoreAdapter() {
-            super(R.layout.widget_recyleview_foot);
+            super(R.layout.widget_recylerview_loading_foot);
         }
 
         @Override

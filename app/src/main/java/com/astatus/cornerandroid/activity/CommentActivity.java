@@ -2,11 +2,13 @@ package com.astatus.cornerandroid.activity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ import com.astatus.cornerandroid.presenter.CommentPresenter;
 import com.astatus.cornerandroid.view.ICommentView;
 import com.astatus.cornerandroid.widget.CommentBottomMenu;
 import com.astatus.cornerandroid.widget.HeadFootRecyclerView;
+import com.astatus.cornerandroid.widget.ProlateSwipeRefreshLayout;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -28,10 +31,12 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
 
     private CommentPresenter mPresenter;
     private HeadFootRecyclerView mRecyclerView;
+    private ProlateSwipeRefreshLayout mSwipeRefreshLayout;
     private EditText mCommentEditText;
     private ActionBar mActionBar;
     private BigInteger mTargetGuid = BigInteger.valueOf(0);
     CommentRecyclerAdapter mAdapter;
+    private boolean mIsFirstLoad = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,7 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
 
         mPresenter.setArticleGuid(articleGuid);
         mPresenter.bindArticleListData();
-        mPresenter.loadNewPage();
+        mSwipeRefreshLayout.autoRefresh();
 
     }
 
@@ -53,7 +58,7 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
         setSupportActionBar(toolbar);
         mActionBar = getSupportActionBar();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mRecyclerView = (HeadFootRecyclerView)findViewById(R.id.comment_recyclerView);
         mAdapter = new CommentRecyclerAdapter(this);
@@ -103,7 +108,22 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
             }
         });
 
+        mPresenter = new CommentPresenter(this);
 
+        mSwipeRefreshLayout = (ProlateSwipeRefreshLayout)findViewById(R.id.comment_swiperefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Your refresh code here
+
+                if (mIsFirstLoad){
+                    mPresenter.loadNextPage();
+                }else{
+                    mPresenter.loadNewPage();
+                }
+
+            }
+        });
         mCommentEditText = (EditText)findViewById(R.id.comment_edit_text);
         Button btn = (Button)findViewById(R.id.comment_send_btn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -116,30 +136,37 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
                 }
             }
         });
-
-
-        mPresenter = new CommentPresenter(this);
     }
 
     @Override
     public void showNextPage() {
+        if (mIsFirstLoad){
+            mIsFirstLoad = false;
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showNewPage() {
 
+        mSwipeRefreshLayout.setRefreshing(false);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void loadNewPageFailed() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void loadNextPageFailed() {
 
+        if (mIsFirstLoad){
+            mIsFirstLoad = false;
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
@@ -148,13 +175,24 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
     }
 
     @Override
+    public void commentAddFailed() {
+
+    }
+
+    @Override
     public void notifyCommentRemove(int pos) {
         mAdapter.notifyItemRemoved(pos);
     }
 
     @Override
-    public void changeRecyclerViewFootStyle(int style) {
+    public void commentRemoveFailed() {
 
+    }
+
+    @Override
+    public void changeRecyclerViewFootStyle(boolean isLoadMore) {
+
+        mRecyclerView.setLoadMoreEnable(isLoadMore);
     }
 
     @Override
