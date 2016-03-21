@@ -9,10 +9,10 @@ android {
         //调试用的KeyStore
         debug {
             keyAlias 'CornerAndroidKey'
-            keyPassword '1qaz2wsx!23456'
+            keyPassword '123456'
             //配置你的keystroe路径
-            storeFile file('../keystore/debug.kjs')
-            storePassword '1qaz2wsx!23456'
+            storeFile file('../keystore/debug.jks')
+            storePassword '123456'
         }
     }
 
@@ -27,14 +27,14 @@ android {
     buildTypes {
 
         debug {
-            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
-            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
+            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
             //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.0.107:3000/"'
             buildConfigField "String", "IMAGE_ADDRESS", '"http://corner-image-bucket.img-cn-shanghai.aliyuncs.com/"'
         }
         release {
-            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
-            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
+            buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.1.6:3000/"'
+            //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.10.223:3000/"'
             //buildConfigField "String", "HTTP_ADDRESS", '"http://192.168.0.107:3000/"'
             buildConfigField "String", "IMAGE_ADDRESS", '"http://corner-image-bucket.img-cn-shanghai.aliyuncs.com/"'
 
@@ -69,5 +69,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.1.2'
     compile files('libs/AMap_Search_V3.2.1_20160308.jar')
     compile files('libs/AMap_Location_V2.4.0_20160308.jar')
-    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile 'com.yqritc:recyclerview-flexibledivider:1.2.9'
 }

@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Button
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/location_search_border"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+    <ImageButton
         android:id="@+id/location_back_btn"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="3dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:background="@color/bpTransparent"
+        android:layout_centerVertical="true"/>
+    <ImageButton
+        android:id="@+id/location_clear_btn"
+        android:layout_alignParentRight="true"
+        android:paddingRight="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_clear_black_24dp"
+        android:background="@color/bpTransparent"
+        android:layout_centerVertical="true"/>
     <EditText
         android:id="@+id/location_search_edit_text"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
-</LinearLayout>
+        android:layout_toRightOf="@id/location_back_btn"
+        android:layout_toLeftOf="@id/location_clear_btn"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:singleLine="true"
+        android:background="@color/bpTransparent"
+        android:imeOptions="actionSearch"/>
+
+</RelativeLayout>

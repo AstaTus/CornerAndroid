@@ -27,4 +27,8 @@ public class CornerModel {
     public void addCorner(CornerEntity entity){
         mCorners.add(entity);
     }
+
+    public void clear(){
+        mCorners.clear();
+    }
 }

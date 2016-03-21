@@ -43,6 +43,7 @@ public class LocationPresenter implements AMapLocationListener,
 
         mContext = context;
         mLocationView = view;
+        mModel = new CornerModel();
 
         init();
     }
@@ -78,7 +79,7 @@ public class LocationPresenter implements AMapLocationListener,
         return true;
     }
 
-    public void bindArticleListData(){
+    public void bindCornerListData(){
         mLocationView.bindCornerData(mModel.getCornerList());
     }
 
@@ -105,7 +106,7 @@ public class LocationPresenter implements AMapLocationListener,
         CornerAddCmd cmd = CornerAddCmd.create(
                 new CornerAddCmdListener()
                 , name
-                , mCurrentLoc.toString());
+                , ("" + mCurrentLoc.getLongitude() + "," + mCurrentLoc.getLatitude()));
         cmd.excute();
     }
 
@@ -113,7 +114,14 @@ public class LocationPresenter implements AMapLocationListener,
 
         @Override
         public void onSuccess(CornerAddMsg result) {
-            mLocationView.notifyCreateCornerSuccess();
+            if (result.mResult){
+
+                CornerEntity entity = new CornerEntity();
+                entity.mName = result.mCorner.mName;
+                entity.mGuid = result.mCorner.mGuid;
+                mLocationView.notifyCreateCornerSuccess(entity);
+            }
+
         }
 
         @Override
@@ -139,6 +147,7 @@ public class LocationPresenter implements AMapLocationListener,
 
             mLocationView.showFinishLocation();
             try {
+                mCurrentLoc = new LatLonPoint(location.getLatitude(), location.getLongitude());
                 querySearchCorner("");
             } catch (AMapException e) {
                 e.printStackTrace();
@@ -150,30 +159,50 @@ public class LocationPresenter implements AMapLocationListener,
     }
 
     @Override
-    public void onCloudSearched(CloudResult cloudResult, int i) {
+    public void onCloudSearched(CloudResult cloudResult, int rCode) {
 
-        CornerEntity entity;
-        CloudItem item;
-        List<CloudItem> items = cloudResult.getClouds();
-        for (int k = 0; k < items.size(); ++k){
+        if (rCode == 1000){
 
-            entity = new CornerEntity();
-            item = items.get(k);
+            boolean isResearch = false;
+            int start = 0;
+            CloudSearch.Query query = cloudResult.getQuery();
 
-            entity.mGuid = BigInteger.valueOf(Long.valueOf(item.getID()));
-            entity.mName = item.getTitle();
-            mModel.addCorner(entity);
+            if(query.getPageNum() == 0){
+                isResearch = true;
+                mModel.clear();
+            }else{
+                start = mModel.getCornerList().size() - 1;
+            }
+
+            CornerEntity entity;
+            CloudItem item;
+            List<CloudItem> items = cloudResult.getClouds();
+            for (int k = 0; k < items.size(); ++k){
+
+                entity = new CornerEntity();
+                item = items.get(k);
+
+                entity.mGuid = BigInteger.valueOf(Long.valueOf(item.getID()));
+                entity.mName = item.getTitle();
+                mModel.addCorner(entity);
+            }
+
+            if (cloudResult.getTotalCount() == 0){
+                mLocationView.changeRecyclerViewFoot(2);
+            }else if (mQuery.getPageNum() == cloudResult.getPageCount() - 1){
+                mLocationView.changeRecyclerViewFoot(1);
+            }else{
+                mLocationView.changeRecyclerViewFoot(0);
+            }
+
+
+
+            if (isResearch){
+                mLocationView.showNewSearchCorner();
+            }else{
+                mLocationView.showNextPageCorner(start, items.size());
+            }
         }
-
-        if (mQuery.getPageNum() == 0){
-            mLocationView.changeRecyclerViewFoot(3);
-        }else if (mQuery.getPageNum() == mQuery.getPageSize() - 1){
-            mLocationView.changeRecyclerViewFoot(2);
-        }else{
-            mLocationView.changeRecyclerViewFoot(0);
-        }
-
-        mLocationView.showNextPageCorner();
     }
 
     @Override

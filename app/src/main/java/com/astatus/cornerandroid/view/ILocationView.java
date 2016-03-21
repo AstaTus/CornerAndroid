@@ -13,15 +13,13 @@ public interface ILocationView {
 
     void showLocationFailed();
 
-    void showNextPageCorner();
+    void showNextPageCorner(int start, int count);
 
-    void showLoadNearbyCornerFailed();
-
-    void showFinishCreateCorner();
+    void showNewSearchCorner();
 
     void showCreateCornerFailed();
 
-    void notifyCreateCornerSuccess();
+    void notifyCreateCornerSuccess(CornerEntity entity);
 
     void changeRecyclerViewFoot(int style);
 

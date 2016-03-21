@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.entity.CommentEntity;
+import com.astatus.cornerandroid.viewholder.NormalFootViewHolder;
 import com.astatus.cornerandroid.widget.HeadFootAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -35,7 +36,7 @@ public class CommentRecyclerAdapter extends HeadFootRecyclerAdapter {
     public CommentRecyclerAdapter(Context context){
         super(false, true);
         mContext = context;
-        setFootAdapter(new LoadMoreAdapter(R.layout.widget_recylerview_loading_foot));
+        changeFootType(new LoadMoreAdapter(R.layout.widget_recylerview_loadmore_foot));
 
     }
 
@@ -147,14 +148,8 @@ public class CommentRecyclerAdapter extends HeadFootRecyclerAdapter {
         @Override
         public RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(mResId, parent, false);
-            return new FootViewHolder(v);
+            return new NormalFootViewHolder(v);
         }
     }
 
-    public static class FootViewHolder extends RecyclerView.ViewHolder {
-
-        public FootViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
 }

@@ -30,7 +30,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     private AppBarLayout mAppbarLayout;
     private TextView mTitleTextView;
     private ActionBar mActionBar;
-    private PersonalRecyclerAdapter mAdpater;
+    private PersonalRecyclerAdapter mAdapter;
 
     private ArticlePresenter mArticlePresenter;
     private boolean mIsFirstLoad = true;
@@ -90,8 +90,8 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
         });
 
         mRecyclerView = (HeadFootRecyclerView)findViewById(R.id.personal_recyclerView);
-        mAdpater = new PersonalRecyclerAdapter(this, mArticlePresenter);
-        mRecyclerView.setAdapter(mAdpater);
+        mAdapter = new PersonalRecyclerAdapter(this, mArticlePresenter);
+        mRecyclerView.setAdapter(mAdapter);
         /*mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -141,25 +141,25 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
             mIsFirstLoad = false;
             mSwipeRefreshLayout.setRefreshing(false);
         }
-        mAdpater.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showNewPage() {
-        mAdpater.showFootView();
-        mAdpater.notifyDataSetChanged();
+        mAdapter.showFootView();
+        mAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);
 
     }
 
     @Override
     public void updateAllArticles() {
-        mAdpater.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void bindArticleListData(List<ArticleEntity> list) {
-        mAdpater.restData(list);
+        mAdapter.restData(list);
     }
 
     @Override
@@ -169,7 +169,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
 
     @Override
     public void notifyUpState(int index) {
-        mAdpater.notifyItemChanged(index);
+        mAdapter.notifyItemChanged(index);
     }
 
     @Override

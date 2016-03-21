@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <ProgressBar
-        android:id="@+id/widget_recylerview_foot_progress_bar"
+        android:id="@+id/widget_foot_loading_progress"
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content" />

@@ -16,6 +16,7 @@ import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.presenter.ArticlePresenter;
 import com.astatus.cornerandroid.util.HttpUtil;
 import com.astatus.cornerandroid.util.NumberUtil;
+import com.astatus.cornerandroid.viewholder.NormalFootViewHolder;
 import com.astatus.cornerandroid.widget.HeadFootAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -43,7 +44,7 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
         super(false, true);
         mContext = context;
         mPresenter = presenter;
-        setFootAdapter(new LoadMoreAdapter());
+        changeFootType(new LoadMoreAdapter());
     }
 
     public void setHaveMore(boolean more){
@@ -210,7 +211,7 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
 
         private boolean mHaveMore = true;
         public LoadMoreAdapter() {
-            super(R.layout.widget_recylerview_loading_foot);
+            super(R.layout.widget_recylerview_loadmore_foot);
         }
 
         @Override
@@ -225,7 +226,7 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
         @Override
         public RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(mResId, parent, false);
-            return new FootViewHolder(v);
+            return new NormalFootViewHolder(v);
         }
 
         public void setHaveMore(boolean more){
@@ -235,13 +236,6 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
 
         public boolean getHaveMore(){
             return mHaveMore;
-        }
-    }
-
-    public static class FootViewHolder extends RecyclerView.ViewHolder {
-
-        public FootViewHolder(View itemView) {
-            super(itemView);
         }
     }
 }
