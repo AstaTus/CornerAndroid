@@ -12,6 +12,7 @@ import com.amap.api.services.cloud.CloudResult;
 import com.amap.api.services.cloud.CloudSearch;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
+import com.astatus.cornerandroid.adapder.HeadFootRecyclerAdapter;
 import com.astatus.cornerandroid.entity.CornerEntity;
 import com.astatus.cornerandroid.http.okhttp.CmdListener;
 import com.astatus.cornerandroid.http.okhttp.CornerAddCmd;
@@ -188,14 +189,12 @@ public class LocationPresenter implements AMapLocationListener,
             }
 
             if (cloudResult.getTotalCount() == 0){
-                mLocationView.changeRecyclerViewFoot(2);
+                mLocationView.changeRecyclerViewCreateFoot();
             }else if (mQuery.getPageNum() == cloudResult.getPageCount() - 1){
-                mLocationView.changeRecyclerViewFoot(1);
+                mLocationView.changeRecyclerViewNoMoreFoot();
             }else{
-                mLocationView.changeRecyclerViewFoot(0);
+                mLocationView.changeRecyclerViewLoadingFoot();
             }
-
-
 
             if (isResearch){
                 mLocationView.showNewSearchCorner();

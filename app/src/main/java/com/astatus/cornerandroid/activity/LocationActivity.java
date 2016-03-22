@@ -72,7 +72,9 @@ public class LocationActivity extends AppCompatActivity
         mRecyclerView = (HeadFootRecyclerView) findViewById(R.id.location_recyclerView);
 
         mRecyclerView.addItemDecoration(
-                new HorizontalDividerItemDecoration.Builder(this).build());
+                new HorizontalDividerItemDecoration.Builder(this)
+                        .colorResId(R.color.colorDivider)
+                        .build());
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -182,9 +184,18 @@ public class LocationActivity extends AppCompatActivity
     }
 
     @Override
-    public void changeRecyclerViewFoot(int type){
+    public void changeRecyclerViewLoadingFoot() {
+        mAdapter.changeFootType(HeadFootRecyclerAdapter.FOOT_STYLE_LOADING);
+    }
 
-        mAdapter.changeFootType(type);
+    @Override
+    public void changeRecyclerViewNoMoreFoot() {
+        mAdapter.changeFootType(HeadFootRecyclerAdapter.FOOT_STYLE_NOMORE);
+    }
+
+    @Override
+    public void changeRecyclerViewCreateFoot() {
+        mAdapter.changeFootType(HeadFootRecyclerAdapter.FOOT_STYLE_CREATE);
     }
 
     @Override

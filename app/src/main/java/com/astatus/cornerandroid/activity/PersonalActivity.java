@@ -10,9 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
+import com.astatus.cornerandroid.adapder.HeadFootRecyclerAdapter;
 import com.astatus.cornerandroid.adapder.PersonalRecyclerAdapter;
 import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.presenter.ArticlePresenter;
@@ -20,6 +23,7 @@ import com.astatus.cornerandroid.view.IArticleView;
 import com.astatus.cornerandroid.widget.HeadFootRecyclerView;
 import com.astatus.cornerandroid.widget.ProlateSwipeRefreshLayout;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class PersonalActivity extends AppCompatActivity implements IArticleView {
@@ -30,7 +34,8 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     private AppBarLayout mAppbarLayout;
     private TextView mTitleTextView;
     private ActionBar mActionBar;
-    private PersonalRecyclerAdapter mAdapter;
+    private PersonalRecyclerAdapter mDataAdapter;
+    private HeadFootRecyclerAdapter mAdapter;
 
     private ArticlePresenter mArticlePresenter;
     private boolean mIsFirstLoad = true;
@@ -90,9 +95,16 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
         });
 
         mRecyclerView = (HeadFootRecyclerView)findViewById(R.id.personal_recyclerView);
-        mAdapter = new PersonalRecyclerAdapter(this, mArticlePresenter);
+        mDataAdapter = new PersonalRecyclerAdapter(this, new PersonalRecyclerAdapter.ArticleUpClickListener() {
+            @Override
+            public void onUpClick(BigInteger guid) {
+                mArticlePresenter.changeUpState(guid);
+            }
+        });
+
+        mAdapter = new HeadFootRecyclerAdapter(false, true, mDataAdapter, null);
         mRecyclerView.setAdapter(mAdapter);
-        /*mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+       /* mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN){
@@ -159,7 +171,8 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
 
     @Override
     public void bindArticleListData(List<ArticleEntity> list) {
-        mAdapter.restData(list);
+        mDataAdapter.restData(list);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

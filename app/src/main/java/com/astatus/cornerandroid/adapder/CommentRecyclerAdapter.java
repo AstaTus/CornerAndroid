@@ -18,42 +18,26 @@ import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
  * Created by AstaTus on 2016/3/1.
  */
-public class CommentRecyclerAdapter extends HeadFootRecyclerAdapter {
+public class CommentRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<CommentEntity> mData;
     private Context mContext;
     private CommentItemClickListener mCommentItemClickListener;
 
-    public interface CommentItemClickListener {
-        public void onItemClick(View view,int postion);
-    }
-
-    public CommentRecyclerAdapter(Context context){
-        super(false, true);
-        mContext = context;
-        changeFootType(new LoadMoreAdapter(R.layout.widget_recylerview_loadmore_foot));
-
-    }
-
-
-
-    public void setCommentItenClickListener(CommentItemClickListener listener){
-        mCommentItemClickListener = listener;
-    }
-
-
     @Override
-    public int getDataItemCount() {
-        return mData.size();
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_comment_item, parent, false);
+        return new CommentViewHolder(v);
     }
 
     @Override
-    public void onBindDataViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CommentViewHolder cvHolder = (CommentViewHolder)holder;
         CommentEntity entity = mData.get(position);
         if (entity != null){
@@ -96,15 +80,22 @@ public class CommentRecyclerAdapter extends HeadFootRecyclerAdapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_comment_item, parent, false);
-        return new CommentViewHolder(v);
+    public int getItemCount() {
+        return mData.size();
     }
 
 
+    public interface CommentItemClickListener {
+        public void onCommentClick(CommentEntity entity);
+    }
+
+    public CommentRecyclerAdapter(Context context, CommentItemClickListener listener){
+        mContext = context;
+        mCommentItemClickListener = listener;
+    }
+
     public void resetData(List<CommentEntity> data){
         mData = data;
-        notifyDataSetChanged();
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
@@ -129,27 +120,6 @@ public class CommentRecyclerAdapter extends HeadFootRecyclerAdapter {
 
             mDateText = (TextView)v.findViewById(R.id.comment_item_date_text);
             mCommentText = (TextView)v.findViewById(R.id.comment_item_comment_text);
-
         }
     }
-
-    private static class LoadMoreAdapter extends HeadFootAdapter{
-
-        public LoadMoreAdapter(@LayoutRes int id) {
-            super(id);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(mResId, parent, false);
-            return new NormalFootViewHolder(v);
-        }
-    }
-
 }

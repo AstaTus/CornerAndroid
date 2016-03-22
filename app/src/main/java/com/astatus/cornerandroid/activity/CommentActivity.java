@@ -1,6 +1,5 @@
 package com.astatus.cornerandroid.activity;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -8,13 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.adapder.CommentRecyclerAdapter;
+import com.astatus.cornerandroid.adapder.HeadFootRecyclerAdapter;
 import com.astatus.cornerandroid.application.CornerApplication;
 import com.astatus.cornerandroid.cache.UserCache;
 import com.astatus.cornerandroid.entity.CommentEntity;
@@ -35,7 +34,8 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
     private EditText mCommentEditText;
     private ActionBar mActionBar;
     private BigInteger mTargetGuid = BigInteger.valueOf(0);
-    CommentRecyclerAdapter mAdapter;
+    CommentRecyclerAdapter mDataAdapter;
+    HeadFootRecyclerAdapter mAdapter;
     private boolean mIsFirstLoad = true;
 
     @Override
@@ -61,13 +61,11 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mRecyclerView = (HeadFootRecyclerView)findViewById(R.id.comment_recyclerView);
-        mAdapter = new CommentRecyclerAdapter(this);
-        mAdapter.setCommentItenClickListener(new CommentRecyclerAdapter.CommentItemClickListener() {
+        mDataAdapter = new CommentRecyclerAdapter(this, new CommentRecyclerAdapter.CommentItemClickListener() {
             @Override
-            public void onItemClick(View view, int postion) {
+            public void onCommentClick(final CommentEntity entity) {
 
                 UserCache user = CornerApplication.getSingleton().getUserCache();
-                final CommentEntity entity = (CommentEntity) view.getTag();
                 if (entity != null) {
 
                     if (entity.mReplyGuid.compareTo(user.getMainUserGuid()) == 0) {
@@ -95,6 +93,8 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
                 }
             }
         });
+
+        mAdapter = new HeadFootRecyclerAdapter(false, true, mDataAdapter, null);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -198,6 +198,7 @@ public class CommentActivity extends AppCompatActivity implements ICommentView {
     @Override
     public void bindArticleListData(List<CommentEntity> list) {
 
-        mAdapter.resetData(list);
+        mDataAdapter.resetData(list);
+        mAdapter.notifyDataSetChanged();
     }
 }

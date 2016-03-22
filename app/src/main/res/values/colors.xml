@@ -4,6 +4,15 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!--More key Hex Opacity Values: 100%: FF 87%: DE
+    70%: B3 54%: 8A 38%:60 30%: 4D 26%: 42 12%: 1F
+    -->
+    <color name="colorPrimaryText">#DE000000</color>
+    <color name="colorSecondText">#8A000000</color>
+    <color name="colorThirdText">#60000000</color>
+
+    <color name="colorDivider">#1F000000</color>
+
     <color name="white">#fcfcfc</color>
     <color name="gray_light">#aaaaaa</color>
     <color name="black_54op">#8A000000</color>

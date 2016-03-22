@@ -21,7 +21,9 @@ public interface ILocationView {
 
     void notifyCreateCornerSuccess(CornerEntity entity);
 
-    void changeRecyclerViewFoot(int style);
+    void changeRecyclerViewLoadingFoot();
+    void changeRecyclerViewNoMoreFoot();
+    void changeRecyclerViewCreateFoot();
 
     void bindCornerData(List<CornerEntity> list);
 }

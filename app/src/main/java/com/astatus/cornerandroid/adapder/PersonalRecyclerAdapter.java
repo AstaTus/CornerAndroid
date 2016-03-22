@@ -29,41 +29,39 @@ import java.util.List;
 /**
  * Created by AstaTus on 2016/2/23.
  */
-public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
+public class PersonalRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ArticleEntity> mData;
     private Context mContext;
-    private ArticlePresenter mPresenter;
+
+    private ArticleUpClickListener mUpClickListener;
+    public interface ArticleUpClickListener {
+        public void onUpClick(BigInteger guid);
+    }
 
     private CommentBtnClickListener mCommentBtnListener = new CommentBtnClickListener();
     private MoreBtnClickListener mMoreBtnListener = new MoreBtnClickListener();
     private UpBtnClickListener mUpBtnListener = new UpBtnClickListener();
 
 
-    public PersonalRecyclerAdapter(Context context, ArticlePresenter presenter){
-        super(false, true);
+    public PersonalRecyclerAdapter(Context context, ArticleUpClickListener listener){
+        super();
         mContext = context;
-        mPresenter = presenter;
-        changeFootType(new LoadMoreAdapter());
+        mUpClickListener = listener;
     }
 
-    public void setHaveMore(boolean more){
-
-        LoadMoreAdapter foot = (LoadMoreAdapter)getFootAdapter();
-
-        if (more !=  foot.getHaveMore()){
-            foot.setHaveMore(more);
-            notifyItemChanged(getItemCount() - 1);
-        }
+    public void restData(List<ArticleEntity> data){
+        mData = data;
     }
 
     @Override
-    public int getDataItemCount() {
-        return mData.size();
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_image_card, parent, false);
+        return new PersonalRecyclerAdapter.PersonalViewHolder(v);
     }
 
     @Override
-    public void onBindDataViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         PersonalViewHolder pvHolder = (PersonalViewHolder)holder;
         ArticleEntity entity = mData.get(position);
         if (entity != null){
@@ -120,16 +118,8 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_image_card, parent, false);
-        return new PersonalRecyclerAdapter.PersonalViewHolder(v);
-    }
-
-
-
-    public void restData(List<ArticleEntity> data){
-        mData = data;
-        notifyDataSetChanged();
+    public int getItemCount() {
+        return mData.size();
     }
 
     class CommentBtnClickListener implements View.OnClickListener{
@@ -154,8 +144,8 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
         @Override
         public void onClick(View v) {
             BigInteger articlGuid = (BigInteger)v.getTag();
-            if (articlGuid != null){
-                mPresenter.changeUpState(articlGuid);
+            if (articlGuid != null && mUpClickListener != null){
+                mUpClickListener.onUpClick(articlGuid);
             }
 
         }
@@ -201,41 +191,6 @@ public class PersonalRecyclerAdapter extends HeadFootRecyclerAdapter {
 
             mMoreView = (ImageView) v.findViewById(R.id.image_card_more_btn);
             mMoreView.setOnClickListener(mMoreBtnListener);
-        }
-
-
-
-    }
-
-    public static class LoadMoreAdapter extends HeadFootAdapter{
-
-        private boolean mHaveMore = true;
-        public LoadMoreAdapter() {
-            super(R.layout.widget_recylerview_loadmore_foot);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(mHaveMore){
-
-            }else{
-
-            }
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(mResId, parent, false);
-            return new NormalFootViewHolder(v);
-        }
-
-        public void setHaveMore(boolean more){
-
-            mHaveMore = more;
-        }
-
-        public boolean getHaveMore(){
-            return mHaveMore;
         }
     }
 }
