@@ -16,6 +16,22 @@ public class BaseCmd<T> {
     private CmdListener mListener;
     private final Class<T> mResponseClass;
 
+    private long mReadTimeOut = -1;
+    private long mWriteTimeOut = -1;
+    private long mConnTimeOut= -1;
+
+    protected void setConnTimeOut(long time){
+        mConnTimeOut = time;
+    }
+
+    protected void setWriteTimeOut(long time){
+        mWriteTimeOut = time;
+    }
+
+    protected void setReadTimeOut(long time){
+        mReadTimeOut = time;
+    }
+
     public BaseCmd(CmdListener listener,
                    Class<T> responseClass) {
 
@@ -27,7 +43,8 @@ public class BaseCmd<T> {
         com.astatus.cornerandroid.http.okhttp.CmdManager mgr = CornerApplication.getSingleton().getCmdMgr();
 
         try {
-            mCall = mgr.addRequest(mRequest, new CommonCallback<T>(mListener, mResponseClass));
+            mCall = mgr.addRequest(mRequest, new CommonCallback<T>(mListener, mResponseClass)
+                    , mConnTimeOut, mWriteTimeOut, mReadTimeOut);
         }catch (Exception e){
             e.printStackTrace();
         }

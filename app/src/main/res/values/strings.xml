@@ -78,4 +78,7 @@
     <!--======================Location======================-->
     <string name="location_title">评论</string>
     <string name="location_name">名称</string>
+
+    <!--======================Publish======================-->
+    <string name="publish_location_is_null">位置没有填写</string>
 </resources>

@@ -33,8 +33,11 @@
             android:name="com.amap.api.v2.apikey"
             android:value="bb3554a5e621b1834e25826f08476f02" />
         <!-- 定位需要的服务 -->
-        <service android:name="com.amap.api.location.APSService" >
-        </service>
+        <service android:name="com.amap.api.location.APSService" ></service>
+        <service
+            android:name=".service.LocationService"
+            android:exported="false"/>
+
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -10,6 +10,7 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import java.io.IOException;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,8 +38,23 @@ public class CmdManager {
         //mOkHttpClient.coo();
     }
 
-    public Call addRequest(Request request, Callback callback) throws IOException {
-        Call call = mOkHttpClient.newCall(request);
+    public Call addRequest(Request request, Callback callback
+            , long connTimeOut, long readTimeOut, long writeTimeOut) throws IOException {
+
+        OkHttpClient.Builder builder = mOkHttpClient.newBuilder();
+        if (connTimeOut >= 0){
+            builder.connectTimeout(connTimeOut, TimeUnit.MILLISECONDS);
+        }
+        if (readTimeOut >= 0){
+            builder.connectTimeout(readTimeOut, TimeUnit.MILLISECONDS);
+        }
+
+        if (writeTimeOut >= 0){
+            builder.connectTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
+        }
+
+        OkHttpClient copy = builder.build();
+        Call call = copy.newCall(request);
         call.enqueue(callback);
         return call;
     }
