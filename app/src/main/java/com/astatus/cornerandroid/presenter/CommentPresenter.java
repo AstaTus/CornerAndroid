@@ -128,6 +128,11 @@ public class CommentPresenter {
         public void onFailed() {
             mCommentView.loadNewPageFailed();
         }
+
+        @Override
+        public void onResponseFailed(int code) {
+
+        }
     }
 
 
@@ -160,6 +165,11 @@ public class CommentPresenter {
         public void onFailed() {
             mCommentView.loadNextPageFailed();
         }
+
+        @Override
+        public void onResponseFailed(int code) {
+
+        }
     }
 
     class CommentAddCmdListener implements CmdListener<CommentAddMsg> {
@@ -186,6 +196,11 @@ public class CommentPresenter {
         public void onFailed() {
 
         }
+
+        @Override
+        public void onResponseFailed(int code) {
+
+        }
     }
 
     class CommentRemoveCmdListener implements CmdListener<CommentRemoveMsg> {
@@ -193,14 +208,18 @@ public class CommentPresenter {
         @Override
         public void onSuccess(CommentRemoveMsg result) {
 
-            if (result.mResult){
-                int index = mModel.removeComment(result.mGuid);
-                mCommentView.notifyCommentRemove(index);
-            }
+            int index = mModel.removeComment(result.mGuid);
+            mCommentView.notifyCommentRemove(index);
+
         }
 
         @Override
         public void onFailed() {
+
+        }
+
+        @Override
+        public void onResponseFailed(int code) {
 
         }
     }

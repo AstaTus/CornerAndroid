@@ -115,19 +115,20 @@ public class LocationPresenter implements AMapLocationListener,
 
         @Override
         public void onSuccess(CornerAddMsg result) {
-            if (result.mResult){
-
                 CornerEntity entity = new CornerEntity();
                 entity.mName = result.mCorner.mName;
                 entity.mGuid = result.mCorner.mGuid;
                 mLocationView.notifyCreateCornerSuccess(entity);
-            }
-
         }
 
         @Override
         public void onFailed() {
             mLocationView.showCreateCornerFailed();
+        }
+
+        @Override
+        public void onResponseFailed(int code) {
+
         }
     }
 

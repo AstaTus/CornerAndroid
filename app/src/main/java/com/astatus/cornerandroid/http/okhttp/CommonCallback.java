@@ -76,10 +76,15 @@ public class CommonCallback<T> implements Callback {
                 }
             });
         }else{
+
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mListener.onResponseFailed(packet.resultCode); // must be inside run()
+                }
+            });
+
             Log.i("test", "server error code:" + packet.resultCode);
         }
-
-
-
     }
 }

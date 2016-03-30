@@ -156,21 +156,21 @@ public class PublishActivity extends AppCompatActivity {
 
             hideLoginProgress();
 
-            if (result.mResult){
+            Intent homeIntent = new Intent(PublishActivity.this, HomeActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            homeIntent.putExtra(ActivityDef.IINTENT_PARAM1, ActivityDef.IP_SEND_SUCCESS);
+            startActivity(homeIntent);
 
-                Intent homeIntent = new Intent(PublishActivity.this, HomeActivity.class);
-                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                homeIntent.putExtra(ActivityDef.IINTENT_PARAM1, ActivityDef.IP_SEND_SUCCESS);
-                startActivity(homeIntent);
-                Log.i("test", "send ok");
-            }else{
-                Log.i("test", "send failed");
-            }
         }
 
         @Override
         public void onFailed() {
             hideLoginProgress();
+
+        }
+
+        @Override
+        public void onResponseFailed(int code) {
 
         }
     }

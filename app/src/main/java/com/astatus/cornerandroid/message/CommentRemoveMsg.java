@@ -7,5 +7,4 @@ import java.math.BigInteger;
  */
 public class CommentRemoveMsg {
     public BigInteger mGuid;
-    public boolean mResult;
 }

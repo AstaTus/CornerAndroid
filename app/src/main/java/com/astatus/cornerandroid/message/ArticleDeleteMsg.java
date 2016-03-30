@@ -7,5 +7,4 @@ import java.math.BigInteger;
  */
 public class ArticleDeleteMsg {
     public BigInteger mGuid;
-    public boolean mResult;
 }

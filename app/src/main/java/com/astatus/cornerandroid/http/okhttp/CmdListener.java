@@ -8,4 +8,5 @@ import com.astatus.cornerandroid.message.MessagePacket;
 public interface CmdListener<T> {
     public void onSuccess(T result);
     public void onFailed();
+    public void onResponseFailed(int code);
 }

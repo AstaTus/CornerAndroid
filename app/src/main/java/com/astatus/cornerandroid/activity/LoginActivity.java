@@ -149,19 +149,18 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onSuccess(LoginMsg msg) {
 
-            if (msg.mResult){
-                saveLoginInfoIntoSharedPreferences();
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+            saveLoginInfoIntoSharedPreferences();
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
 
-            }else{
+            /*}else{
                 if (msg.mCode == LoginMsg.CODE_ACCOUNT_NOT_EXIST){
                     Log.i("test", "account not exist");
 
                 }else if(msg.mCode == LoginMsg.CODE_ACCOUNT_OR_PASSWORD_ERROR){
                     Log.i("test", "account OR password error");
                 }
-            }
+            }*/
 
 
             hideLoginProgress();
@@ -171,6 +170,11 @@ public class LoginActivity extends AppCompatActivity {
         public void onFailed() {
 
             hideLoginProgress();
+        }
+
+        @Override
+        public void onResponseFailed(int code) {
+
         }
     }
 

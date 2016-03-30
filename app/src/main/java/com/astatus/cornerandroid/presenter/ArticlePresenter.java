@@ -78,6 +78,11 @@ public class ArticlePresenter {
         public void onFailed() {
 
         }
+
+        @Override
+        public void onResponseFailed(int code) {
+
+        }
     }
 
     class LoadNewPageArticleCmdListener implements CmdListener<ArticleMsg> {
@@ -108,6 +113,11 @@ public class ArticlePresenter {
         public void onFailed() {
             mArticleView.loadNextPageFailed();
         }
+
+        @Override
+        public void onResponseFailed(int code) {
+
+        }
     }
 
 
@@ -135,6 +145,11 @@ public class ArticlePresenter {
         @Override
         public void onFailed() {
             mArticleView.loadNextPageFailed();
+        }
+
+        @Override
+        public void onResponseFailed(int code) {
+
         }
     }
 
