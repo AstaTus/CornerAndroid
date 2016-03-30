@@ -9,17 +9,20 @@ import java.util.Date;
  */
 public class ArticleMsg {
     public boolean mIsTimeOut;
-    public ArrayList<BigInteger> mGuids;
-    public ArrayList<String> mUserGuids;
-    public ArrayList<String> mUserNames;
-    public ArrayList<String> mHeadUrls;
-    public ArrayList<Date> mTimes;
-    public ArrayList<String> mImagePaths;
-    public ArrayList<String> mFeelTexts;
-    public ArrayList<Integer> mUpCounts;
-    public ArrayList<Integer> mReadCounts;
-    public ArrayList<ArrayList<CommentBlock>> mComments;
-    public ArrayList<BigInteger> mLocationGuids;
-    public ArrayList<String> mLocationNames;
-    public ArrayList<Boolean> mIsUps;
+
+    public ArrayList<UserArticleBlock> mArticles;
+
+//public ArrayList<BigInteger> mGuids;
+//public ArrayList<String> mUserGuids;
+//public ArrayList<String> mUserNames;
+//public ArrayList<String> mHeadUrls;
+//public ArrayList<Date> mTimes;
+//public ArrayList<String> mImagePaths;
+//public ArrayList<String> mFeelTexts;
+//public ArrayList<Integer> mUpCounts;
+//public ArrayList<Integer> mReadCounts;
+//public ArrayList<ArrayList<CommentBlock>> mComments;
+//public ArrayList<BigInteger> mLocationGuids;
+//public ArrayList<String> mLocationNames;
+//public ArrayList<Boolean> mIsUps;
 }

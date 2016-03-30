@@ -10,6 +10,7 @@ import com.astatus.cornerandroid.http.okhttp.UpChangeStateCmd;
 import com.astatus.cornerandroid.message.ArticleMsg;
 import com.astatus.cornerandroid.message.CommentBlock;
 import com.astatus.cornerandroid.message.UpChangeStateMsg;
+import com.astatus.cornerandroid.message.UserArticleBlock;
 import com.astatus.cornerandroid.model.ArticleModel;
 import com.astatus.cornerandroid.view.IArticleView;
 
@@ -95,9 +96,9 @@ public class ArticlePresenter {
                 }
 
                 ArticleEntity entity;
-                for (int i = result.mGuids.size() - 1; i >= 0; --i){
+                for (int i = result.mArticles.size() - 1; i >= 0; --i){
 
-                    entity = builderArticleEntity(result, i);
+                    entity = builderArticleEntity(result.mArticles.get(i));
                     mModel.addArticle(entity, ArticleModel.ADD_ARTICLE_LOCATION_FRONT);
                 }
 
@@ -127,12 +128,12 @@ public class ArticlePresenter {
         public void onSuccess(ArticleMsg result) {
 
             ArticleEntity entity;
-            for (int i = 0; i < result.mGuids.size(); ++i){
-                entity = builderArticleEntity(result, i);
+            for (int i = 0; i < result.mArticles.size(); ++i){
+                entity = builderArticleEntity(result.mArticles.get(i));
                 mModel.addArticle(entity, ArticleModel.ADD_ARTICLE_LOCATION_BACK);
             }
 
-            if (result.mGuids.size() < ArticleCmd.REQUEST_ARTICLE_MAX_COUNT){
+            if (result.mArticles.size() < ArticleCmd.REQUEST_ARTICLE_MAX_COUNT){
 
                 mArticleView.changeRecyclerViewFootStyle(false);
             }else{
@@ -153,33 +154,33 @@ public class ArticlePresenter {
         }
     }
 
-    public ArticleEntity builderArticleEntity(ArticleMsg result, int index){
+    public ArticleEntity builderArticleEntity(UserArticleBlock block){
         ArticleEntity entity = new ArticleEntity();
-        entity.mGuid = result.mGuids.get(index);
-        entity.mTime = result.mTimes.get(index);
-        entity.mFeelText = result.mFeelTexts.get(index);
-        entity.mHeadUrl = result.mHeadUrls.get(index);
-        entity.mImagePath = result.mImagePaths.get(index);
-        entity.mIsUp = result.mIsUps.get(index);
-        entity.mLocationGuid = result.mLocationGuids.get(index);
-        entity.mLocationName = result.mLocationNames.get(index);
-        entity.mUserName = result.mUserNames.get(index);
-        entity.mReadCount = result.mReadCounts.get(index).intValue();
-        entity.mUpCount = result.mReadCounts.get(index).intValue();
+        entity.mGuid = block.mGuid;
+        entity.mTime = block.mTime;
+        entity.mFeelText = block.mFeelText;
+        entity.mHeadUrl = block.mUser.mHeadPath;
+        entity.mImagePath = block.mImagePath;
+        entity.mIsUp = block.mIsUp;
+        entity.mLocationGuid = block.mCorner.mGuid;
+        entity.mLocationName = block.mCorner.mName;
+        entity.mUserName = block.mUser.mName;
+        entity.mReadCount = block.mReadCount;
+        entity.mUpCount = block.mUpCount;
 
-        ArrayList<CommentBlock> blocks = result.mComments.get(index);
+        ArrayList<CommentBlock> blocks = block.mComments;
         for (int i = 0; i < blocks.size(); ++i){
-            CommentBlock block = blocks.get(i);
+            CommentBlock commentBlock = blocks.get(i);
 
             if (block.mGuid.compareTo(BigInteger.valueOf(0)) != 0){
                 CommentEntity comment = new CommentEntity();
-                comment.mGuid = block.mGuid;
-                comment.mReplyGuid = block.mReplyGuid;
-                comment.mReplyHeadUrl = block.mHeadUrl;
-                comment.mTargetName = block.mTargetName;
-                comment.mReplyName = block.mReplyName;
-                comment.mTime = block.mTime;
-                comment.mFeelText = block.mText;
+                comment.mGuid = commentBlock.mGuid;
+                comment.mReplyGuid = commentBlock.mReplyGuid;
+                comment.mReplyHeadUrl = commentBlock.mHeadUrl;
+                comment.mTargetName = commentBlock.mTargetName;
+                comment.mReplyName = commentBlock.mReplyName;
+                comment.mTime = commentBlock.mTime;
+                comment.mFeelText = commentBlock.mText;
 
                 entity.mComments.add(comment);
             }
