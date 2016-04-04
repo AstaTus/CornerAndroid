@@ -10,14 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.adapder.HeadFootRecyclerAdapter;
 import com.astatus.cornerandroid.adapder.PersonalRecyclerAdapter;
-import com.astatus.cornerandroid.entity.ArticleEntity;
+import com.astatus.cornerandroid.entity.UserArticleEntity;
 import com.astatus.cornerandroid.presenter.ArticlePresenter;
 import com.astatus.cornerandroid.view.IArticleView;
 import com.astatus.cornerandroid.widget.HeadFootRecyclerView;
@@ -170,7 +168,7 @@ public class PersonalActivity extends AppCompatActivity implements IArticleView 
     }
 
     @Override
-    public void bindArticleListData(List<ArticleEntity> list) {
+    public void bindArticleListData(List<UserArticleEntity> list) {
         mDataAdapter.restData(list);
         mAdapter.notifyDataSetChanged();
     }

@@ -47,7 +47,6 @@
     <string name="home_action_setting">设置</string>
     <string name="home_fab_photo">相册</string>
     <string name="home_fab_camera">相机</string>
-
     <string name="home_send_success_tip">发布成功</string>
 
     <!--======================PICTURE_EDIT======================-->
@@ -81,4 +80,9 @@
 
     <!--======================Publish======================-->
     <string name="publish_location_is_null">位置没有填写</string>
+
+    <!--======================WIDGET======================-->
+    <string name="widget_corner_article_card_want_to">想去</string>
+
+    <string name="widget_user_article_card_attention">关注</string>
 </resources>

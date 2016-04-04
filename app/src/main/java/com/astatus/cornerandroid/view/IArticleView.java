@@ -1,6 +1,6 @@
 package com.astatus.cornerandroid.view;
 
-import com.astatus.cornerandroid.entity.ArticleEntity;
+import com.astatus.cornerandroid.entity.UserArticleEntity;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface IArticleView {
 
     void updateAllArticles();
 
-    void bindArticleListData(List<ArticleEntity> list);
+    void bindArticleListData(List<UserArticleEntity> list);
 
     void changeRecyclerViewFootStyle(boolean loadMoreStyle);
 

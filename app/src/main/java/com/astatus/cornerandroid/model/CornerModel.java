@@ -1,6 +1,5 @@
 package com.astatus.cornerandroid.model;
 
-import com.astatus.cornerandroid.entity.ArticleEntity;
 import com.astatus.cornerandroid.entity.CornerEntity;
 
 import java.util.ArrayList;

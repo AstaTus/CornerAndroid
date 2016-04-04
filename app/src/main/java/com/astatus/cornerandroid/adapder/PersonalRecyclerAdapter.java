@@ -12,12 +12,10 @@ import android.widget.TextView;
 
 import com.astatus.cornerandroid.R;
 import com.astatus.cornerandroid.activity.CommentActivity;
-import com.astatus.cornerandroid.entity.ArticleEntity;
-import com.astatus.cornerandroid.presenter.ArticlePresenter;
+import com.astatus.cornerandroid.entity.UserArticleEntity;
 import com.astatus.cornerandroid.util.HttpUtil;
 import com.astatus.cornerandroid.util.NumberUtil;
-import com.astatus.cornerandroid.viewholder.NormalFootViewHolder;
-import com.astatus.cornerandroid.widget.HeadFootAdapter;
+import com.astatus.cornerandroid.viewholder.UserArticleViewHolder;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
@@ -31,39 +29,32 @@ import java.util.List;
  */
 public class PersonalRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<ArticleEntity> mData;
+    private List<UserArticleEntity> mData;
     private Context mContext;
 
-    private ArticleUpClickListener mUpClickListener;
-    public interface ArticleUpClickListener {
-        public void onUpClick(BigInteger guid);
-    }
-
-    private CommentBtnClickListener mCommentBtnListener = new CommentBtnClickListener();
-    private MoreBtnClickListener mMoreBtnListener = new MoreBtnClickListener();
-    private UpBtnClickListener mUpBtnListener = new UpBtnClickListener();
+    private UserArticleViewHolder.ArticleUpClickListener mUpClickListener;
 
 
-    public PersonalRecyclerAdapter(Context context, ArticleUpClickListener listener){
+    public PersonalRecyclerAdapter(Context context, UserArticleViewHolder.ArticleUpClickListener listener){
         super();
         mContext = context;
         mUpClickListener = listener;
     }
 
-    public void restData(List<ArticleEntity> data){
+    public void restData(List<UserArticleEntity> data){
         mData = data;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_image_card, parent, false);
-        return new PersonalRecyclerAdapter.PersonalViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.widget_user_article_card, parent, false);
+        return new UserArticleViewHolder(v, mUpClickListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        PersonalViewHolder pvHolder = (PersonalViewHolder)holder;
-        ArticleEntity entity = mData.get(position);
+        UserArticleViewHolder pvHolder = (UserArticleViewHolder)holder;
+        UserArticleEntity entity = mData.get(position);
         if (entity != null){
             //根据entity  item中的控件可做到局部更新
             try{
@@ -122,37 +113,10 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         return mData.size();
     }
 
-    class CommentBtnClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-
-            BigInteger guid = (BigInteger)v.getTag();
-            Intent commentIntent = new Intent(v.getContext(), CommentActivity.class);
-            commentIntent.putExtra("ARTICLE_GUID", guid.toString());
-            v.getContext().startActivity(commentIntent);
-        }
-    }
-
-    class MoreBtnClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-
-        }
-    }
-
-    class UpBtnClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            BigInteger articlGuid = (BigInteger)v.getTag();
-            if (articlGuid != null && mUpClickListener != null){
-                mUpClickListener.onUpClick(articlGuid);
-            }
-
-        }
-    }
 
 
-    public class PersonalViewHolder extends RecyclerView.ViewHolder {
+
+    /*public class PersonalViewHolder extends RecyclerView.ViewHolder {
 
         protected RoundedImageView mHeadImage;
         protected TextView mArtistName;
@@ -171,26 +135,7 @@ public class PersonalRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         public PersonalViewHolder(View v) {
             super(v);
 
-            mHeadImage = (RoundedImageView)v.findViewById(R.id.image_card_head_image);
-            mArtistName = (TextView)v.findViewById(R.id.image_card_artist);
-            mTime = (TextView)v.findViewById(R.id.image_card_time);
-            mArticleImage = (ImageView)v.findViewById(R.id.image_card_image);
 
-            mFeelText = (TextView)v.findViewById(R.id.image_card_text);
-            mLocationName = (TextView)v.findViewById(R.id.image_card_corner_name);
-            mLocationDistance = (TextView)v.findViewById(R.id.image_card_corner_distance);
-
-            mUpCount = (TextView)v.findViewById(R.id.image_card_up_text);
-            mReadCount = (TextView)v.findViewById(R.id.image_card_read_text);
-
-            mUpView = (ImageView) v.findViewById(R.id.image_card_up_btn);
-            mUpView.setOnClickListener(mUpBtnListener);
-
-            mCommentView = (ImageView) v.findViewById(R.id.image_card_comment_btn);
-            mCommentView.setOnClickListener(mCommentBtnListener);
-
-            mMoreView = (ImageView) v.findViewById(R.id.image_card_more_btn);
-            mMoreView.setOnClickListener(mMoreBtnListener);
         }
-    }
+    }*/
 }

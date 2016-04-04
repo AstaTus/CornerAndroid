@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by AstaTus on 2016/2/23.
  */
-public class ArticleEntity {
+public class UserArticleEntity {
     public BigInteger mGuid;
     public String mUserName;
     public String mHeadUrl;

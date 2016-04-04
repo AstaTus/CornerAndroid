@@ -2,7 +2,7 @@ package com.astatus.cornerandroid.presenter;
 
 import com.astatus.cornerandroid.application.CornerApplication;
 import com.astatus.cornerandroid.cache.UserCache;
-import com.astatus.cornerandroid.entity.ArticleEntity;
+import com.astatus.cornerandroid.entity.UserArticleEntity;
 import com.astatus.cornerandroid.entity.CommentEntity;
 import com.astatus.cornerandroid.http.okhttp.ArticleCmd;
 import com.astatus.cornerandroid.http.okhttp.CmdListener;
@@ -95,7 +95,7 @@ public class ArticlePresenter {
                     mModel.resetData();
                 }
 
-                ArticleEntity entity;
+                UserArticleEntity entity;
                 for (int i = result.mArticles.size() - 1; i >= 0; --i){
 
                     entity = builderArticleEntity(result.mArticles.get(i));
@@ -127,7 +127,7 @@ public class ArticlePresenter {
         @Override
         public void onSuccess(ArticleMsg result) {
 
-            ArticleEntity entity;
+            UserArticleEntity entity;
             for (int i = 0; i < result.mArticles.size(); ++i){
                 entity = builderArticleEntity(result.mArticles.get(i));
                 mModel.addArticle(entity, ArticleModel.ADD_ARTICLE_LOCATION_BACK);
@@ -154,8 +154,8 @@ public class ArticlePresenter {
         }
     }
 
-    public ArticleEntity builderArticleEntity(UserArticleBlock block){
-        ArticleEntity entity = new ArticleEntity();
+    public UserArticleEntity builderArticleEntity(UserArticleBlock block){
+        UserArticleEntity entity = new UserArticleEntity();
         entity.mGuid = block.mGuid;
         entity.mTime = block.mTime;
         entity.mFeelText = block.mFeelText;

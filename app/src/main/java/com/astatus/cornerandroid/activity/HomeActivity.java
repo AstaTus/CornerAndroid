@@ -13,6 +13,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,32 +24,44 @@ import android.view.View;
 import android.support.design.widget.NavigationView;
 //import android.support.v7.recyclerview;
 import com.astatus.cornerandroid.R;
+import com.astatus.cornerandroid.adapder.HeadFootRecyclerAdapter;
+import com.astatus.cornerandroid.adapder.HomeRecyclerAdapter;
+import com.astatus.cornerandroid.presenter.HomePresenter;
 import com.astatus.cornerandroid.util.ToastUtil;
+import com.astatus.cornerandroid.view.IHomeView;
+import com.astatus.cornerandroid.viewholder.CornerArticleViewHolder;
+import com.astatus.cornerandroid.viewholder.UserArticleViewHolder;
 import com.astatus.cornerandroid.widget.FloatingActionMenuLayout;
 import com.astatus.cornerandroid.widget.FloatingActionMenuButton;
+import com.astatus.cornerandroid.widget.HeadFootRecyclerView;
+import com.astatus.cornerandroid.widget.ProlateSwipeRefreshLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
+import java.math.BigInteger;
+import java.util.List;
 
 
 /**
  * Created by AstaTus on 2016/1/14.
  */
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements IHomeView {
 
     private static final int REQUEST_CODE_PICK_PHOTO = 1;
     private static final int REQUEST_CODE_CAMERA = 2;
 
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private NavigationView mNavigationView;
     private FloatingActionButton mFab;
     private ObjectAnimator mExpandMenuAnimator;
     private ObjectAnimator mCollapsedMenuAnimator;
     private FloatingActionMenuLayout mAddMenu;
     private CoordinatorLayout mRootLayout;
     private RoundedImageView mHeadImageView;
-//  private RecyclerView mRecyclerView;
+    private HeadFootRecyclerView mRecyclerView;
+    private HeadFootRecyclerAdapter mAdapter;
+    private HomeRecyclerAdapter mDataAdapter;
+    private ProlateSwipeRefreshLayout mRefreshLayout;
+    private HomePresenter mPresenter;
+
     private static int i = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +73,9 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         initView();
+
+        mPresenter = new HomePresenter(this, this);
+        mRefreshLayout.autoRefresh();
 
         processExtraData();
     }
@@ -87,13 +103,6 @@ public class HomeActivity extends AppCompatActivity {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (i == 0){
-                    i = 1;
-                    mCollapsedMenuAnimator.start();
-                }else{
-                    i = 0;
-                    mExpandMenuAnimator.start();
-                }*/
 
                 if (mAddMenu.isExpanded()) {
                     mAddMenu.collapse();
@@ -136,13 +145,49 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(cameraIntent);
             }
         });
-        /*mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigationView);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();*/
+
+        mRecyclerView = (HeadFootRecyclerView)findViewById(R.id.home_recyclerView);
+        mRecyclerView.setOnLoadMoreListener(new HeadFootRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (mPresenter.isReLocation()) {
+                    mPresenter.startLocation();
+                } else {
+                    mPresenter.loadNextArticles();
+                }
+            }
+        });
+
+        mDataAdapter = new HomeRecyclerAdapter(
+                new CornerArticleViewHolder.CornerWantClickListener() {
+
+                    @Override
+                    public void onWantClick(BigInteger guid) {
+
+                    }
+                }
+                , new UserArticleViewHolder.ArticleUpClickListener() {
+                    @Override
+                    public void onUpClick(BigInteger guid) {
+
+                    }
+                });
+
+        mAdapter = new HeadFootRecyclerAdapter(false, true, mDataAdapter, null);
+        mRecyclerView.setAdapter(mAdapter);
+
+        mRefreshLayout = (ProlateSwipeRefreshLayout)findViewById(R.id.home_swiperefresh);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(mPresenter.isReLocation()){
+                    mPresenter.startLocation();
+                }else{
+                    mPresenter.loadNewArticles();
+                }
+            }
+        });
+
 
         mHeadImageView = (RoundedImageView)findViewById(R.id.home_head_image);
         mHeadImageView.setOnClickListener(new View.OnClickListener() {
@@ -168,13 +213,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_CODE_PICK_PHOTO) {
@@ -198,7 +236,6 @@ public class HomeActivity extends AppCompatActivity {
         setIntent(intent);
 
         processExtraData();
-
     }
 
     private void processExtraData(){
@@ -211,5 +248,53 @@ public class HomeActivity extends AppCompatActivity {
             Snackbar.make(mRootLayout, tip, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
+    }
+
+    @Override
+    public void showLocationFailed() {
+
+    }
+
+    @Override
+    public void showFinishSearchCorner() {
+
+        //new
+        if (mRefreshLayout.isRefreshing()){
+
+            mPresenter.loadNewArticles();
+        }//next
+        else{
+            mPresenter.loadNextArticles();
+        }
+    }
+
+    @Override
+    public void showSearchCornerFailed() {
+
+    }
+
+    @Override
+    public void showNextPage() {
+
+    }
+
+    @Override
+    public void showNewPage() {
+
+    }
+
+    @Override
+    public void changeRecyclerViewLoadingFoot() {
+
+    }
+
+    @Override
+    public void changeRecyclerViewNoMoreFoot() {
+
+    }
+
+    @Override
+    public void bindCornerData(List<Object> list) {
+
     }
 }
